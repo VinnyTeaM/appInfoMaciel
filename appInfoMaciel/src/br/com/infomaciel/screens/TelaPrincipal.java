@@ -26,7 +26,6 @@ import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-
 public class TelaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 2L;
@@ -95,11 +94,11 @@ public class TelaPrincipal extends JFrame {
 
 		menCadUsu = new JMenuItem("Usuários");
 		menCadUsu.addActionListener(new ActionListener() {
-			//abrir o form TelaUsuario dentro desktop pane
+			// abrir o form TelaUsuario dentro desktop pane
 			public void actionPerformed(ActionEvent e) {
 				TelaUsuarios usuarios = new TelaUsuarios();
-						usuarios.setVisible(true);
-						desktop.add(usuarios);
+				usuarios.setVisible(true);
+				desktop.add(usuarios);
 			}
 		});
 		menCadUsu.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -129,7 +128,7 @@ public class TelaPrincipal extends JFrame {
 				// chamando a tela sobre
 				About sobre = new About();
 				sobre.setVisible(true);
-				
+
 			}
 		});
 		menAjuSob.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, InputEvent.ALT_DOWN_MASK));
@@ -153,7 +152,7 @@ public class TelaPrincipal extends JFrame {
 		});
 		menOpcSai.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_DOWN_MASK));
 		menOpc.add(menOpcSai);
-		
+
 		JMenuItem menOpcSenha = new JMenuItem("Alterar Senha");
 		menOpcSenha.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_DOWN_MASK));
 		menOpcSenha.setFont(new Font("Segoe UI", Font.BOLD, 12));
