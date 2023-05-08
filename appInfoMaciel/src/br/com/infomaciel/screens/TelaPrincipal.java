@@ -1,5 +1,7 @@
 package br.com.infomaciel.screens;
 
+import java.awt.Color;
+import java.awt.Dialog.ModalExclusionType;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -10,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.DebugGraphics;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -22,9 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import javax.swing.DebugGraphics;
-import java.awt.Dialog.ModalExclusionType;
+
 
 public class TelaPrincipal extends JFrame {
 
@@ -33,6 +34,7 @@ public class TelaPrincipal extends JFrame {
 	public static JMenuItem menCadUsu;
 	public static JMenu menRel;
 	public static JLabel lblUsuario;
+	public static JDesktopPane desktop;
 
 	/**
 	 * Launch the application.
@@ -77,7 +79,7 @@ public class TelaPrincipal extends JFrame {
 		menu.setBounds(0, 0, 722, 22);
 		contentPane.add(menu);
 
-		JMenu menCad = new JMenu("Cadastro");
+		JMenu menCad = new JMenu("Cadastros");
 		menCad.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menu.add(menCad);
 
@@ -92,12 +94,20 @@ public class TelaPrincipal extends JFrame {
 		menCad.add(menCadOs);
 
 		menCadUsu = new JMenuItem("Usuários");
+		menCadUsu.addActionListener(new ActionListener() {
+			//abrir o form TelaUsuario dentro desktop pane
+			public void actionPerformed(ActionEvent e) {
+				TelaUsuarios usuarios = new TelaUsuarios();
+						usuarios.setVisible(true);
+						desktop.add(usuarios);
+			}
+		});
 		menCadUsu.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menCadUsu.setEnabled(false);
 		menCadUsu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.ALT_DOWN_MASK));
 		menCad.add(menCadUsu);
 
-		menRel = new JMenu("Relatório");
+		menRel = new JMenu("Relatórios");
 		menRel.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menRel.setDebugGraphicsOptions(DebugGraphics.NONE_OPTION);
 		menRel.setEnabled(false);
@@ -119,6 +129,7 @@ public class TelaPrincipal extends JFrame {
 				// chamando a tela sobre
 				About sobre = new About();
 				sobre.setVisible(true);
+				
 			}
 		});
 		menAjuSob.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, InputEvent.ALT_DOWN_MASK));
@@ -129,7 +140,7 @@ public class TelaPrincipal extends JFrame {
 		menu.add(menOpc);
 
 		JMenuItem menOpcSai = new JMenuItem("Sair");
-		menOpcSai.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
+		menOpcSai.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menOpcSai.addActionListener(new ActionListener() {
 			// exibir uma caixa de dialogo sim ou não
 			public void actionPerformed(ActionEvent e) {
@@ -142,10 +153,18 @@ public class TelaPrincipal extends JFrame {
 		});
 		menOpcSai.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_DOWN_MASK));
 		menOpc.add(menOpcSai);
+		
+		JMenuItem menOpcSenha = new JMenuItem("Alterar Senha");
+		menOpcSenha.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_DOWN_MASK));
+		menOpcSenha.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		menOpc.add(menOpcSenha);
 
-		JDesktopPane desktop = new JDesktopPane();
-		desktop.setBounds(493, 462, -489, -440);
+		desktop = new JDesktopPane();
+		desktop.setLocation(0, 22);
+		desktop.setBackground(new Color(102, 102, 255));
+		desktop.setSize(500, 430);
 		contentPane.add(desktop);
+		desktop.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel
