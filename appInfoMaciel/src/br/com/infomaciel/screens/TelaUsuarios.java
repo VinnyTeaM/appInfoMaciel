@@ -1,24 +1,47 @@
 package br.com.infomaciel.screens;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.ParseException;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import java.awt.Cursor;
+import javax.swing.text.MaskFormatter;
+
+import br.com.infomaciel.dal.ConexaoDao;
 
 public class TelaUsuarios extends JInternalFrame {
+
+	// usando a variavel conexao do DAL
+	Connection conexao = null;
+	/*
+	 * criando variaveis especiais para conexao com o banco PreparedStatement e
+	 * ResultSet são frameworks do pacote java.sql* e servem para preparar e
+	 * executar as intruções sql
+	 */
+
+	PreparedStatement pst = null;
+	ResultSet rs = null;
+
 	private static final long serialVersionUID = 2L;
 	private JTextField txtUsuId;
 	private JTextField txtUsoSenha;
 	private JTextField txtUsuLogin;
 	private JTextField txtUsuNome;
-	private JTextField txtUsuFone;
+	private JFormattedTextField txtUsuFone;
 
 	/**
 	 * Launch the application.
@@ -95,10 +118,21 @@ public class TelaUsuarios extends JInternalFrame {
 		cboUsuPerfil.setBounds(74, 50, 77, 22);
 		getContentPane().add(cboUsuPerfil);
 
-		txtUsuFone = new JTextField();
-		txtUsuFone.setBounds(74, 133, 145, 20);
+		txtUsuFone = new JFormattedTextField();
+		txtUsuFone.setDocument(new OnlyNumbersDocument());
+
+		MaskFormatter mascarafone = null;
+		try {
+			mascarafone = new MaskFormatter("(##)#####-####");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		JFormattedTextField txtUsuFone = new JFormattedTextField(mascarafone);
 		getContentPane().add(txtUsuFone);
-		txtUsuFone.setColumns(10);
+		txtUsuFone.setBounds(74, 133, 145, 20);
+		setVisible(true);
 
 		JButton btnUsoCreate = new JButton("");
 		btnUsoCreate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -117,6 +151,26 @@ public class TelaUsuarios extends JInternalFrame {
 		getContentPane().add(btnUsoDelete);
 
 		JButton btnUsoRead = new JButton("");
+		btnUsoRead.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				conexao = ConexaoDao.getConnection();
+				String sql = "select * from tbuser where  iduser = ?";
+				try {
+					pst = conexao.prepareStatement(sql);
+					pst.setString(1, txtUsuId.getText());
+					rs = pst.executeQuery();
+					if (rs.next()) {
+						txtUsuNome.setText(rs.getString(2));
+					} else {
+
+					}
+				} catch (Exception erro) {
+					JOptionPane.showMessageDialog(null, erro);
+
+				}
+			}
+		});
+
 		btnUsoRead.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnUsoRead.setToolTipText("Consultar");
 		btnUsoRead.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/read.png")));
@@ -134,5 +188,12 @@ public class TelaUsuarios extends JInternalFrame {
 		setTitle("Cadastros / Usuários");
 		setSize(500, 430);
 
+		try {
+			MaskFormatter formatter = new MaskFormatter("(##)#####-####");
+			formatter.install(txtUsuFone);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
+
 }

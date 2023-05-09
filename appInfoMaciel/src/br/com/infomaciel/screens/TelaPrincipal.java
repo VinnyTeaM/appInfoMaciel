@@ -27,7 +27,8 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 public class TelaPrincipal extends JFrame {
-
+	
+	
 	private static final long serialVersionUID = 2L;
 	private JPanel contentPane;
 	public static JMenuItem menCadUsu;
@@ -56,7 +57,7 @@ public class TelaPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaPrincipal() {
-
+		
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setResizable(false);
 		setTitle("-*Informática Maciel*- TELA PRINCIPAL");
@@ -72,7 +73,7 @@ public class TelaPrincipal extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
 		JMenuBar menu = new JMenuBar();
 		menu.setForeground(Color.BLUE);
 		menu.setBounds(0, 0, 722, 22);
@@ -128,7 +129,6 @@ public class TelaPrincipal extends JFrame {
 				// chamando a tela sobre
 				About sobre = new About();
 				sobre.setVisible(true);
-
 			}
 		});
 		menAjuSob.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, InputEvent.ALT_DOWN_MASK));
@@ -154,6 +154,14 @@ public class TelaPrincipal extends JFrame {
 		menOpc.add(menOpcSai);
 
 		JMenuItem menOpcSenha = new JMenuItem("Alterar Senha");
+		menOpcSenha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			    TelaTrocaSenha telaTrocaSenha = new TelaTrocaSenha();
+			    telaTrocaSenha.setVisible(true);
+			    desktop.add(telaTrocaSenha);
+			
+			}
+		});
 		menOpcSenha.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_DOWN_MASK));
 		menOpcSenha.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menOpc.add(menOpcSenha);
@@ -173,12 +181,12 @@ public class TelaPrincipal extends JFrame {
 
 		lblUsuario = new JLabel("\t\tUsuário");
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblUsuario.setBounds(501, 96, 215, 22);
+		lblUsuario.setBounds(507, 96, 215, 22);
 		contentPane.add(lblUsuario);
 
 		JLabel lblData = new JLabel("");
 		lblData.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblData.setBounds(501, 140, 215, 22);
+		lblData.setBounds(507, 140, 215, 22);
 		contentPane.add(lblData);
 
 		// atualiza a data e hora do sistema a cada 1 segundo

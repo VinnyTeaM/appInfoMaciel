@@ -19,9 +19,18 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import br.com.infomaciel.dal.ConexaoMySQL;
+import br.com.infomaciel.dal.ConexaoDao;
 
 public class TelaLogin extends JFrame implements ActionListener {
+	
+	//usando a variavel conexao do DAL
+	Connection conexao = null;
+	/*criando variaveis especiais para conexao com o banco
+	PreparedStatement e ResultSet são frameworks do pacote java.sql*
+	e servem para preparar e executar as intruções sql */
+	
+	PreparedStatement pst = null;
+	ResultSet rs = null;
 
 	private static final long serialVersionUID = 2L;
 	private JLabel labelUsuario, labelSenha;
@@ -84,7 +93,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 			String usuario = campoUsuario.getText();
 			String senha = new String(campoSenha.getPassword());
 
-			try (Connection conexao = ConexaoMySQL.getConnection()) {
+			try (Connection conexao = ConexaoDao.getConnection()) {
 
 				// aqui ve a condição apos acionar botao login
 				if (conexao != null) {
@@ -108,6 +117,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 						// System.out.println(perfil);
 						// estrutura abaixo faz o tratamento do perfil do usuario
 						if (perfil.equals("admin")) {
+							resultado.getString(2);
 							TelaPrincipal principal = new TelaPrincipal();
 							principal.setVisible(true);
 							TelaPrincipal.menCadUsu.setEnabled(true);
@@ -117,6 +127,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 							this.dispose();
 							conexao.close();
 						} else {
+							resultado.getString(2);
 							TelaPrincipal principal = new TelaPrincipal();
 							principal.setVisible(true);
 							TelaPrincipal.lblUsuario.setText(resultado.getString(2));
@@ -124,10 +135,6 @@ public class TelaLogin extends JFrame implements ActionListener {
 							conexao.close();
 						}
 
-						/*
-						 * abrir formulario tela principal TelaPrincipal principal = new
-						 * TelaPrincipal(); principal.setVisible(true); this.dispose(); conexao.close();
-						 */
 					} else {
 						JOptionPane.showMessageDialog(this, "Senha incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
 						campoSenha.setText("");
@@ -144,6 +151,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 				ex.printStackTrace();
 			}
+
 		}
 
 	}
