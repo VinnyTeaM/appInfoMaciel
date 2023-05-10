@@ -38,7 +38,7 @@ public class TelaUsuarios extends JInternalFrame {
 
 	private static final long serialVersionUID = 2L;
 	private JTextField txtUsuId;
-	private JTextField txtUsoSenha;
+	private JTextField txtUsuSenha;
 	private JTextField txtUsuLogin;
 	private JTextField txtUsuNome;
 	private JFormattedTextField txtUsuFone;
@@ -108,13 +108,13 @@ public class TelaUsuarios extends JInternalFrame {
 		txtUsuLogin.setBounds(74, 161, 145, 20);
 		getContentPane().add(txtUsuLogin);
 
-		txtUsoSenha = new JTextField();
-		txtUsoSenha.setColumns(10);
-		txtUsoSenha.setBounds(307, 161, 145, 20);
-		getContentPane().add(txtUsoSenha);
+		txtUsuSenha = new JTextField();
+		txtUsuSenha.setColumns(10);
+		txtUsuSenha.setBounds(307, 161, 145, 20);
+		getContentPane().add(txtUsuSenha);
 
-		JComboBox cboUsuPerfil = new JComboBox();
-		cboUsuPerfil.setModel(new DefaultComboBoxModel(new String[] { "USUARIO", "TECNICO", "ADMIN" }));
+		JComboBox<String> cboUsuPerfil = new JComboBox<>();
+		cboUsuPerfil.setModel(new DefaultComboBoxModel(new String[] { "", "usuario", "tecnico", "admin" }));
 		cboUsuPerfil.setBounds(74, 50, 77, 22);
 		getContentPane().add(cboUsuPerfil);
 
@@ -125,7 +125,6 @@ public class TelaUsuarios extends JInternalFrame {
 		try {
 			mascarafone = new MaskFormatter("(##)#####-####");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -134,7 +133,31 @@ public class TelaUsuarios extends JInternalFrame {
 		txtUsuFone.setBounds(74, 133, 145, 20);
 		setVisible(true);
 
+		// metodo para adicionar usuários
 		JButton btnUsoCreate = new JButton("");
+		btnUsoCreate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				conexao = ConexaoDao.getConnection();
+				String sql = "insert into tbuser(iduser,user,login,password,perfil,phone) values(?,?,?,?,?,?)";
+				try {
+					pst = conexao.prepareStatement(sql);
+					pst.setString(1, txtUsuId.getText());
+					pst.setString(2, txtUsuNome.getText());
+					pst.setString(3, txtUsuLogin.getText());
+					pst.setString(4, txtUsuSenha.getText());
+					pst.setString(5, cboUsuPerfil.getSelectedItem().toString());
+					pst.setString(6, txtUsuFone.getText());
+					// a linha abaixo atualiza a tabela usuario com os dados do formulario
+					pst.executeUpdate();
+					JOptionPane.showMessageDialog(null, "Usuario adicionado com sucesso!", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+					LimparCamposUtil.limparCampos2(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha, cboUsuPerfil);
+					
+				} catch (Exception erro) {
+					JOptionPane.showMessageDialog(null, erro);
+				}
+			}
+		});
 		btnUsoCreate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnUsoCreate.setToolTipText("Criar");
 		btnUsoCreate.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/create.png")));
@@ -150,19 +173,35 @@ public class TelaUsuarios extends JInternalFrame {
 		btnUsoDelete.setBounds(346, 236, 89, 73);
 		getContentPane().add(btnUsoDelete);
 
+		// metodo para consultar usuário
 		JButton btnUsoRead = new JButton("");
 		btnUsoRead.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conexao = ConexaoDao.getConnection();
 				String sql = "select * from tbuser where  iduser = ?";
-				try {
-					pst = conexao.prepareStatement(sql);
-					pst.setString(1, txtUsuId.getText());
-					rs = pst.executeQuery();
-					if (rs.next()) {
-						txtUsuNome.setText(rs.getString(2));
-					} else {
 
+				try {
+
+					if (txtUsuId.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Digite um ID válido");
+					} else {
+						pst = conexao.prepareStatement(sql);
+						pst.setString(1, txtUsuId.getText());
+						rs = pst.executeQuery();
+						if (rs.next()) {
+							txtUsuNome.setText(rs.getString(2));
+							txtUsuFone.setText(rs.getString(6));
+							txtUsuLogin.setText(rs.getString(3));
+							txtUsuSenha.setText(rs.getString(4));
+							// a linha abaixo se refere ao combobox
+							cboUsuPerfil.setSelectedItem(rs.getString(5));
+						} else {
+							JOptionPane.showMessageDialog(null, "Usuario não cadastrado!");
+							// as linhas a baixo "limpa" os campos
+							LimparCamposUtil.limparCampos(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
+									cboUsuPerfil);
+
+						}
 					}
 				} catch (Exception erro) {
 					JOptionPane.showMessageDialog(null, erro);
@@ -191,9 +230,24 @@ public class TelaUsuarios extends JInternalFrame {
 		try {
 			MaskFormatter formatter = new MaskFormatter("(##)#####-####");
 			formatter.install(txtUsuFone);
+
+			JLabel lblNewLabel_6 = new JLabel("ADICIONAR");
+			lblNewLabel_6.setBounds(59, 307, 70, 14);
+			getContentPane().add(lblNewLabel_6);
+
+			JLabel lblNewLabel_7 = new JLabel("BUSCAR");
+			lblNewLabel_7.setBounds(173, 307, 64, 14);
+			getContentPane().add(lblNewLabel_7);
+
+			JLabel lblNewLabel_8 = new JLabel("EDITAR");
+			lblNewLabel_8.setBounds(274, 307, 46, 14);
+			getContentPane().add(lblNewLabel_8);
+
+			JLabel lblNewLabel_9 = new JLabel("DELETAR");
+			lblNewLabel_9.setBounds(370, 307, 65, 14);
+			getContentPane().add(lblNewLabel_9);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

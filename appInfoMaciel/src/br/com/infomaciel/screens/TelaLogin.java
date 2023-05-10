@@ -112,7 +112,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 					String senhaArmazenada = resultado.getString("password");
 					if (senha.equals(senhaArmazenada)) {
 						// a linha abaixo obtem o conteudo do campo perfil na tabela tbuser
-						String perfil = resultado.getString(6);
+						String perfil = resultado.getString(5);
 
 						// System.out.println(perfil);
 						// estrutura abaixo faz o tratamento do perfil do usuario
