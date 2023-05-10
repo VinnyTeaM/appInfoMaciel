@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.ParseException;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -69,28 +70,28 @@ public class TelaUsuarios extends JInternalFrame {
 		getContentPane().setPreferredSize(new Dimension(80, 80));
 		getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("ID");
-		lblNewLabel.setBounds(33, 83, 46, 14);
+		JLabel lblNewLabel = new JLabel("* ID");
+		lblNewLabel.setBounds(10, 83, 54, 14);
 		getContentPane().add(lblNewLabel);
 
-		JLabel lblNewLabel_5 = new JLabel("NOME");
-		lblNewLabel_5.setBounds(33, 108, 46, 14);
+		JLabel lblNewLabel_5 = new JLabel("* NOME");
+		lblNewLabel_5.setBounds(10, 108, 54, 14);
 		getContentPane().add(lblNewLabel_5);
 
-		JLabel lblNewLabel_4 = new JLabel("LOGIN");
-		lblNewLabel_4.setBounds(33, 164, 46, 14);
+		JLabel lblNewLabel_4 = new JLabel("* LOGIN");
+		lblNewLabel_4.setBounds(10, 164, 46, 14);
 		getContentPane().add(lblNewLabel_4);
 
-		JLabel lblNewLabel_3 = new JLabel("SENHA");
-		lblNewLabel_3.setBounds(263, 164, 46, 14);
+		JLabel lblNewLabel_3 = new JLabel("* SENHA");
+		lblNewLabel_3.setBounds(247, 164, 50, 14);
 		getContentPane().add(lblNewLabel_3);
 
-		JLabel lblNewLabel_2 = new JLabel("PERFIL");
-		lblNewLabel_2.setBounds(33, 54, 46, 14);
+		JLabel lblNewLabel_2 = new JLabel("* PERFIL");
+		lblNewLabel_2.setBounds(10, 54, 54, 14);
 		getContentPane().add(lblNewLabel_2);
 
-		JLabel lblNewLabel_1 = new JLabel("FONE");
-		lblNewLabel_1.setBounds(33, 136, 46, 14);
+		JLabel lblNewLabel_1 = new JLabel("   FONE");
+		lblNewLabel_1.setBounds(10, 136, 46, 14);
 		getContentPane().add(lblNewLabel_1);
 
 		txtUsuId = new JTextField();
@@ -114,7 +115,7 @@ public class TelaUsuarios extends JInternalFrame {
 		getContentPane().add(txtUsuSenha);
 
 		JComboBox<String> cboUsuPerfil = new JComboBox<>();
-		cboUsuPerfil.setModel(new DefaultComboBoxModel(new String[] { "", "usuario", "tecnico", "admin" }));
+		cboUsuPerfil.setModel(new DefaultComboBoxModel(new String[] {"", "usuario", "tecnico", "admin"}));
 		cboUsuPerfil.setBounds(74, 50, 77, 22);
 		getContentPane().add(cboUsuPerfil);
 
@@ -147,12 +148,18 @@ public class TelaUsuarios extends JInternalFrame {
 					pst.setString(4, txtUsuSenha.getText());
 					pst.setString(5, cboUsuPerfil.getSelectedItem().toString());
 					pst.setString(6, txtUsuFone.getText());
-					// a linha abaixo atualiza a tabela usuario com os dados do formulario
-					pst.executeUpdate();
-					JOptionPane.showMessageDialog(null, "Usuario adicionado com sucesso!", "Sucesso",
-							JOptionPane.INFORMATION_MESSAGE);
-					LimparCamposUtil.limparCampos2(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha, cboUsuPerfil);
-					
+					// validação dos campos obrigatorios
+					if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (txtUsuLogin.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())) {
+						JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios!");
+					} else {
+
+						// a linha abaixo atualiza a tabela usuario com os dados do formulario
+						pst.executeUpdate();
+						JOptionPane.showMessageDialog(null, "Usuario adicionado com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
+						LimparCamposUtil.limparCamposId(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
+								cboUsuPerfil);
+					}
 				} catch (Exception erro) {
 					JOptionPane.showMessageDialog(null, erro);
 				}
@@ -198,8 +205,7 @@ public class TelaUsuarios extends JInternalFrame {
 						} else {
 							JOptionPane.showMessageDialog(null, "Usuario não cadastrado!");
 							// as linhas a baixo "limpa" os campos
-							LimparCamposUtil.limparCampos(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
-									cboUsuPerfil);
+							LimparCamposUtil.limparCampos(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha);
 
 						}
 					}
@@ -217,7 +223,40 @@ public class TelaUsuarios extends JInternalFrame {
 		btnUsoRead.setBounds(148, 236, 89, 73);
 		getContentPane().add(btnUsoRead);
 
+		//criando o metodo para alterar dados do usuario
 		JButton btnUsoUpdate = new JButton("");
+		btnUsoUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				conexao = ConexaoDao.getConnection();
+				// sempre prestar muito atenção na seguencia para passagem dos paramentros
+				String sql = "update tbuser set user=?,login=?,password=?,perfil=?,phone=? where iduser=?";
+				try {
+					
+					pst = conexao.prepareStatement(sql);
+					pst.setString(1, txtUsuNome.getText());
+					pst.setString(2, txtUsuLogin.getText());
+					pst.setString(3, txtUsuSenha.getText());
+					pst.setString(4, cboUsuPerfil.getSelectedItem().toString());
+					pst.setString(5, txtUsuFone.getText());
+					pst.setString(6, txtUsuId.getText());
+					
+					if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (txtUsuLogin.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())) {
+						JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios!");
+						
+					} else {
+						// a linha abaixo altera a tabela usuario com os dados do formulario
+							pst.executeUpdate();
+							JOptionPane.showMessageDialog(null, "Usuario alterado com sucesso!", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+				} catch (Exception erro) {
+						JOptionPane.showMessageDialog(null, erro);
+						//System.out.println(erro);
+				}
+				
+			}
+		});
 		btnUsoUpdate.setToolTipText("Atualizar");
 		btnUsoUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnUsoUpdate.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/update.png")));
@@ -246,6 +285,10 @@ public class TelaUsuarios extends JInternalFrame {
 			JLabel lblNewLabel_9 = new JLabel("DELETAR");
 			lblNewLabel_9.setBounds(370, 307, 65, 14);
 			getContentPane().add(lblNewLabel_9);
+
+			JLabel lblNewLabel_10 = new JLabel("* Campos obrigatorios!");
+			lblNewLabel_10.setBounds(318, 58, 134, 14);
+			getContentPane().add(lblNewLabel_10);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
@@ -20,7 +19,11 @@ import javax.swing.JTextField;
 import br.com.infomaciel.dal.ConexaoDao;
 
 public class TelaTrocaSenha extends JInternalFrame {
-    private JLabel usuarioLabel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2L;
+	private JLabel usuarioLabel;
     private JLabel senhaLabel;
     private JLabel novaSenhaLabel;
     private JLabel repetirNovaSenhaLabel;
@@ -99,8 +102,7 @@ public class TelaTrocaSenha extends JInternalFrame {
                 }
 
                 try {
-                    ConexaoDao conexao = new ConexaoDao();
-                    Connection conn = conexao.getConnection();
+                    Connection conn = ConexaoDao.getConnection();
                     PreparedStatement stmt = conn.prepareStatement(
                         "SELECT * FROM tbuser WHERE login = ? AND password = ?");
                     stmt.setString(1, usuario);
