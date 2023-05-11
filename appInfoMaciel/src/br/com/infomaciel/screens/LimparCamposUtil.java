@@ -11,14 +11,19 @@ public class LimparCamposUtil {
 		}
 	}
 
-	public static void limparCampos(JTextField txtUsuNome, JTextField txtUsuFone, JTextField txtUsuLogin, JTextField txtUsuSenha, JComboBox<?> comboBox) {
+	public static void limparCamposUs(JTextField txtUsuNome, JTextField txtUsuFone, JTextField txtUsuLogin, JTextField txtUsuSenha, JComboBox<?> comboBox) {
         limparCampos(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha);
         comboBox.setSelectedItem("");
 	}
 
-	public static void limparCamposId(JTextField txtUsuId, JTextField txtUsuNome, JTextField txtUsuFone,
+	public static void limparCamposUsId(JTextField txtUsuId, JTextField txtUsuNome, JTextField txtUsuFone,
 			JTextField txtUsuLogin, JTextField txtUsuSenha, JComboBox<?> comboBox) {
 		limparCampos(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha);
-		comboBox.setSelectedItem(null);
+		comboBox.setSelectedItem("");
+	}
+	
+	public static void limparCamposCl(JTextField txtCliNome, JTextField txtCliEnd, JTextField txtCliFone,
+			JTextField txtCliEmail) {
+		limparCampos(txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
 	}
 }

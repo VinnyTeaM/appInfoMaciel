@@ -62,7 +62,7 @@ public class TelaPrincipal extends JFrame {
 		setResizable(false);
 		setTitle("-*Informática Maciel*- TELA PRINCIPAL");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 734, 506);
+		setBounds(100, 100, 859, 506);
 		contentPane = new JPanel();
 		contentPane.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.setForeground(Color.YELLOW);
@@ -83,7 +83,14 @@ public class TelaPrincipal extends JFrame {
 		menCad.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menu.add(menCad);
 
-		JMenuItem menCadCli = new JMenuItem("Cliente");
+		JMenuItem menCadCli = new JMenuItem("Clientes");
+		menCadCli.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaClientes cliente = new TelaClientes();
+				cliente.setVisible(true);
+				desktop.add(cliente);
+			}
+		});
 		menCadCli.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menCadCli.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK));
 		menCad.add(menCadCli);
@@ -169,24 +176,24 @@ public class TelaPrincipal extends JFrame {
 		desktop = new JDesktopPane();
 		desktop.setLocation(0, 22);
 		desktop.setBackground(new Color(102, 102, 255));
-		desktop.setSize(500, 430);
+		desktop.setSize(608, 430);
 		contentPane.add(desktop);
 		desktop.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel
 				.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/br/com/infomaciel/icons/telaprincipal.png")));
-		lblNewLabel.setBounds(493, 210, 215, 232);
+		lblNewLabel.setBounds(604, 220, 215, 232);
 		contentPane.add(lblNewLabel);
 
 		lblUsuario = new JLabel("\t\tUsuário");
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblUsuario.setBounds(507, 96, 215, 22);
+		lblUsuario.setBounds(618, 106, 215, 22);
 		contentPane.add(lblUsuario);
 
 		JLabel lblData = new JLabel("");
 		lblData.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblData.setBounds(507, 140, 215, 22);
+		lblData.setBounds(618, 150, 215, 22);
 		contentPane.add(lblData);
 
 		// atualiza a data e hora do sistema a cada 1 segundo

@@ -64,6 +64,8 @@ public class TelaUsuarios extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaUsuarios() {
+		setTitle("Usuários / Cadastros");
+		setSize(608, 430);
 		setClosable(true);
 		setMaximizable(true);
 		setIconifiable(true);
@@ -71,52 +73,52 @@ public class TelaUsuarios extends JInternalFrame {
 		getContentPane().setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("* ID");
-		lblNewLabel.setBounds(10, 83, 54, 14);
+		lblNewLabel.setBounds(78, 89, 54, 14);
 		getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_5 = new JLabel("* NOME");
-		lblNewLabel_5.setBounds(10, 108, 54, 14);
+		lblNewLabel_5.setBounds(78, 114, 54, 14);
 		getContentPane().add(lblNewLabel_5);
 
 		JLabel lblNewLabel_4 = new JLabel("* LOGIN");
-		lblNewLabel_4.setBounds(10, 164, 46, 14);
+		lblNewLabel_4.setBounds(78, 170, 46, 14);
 		getContentPane().add(lblNewLabel_4);
 
 		JLabel lblNewLabel_3 = new JLabel("* SENHA");
-		lblNewLabel_3.setBounds(247, 164, 50, 14);
+		lblNewLabel_3.setBounds(315, 170, 50, 14);
 		getContentPane().add(lblNewLabel_3);
 
 		JLabel lblNewLabel_2 = new JLabel("* PERFIL");
-		lblNewLabel_2.setBounds(10, 54, 54, 14);
+		lblNewLabel_2.setBounds(78, 60, 54, 14);
 		getContentPane().add(lblNewLabel_2);
 
 		JLabel lblNewLabel_1 = new JLabel("   FONE");
-		lblNewLabel_1.setBounds(10, 136, 46, 14);
+		lblNewLabel_1.setBounds(78, 142, 46, 14);
 		getContentPane().add(lblNewLabel_1);
 
 		txtUsuId = new JTextField();
-		txtUsuId.setBounds(74, 80, 77, 20);
+		txtUsuId.setBounds(142, 86, 77, 20);
 		getContentPane().add(txtUsuId);
 		txtUsuId.setColumns(10);
 
 		txtUsuNome = new JTextField();
 		txtUsuNome.setColumns(10);
-		txtUsuNome.setBounds(74, 105, 378, 20);
+		txtUsuNome.setBounds(142, 111, 378, 20);
 		getContentPane().add(txtUsuNome);
 
 		txtUsuLogin = new JTextField();
 		txtUsuLogin.setColumns(10);
-		txtUsuLogin.setBounds(74, 161, 145, 20);
+		txtUsuLogin.setBounds(142, 167, 145, 20);
 		getContentPane().add(txtUsuLogin);
 
 		txtUsuSenha = new JTextField();
 		txtUsuSenha.setColumns(10);
-		txtUsuSenha.setBounds(307, 161, 145, 20);
+		txtUsuSenha.setBounds(375, 167, 145, 20);
 		getContentPane().add(txtUsuSenha);
 
 		JComboBox<String> cboUsuPerfil = new JComboBox<>();
-		cboUsuPerfil.setModel(new DefaultComboBoxModel(new String[] {"", "usuario", "tecnico", "admin"}));
-		cboUsuPerfil.setBounds(74, 50, 77, 22);
+		cboUsuPerfil.setModel(new DefaultComboBoxModel(new String[] { "", "usuario", "tecnico", "admin" }));
+		cboUsuPerfil.setBounds(142, 56, 77, 22);
 		getContentPane().add(cboUsuPerfil);
 
 		txtUsuFone = new JFormattedTextField();
@@ -131,12 +133,11 @@ public class TelaUsuarios extends JInternalFrame {
 
 		JFormattedTextField txtUsuFone = new JFormattedTextField(mascarafone);
 		getContentPane().add(txtUsuFone);
-		txtUsuFone.setBounds(74, 133, 145, 20);
-		setVisible(true);
+		txtUsuFone.setBounds(142, 139, 145, 20);
 
 		// metodo para adicionar usuários
-		JButton btnUsoCreate = new JButton("");
-		btnUsoCreate.addActionListener(new ActionListener() {
+		JButton btnUsuCreate = new JButton("");
+		btnUsuCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conexao = ConexaoDao.getConnection();
 				String sql = "insert into tbuser(iduser,user,login,password,perfil,phone) values(?,?,?,?,?,?)";
@@ -149,15 +150,16 @@ public class TelaUsuarios extends JInternalFrame {
 					pst.setString(5, cboUsuPerfil.getSelectedItem().toString());
 					pst.setString(6, txtUsuFone.getText());
 					// validação dos campos obrigatorios
-					if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (txtUsuLogin.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())) {
+					if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty())
+							|| (txtUsuLogin.getText().isEmpty()) || (txtUsuSenha.getText().isEmpty())) {
 						JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios!");
 					} else {
 
 						// a linha abaixo atualiza a tabela usuario com os dados do formulario
 						pst.executeUpdate();
-						JOptionPane.showMessageDialog(null, "Usuario adicionado com sucesso!", "Sucesso",
+						JOptionPane.showMessageDialog(null, "Usuário adicionado com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
-						LimparCamposUtil.limparCamposId(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
+						LimparCamposUtil.limparCamposUsId(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
 								cboUsuPerfil);
 					}
 				} catch (Exception erro) {
@@ -165,24 +167,46 @@ public class TelaUsuarios extends JInternalFrame {
 				}
 			}
 		});
-		btnUsoCreate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnUsoCreate.setToolTipText("Criar");
-		btnUsoCreate.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/create.png")));
-		btnUsoCreate.setPreferredSize(new Dimension(65, 65));
-		btnUsoCreate.setBounds(49, 236, 89, 73);
-		getContentPane().add(btnUsoCreate);
+		btnUsuCreate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnUsuCreate.setToolTipText("Criar");
+		btnUsuCreate.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/create.png")));
+		btnUsuCreate.setPreferredSize(new Dimension(65, 65));
+		btnUsuCreate.setBounds(117, 242, 89, 73);
+		getContentPane().add(btnUsuCreate);
 
-		JButton btnUsoDelete = new JButton("");
-		btnUsoDelete.setToolTipText("Apagar");
-		btnUsoDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnUsoDelete.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/delete.png")));
-		btnUsoDelete.setPreferredSize(new Dimension(65, 65));
-		btnUsoDelete.setBounds(346, 236, 89, 73);
-		getContentPane().add(btnUsoDelete);
+		// metodo para remover usuário
+		JButton btnUsuDelete = new JButton("");
+		btnUsuDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// estrutura abaixo confirma a remoção do usuario.
+				int remover = JOptionPane.showConfirmDialog(null, "tem certeza que deseja remover este usuário?",
+						"Atenção", JOptionPane.YES_NO_OPTION);
+				if (remover == JOptionPane.YES_OPTION) {
+					String sql = "delete from tbuser where iduser=?";
+					try {
+						pst = conexao.prepareStatement(sql);
+						pst.setString(1, txtUsuId.getText());
+						pst.executeUpdate();
+						LimparCamposUtil.limparCamposUsId(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
+								cboUsuPerfil);
+						JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
+					} catch (Exception erro) {
+						JOptionPane.showMessageDialog(null, erro);
+					}
+				}
+			}
+		});
+		btnUsuDelete.setToolTipText("Apagar");
+		btnUsuDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnUsuDelete.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/delete.png")));
+		btnUsuDelete.setPreferredSize(new Dimension(65, 65));
+		btnUsuDelete.setBounds(414, 242, 89, 73);
+		getContentPane().add(btnUsuDelete);
 
 		// metodo para consultar usuário
-		JButton btnUsoRead = new JButton("");
-		btnUsoRead.addActionListener(new ActionListener() {
+		JButton btnUsuRead = new JButton("");
+		btnUsuRead.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conexao = ConexaoDao.getConnection();
 				String sql = "select * from tbuser where  iduser = ?";
@@ -203,7 +227,7 @@ public class TelaUsuarios extends JInternalFrame {
 							// a linha abaixo se refere ao combobox
 							cboUsuPerfil.setSelectedItem(rs.getString(5));
 						} else {
-							JOptionPane.showMessageDialog(null, "Usuario não cadastrado!");
+							JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
 							// as linhas a baixo "limpa" os campos
 							LimparCamposUtil.limparCampos(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha);
 
@@ -216,22 +240,22 @@ public class TelaUsuarios extends JInternalFrame {
 			}
 		});
 
-		btnUsoRead.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnUsoRead.setToolTipText("Consultar");
-		btnUsoRead.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/read.png")));
-		btnUsoRead.setPreferredSize(new Dimension(65, 65));
-		btnUsoRead.setBounds(148, 236, 89, 73);
-		getContentPane().add(btnUsoRead);
+		btnUsuRead.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnUsuRead.setToolTipText("Consultar");
+		btnUsuRead.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/read.png")));
+		btnUsuRead.setPreferredSize(new Dimension(65, 65));
+		btnUsuRead.setBounds(216, 242, 89, 73);
+		getContentPane().add(btnUsuRead);
 
-		//criando o metodo para alterar dados do usuario
-		JButton btnUsoUpdate = new JButton("");
-		btnUsoUpdate.addActionListener(new ActionListener() {
+		// criando o metodo para alterar dados do usuario
+		JButton btnUsuUpdate = new JButton("");
+		btnUsuUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conexao = ConexaoDao.getConnection();
 				// sempre prestar muito atenção na seguencia para passagem dos paramentros
 				String sql = "update tbuser set user=?,login=?,password=?,perfil=?,phone=? where iduser=?";
 				try {
-					
+
 					pst = conexao.prepareStatement(sql);
 					pst.setString(1, txtUsuNome.getText());
 					pst.setString(2, txtUsuLogin.getText());
@@ -239,55 +263,56 @@ public class TelaUsuarios extends JInternalFrame {
 					pst.setString(4, cboUsuPerfil.getSelectedItem().toString());
 					pst.setString(5, txtUsuFone.getText());
 					pst.setString(6, txtUsuId.getText());
-					
-					if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (txtUsuLogin.getText().isEmpty())||(txtUsuSenha.getText().isEmpty())) {
+
+					if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty())
+							|| (txtUsuLogin.getText().isEmpty()) || (txtUsuSenha.getText().isEmpty())) {
 						JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios!");
-						
+
 					} else {
 						// a linha abaixo altera a tabela usuario com os dados do formulario
-							pst.executeUpdate();
-							JOptionPane.showMessageDialog(null, "Usuario alterado com sucesso!", "Sucesso",
-							JOptionPane.INFORMATION_MESSAGE);
-					}
-					
+						pst.executeUpdate();
+						LimparCamposUtil.limparCamposUsId(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha, txtUsuId, cboUsuPerfil);
+						JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
+						}
+
 				} catch (Exception erro) {
-						JOptionPane.showMessageDialog(null, erro);
-						//System.out.println(erro);
+					JOptionPane.showMessageDialog(null, erro);
+					// System.out.println(erro);
 				}
-				
+
 			}
 		});
-		btnUsoUpdate.setToolTipText("Atualizar");
-		btnUsoUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnUsoUpdate.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/update.png")));
-		btnUsoUpdate.setPreferredSize(new Dimension(65, 65));
-		btnUsoUpdate.setBounds(247, 236, 89, 73);
-		getContentPane().add(btnUsoUpdate);
-		setTitle("Cadastros / Usuários");
-		setSize(500, 430);
+		btnUsuUpdate.setToolTipText("Atualizar");
+		btnUsuUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnUsuUpdate.setIcon(new ImageIcon(TelaUsuarios.class.getResource("/br/com/infomaciel/icons/update.png")));
+		btnUsuUpdate.setPreferredSize(new Dimension(65, 65));
+		btnUsuUpdate.setBounds(315, 242, 89, 73);
+		getContentPane().add(btnUsuUpdate);
 
+		// colocando formato padrao no campo txtUsuFone
 		try {
 			MaskFormatter formatter = new MaskFormatter("(##)#####-####");
 			formatter.install(txtUsuFone);
 
 			JLabel lblNewLabel_6 = new JLabel("ADICIONAR");
-			lblNewLabel_6.setBounds(59, 307, 70, 14);
+			lblNewLabel_6.setBounds(127, 313, 70, 14);
 			getContentPane().add(lblNewLabel_6);
 
 			JLabel lblNewLabel_7 = new JLabel("BUSCAR");
-			lblNewLabel_7.setBounds(173, 307, 64, 14);
+			lblNewLabel_7.setBounds(241, 313, 64, 14);
 			getContentPane().add(lblNewLabel_7);
 
 			JLabel lblNewLabel_8 = new JLabel("EDITAR");
-			lblNewLabel_8.setBounds(274, 307, 46, 14);
+			lblNewLabel_8.setBounds(342, 313, 46, 14);
 			getContentPane().add(lblNewLabel_8);
 
-			JLabel lblNewLabel_9 = new JLabel("DELETAR");
-			lblNewLabel_9.setBounds(370, 307, 65, 14);
+			JLabel lblNewLabel_9 = new JLabel("REMOVER");
+			lblNewLabel_9.setBounds(438, 313, 65, 14);
 			getContentPane().add(lblNewLabel_9);
 
 			JLabel lblNewLabel_10 = new JLabel("* Campos obrigatorios!");
-			lblNewLabel_10.setBounds(318, 58, 134, 14);
+			lblNewLabel_10.setBounds(386, 64, 134, 14);
 			getContentPane().add(lblNewLabel_10);
 		} catch (ParseException e) {
 			e.printStackTrace();
