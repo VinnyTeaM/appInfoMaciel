@@ -90,7 +90,7 @@ public class TelaTrocaSenha extends JInternalFrame {
             }
         });
 
-        // Adicione um listener ao botão de confirmar
+        // Adicione uma ação ao botão de confirmar
         confirmarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	conexao = ConexaoDao.getConnection();
@@ -148,6 +148,5 @@ public class TelaTrocaSenha extends JInternalFrame {
             }
         });
 
-        // ...
     }
 } 
