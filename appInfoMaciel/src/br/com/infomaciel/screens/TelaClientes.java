@@ -69,7 +69,7 @@ public class TelaClientes extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaClientes() {
-		setTitle("\t\t\t\t\t                                                                    \t\t\tClientes / Cadastros");
+		setTitle("Clientes / Cadastros");
 		getContentPane().setPreferredSize(new Dimension(80, 80));
 		setMaximizable(true);
 		setIconifiable(true);
