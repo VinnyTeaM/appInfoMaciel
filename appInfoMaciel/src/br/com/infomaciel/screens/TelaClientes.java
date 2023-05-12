@@ -28,6 +28,8 @@ import javax.swing.text.MaskFormatter;
 
 import br.com.infomaciel.dal.ConexaoDao;
 import net.proteanit.sql.DbUtils;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaClientes extends JInternalFrame {
 
@@ -45,6 +47,7 @@ public class TelaClientes extends JInternalFrame {
 	private JTextField txtCliEmail;
 	private JTextField txtCliPesquisar;
 	private JTable tblClientes;
+	private JTextField txtCliId;
 
 	/**
 	 * Launch the application.
@@ -66,7 +69,7 @@ public class TelaClientes extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaClientes() {
-		setTitle("Clientes / Cadastros");
+		setTitle("\t\t\t\t\t                                                                    \t\t\tClientes / Cadastros");
 		getContentPane().setPreferredSize(new Dimension(80, 80));
 		setMaximizable(true);
 		setIconifiable(true);
@@ -75,19 +78,19 @@ public class TelaClientes extends JInternalFrame {
 		getContentPane().setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("* NOME");
-		lblNewLabel.setBounds(10, 103, 46, 14);
+		lblNewLabel.setBounds(10, 145, 46, 14);
 		getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("  ENDEREÇO");
-		lblNewLabel_1.setBounds(10, 137, 68, 14);
+		lblNewLabel_1.setBounds(10, 179, 68, 14);
 		getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("* FONE");
-		lblNewLabel_2.setBounds(10, 174, 46, 14);
+		lblNewLabel_2.setBounds(10, 216, 46, 14);
 		getContentPane().add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("  EMAIL");
-		lblNewLabel_3.setBounds(10, 213, 55, 14);
+		lblNewLabel_3.setBounds(10, 255, 55, 14);
 		getContentPane().add(lblNewLabel_3);
 
 		JLabel lblNewLabel_4 = new JLabel("* Campos obrigatorios!");
@@ -95,12 +98,12 @@ public class TelaClientes extends JInternalFrame {
 		getContentPane().add(lblNewLabel_4);
 
 		txtCliNome = new JTextField();
-		txtCliNome.setBounds(80, 100, 502, 20);
+		txtCliNome.setBounds(80, 142, 502, 20);
 		getContentPane().add(txtCliNome);
 		txtCliNome.setColumns(10);
 
 		txtCliEnd = new JTextField();
-		txtCliEnd.setBounds(80, 134, 502, 20);
+		txtCliEnd.setBounds(80, 176, 502, 20);
 		getContentPane().add(txtCliEnd);
 		txtCliEnd.setColumns(10);
 
@@ -116,17 +119,11 @@ public class TelaClientes extends JInternalFrame {
 
 		JFormattedTextField txtCliFone = new JFormattedTextField(mascarafone);
 		getContentPane().add(txtCliFone);
-		txtCliFone.setBounds(80, 171, 145, 20);
+		txtCliFone.setBounds(80, 213, 145, 20);
 
-		/*
-		 * txtCliFone = new JTextField(); txtCliFone.setSelectionStart(1);
-		 * txtCliFone.setSelectionEnd(1); txtCliFone.setPreferredSize(new Dimension(52,
-		 * 20)); txtCliFone.setBounds(80, 171, 149, 20);
-		 * getContentPane().add(txtCliFone); txtCliFone.setColumns(10);
-		 */
 
 		txtCliEmail = new JTextField();
-		txtCliEmail.setBounds(80, 210, 378, 20);
+		txtCliEmail.setBounds(80, 252, 378, 20);
 		getContentPane().add(txtCliEmail);
 		txtCliEmail.setColumns(10);
 
@@ -164,29 +161,61 @@ public class TelaClientes extends JInternalFrame {
 			}
 		});
 		btnCliCreate.setIcon(new ImageIcon(TelaClientes.class.getResource("/br/com/infomaciel/icons/create.png")));
-		btnCliCreate.setBounds(141, 254, 78, 66);
+		btnCliCreate.setBounds(141, 296, 78, 66);
 		getContentPane().add(btnCliCreate);
 
+		// metodo para alterar cliente
 		JButton btnCliUpdate = new JButton("");
+		btnCliUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				conexao = ConexaoDao.getConnection();
+				int setar = tblClientes.getSelectedRow();
+				// sempre prestar muito atenção na seguencia para passagem dos paramentros
+				String sql = "UPDATE tbclient SET namecli=?,addcli=?,phonecli=?,emailcli=? WHERE idcli=?";
+				try {
+
+					pst = conexao.prepareStatement(sql);
+					pst.setString(1, txtCliNome.getText());
+					pst.setString(2, txtCliEnd.getText());
+					pst.setString(3, txtCliFone.getText());
+					pst.setString(4, txtCliEmail.getText());
+					pst.setString(5, txtCliId.getText());
+
+					String texto = txtCliFone.getText().trim();
+					String textoVazio = "(  )     -";
+					if ((txtCliNome.getText().isEmpty()) || (texto.equals(textoVazio))) {
+						JOptionPane.showMessageDialog(null, "Preecher todos os campos obrigatorios!");
+					} else {
+						pst.executeUpdate();
+						LimparCamposUtil.limparCamposCl(txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
+						JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");
+					}
+
+				} catch (Exception erro) {
+					JOptionPane.showMessageDialog(null, erro);
+					// System.out.println(erro);
+				}
+			}
+		});
 		btnCliUpdate.setIcon(new ImageIcon(TelaClientes.class.getResource("/br/com/infomaciel/icons/update.png")));
-		btnCliUpdate.setBounds(260, 254, 89, 66);
+		btnCliUpdate.setBounds(260, 296, 89, 66);
 		getContentPane().add(btnCliUpdate);
 
 		JButton btnCliDelete = new JButton("");
 		btnCliDelete.setIcon(new ImageIcon(TelaClientes.class.getResource("/br/com/infomaciel/icons/delete.png")));
-		btnCliDelete.setBounds(383, 254, 89, 66);
+		btnCliDelete.setBounds(383, 296, 89, 66);
 		getContentPane().add(btnCliDelete);
 
 		JLabel lblNewLabel_5 = new JLabel("ADICIONAR");
-		lblNewLabel_5.setBounds(151, 321, 68, 14);
+		lblNewLabel_5.setBounds(151, 363, 68, 14);
 		getContentPane().add(lblNewLabel_5);
 
 		JLabel lblNewLabel_6 = new JLabel("EDITAR");
-		lblNewLabel_6.setBounds(282, 321, 46, 14);
+		lblNewLabel_6.setBounds(282, 363, 46, 14);
 		getContentPane().add(lblNewLabel_6);
 
 		JLabel lblNewLabel_7 = new JLabel("REMOVER");
-		lblNewLabel_7.setBounds(405, 321, 67, 14);
+		lblNewLabel_7.setBounds(405, 363, 67, 14);
 		getContentPane().add(lblNewLabel_7);
 
 		txtCliPesquisar = new JTextField();
@@ -194,7 +223,7 @@ public class TelaClientes extends JInternalFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				conexao = ConexaoDao.getConnection();
-				String sql = "SELECT * FROM `tbclient` where namecli like  ?";
+				String sql = "SELECT * FROM `tbclient` WHERE namecli LIKE  ?";
 				try {
 					pst = conexao.prepareStatement(sql);
 					// passando o conteudo de pesquisa para o ?
@@ -218,7 +247,19 @@ public class TelaClientes extends JInternalFrame {
 		lblNewLabel_8.setBounds(322, 0, 32, 37);
 		getContentPane().add(lblNewLabel_8);
 
+		// evento usado para setar os campos na tabela (com click do mouse)
 		tblClientes = new JTable();
+		tblClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int setar = tblClientes.getSelectedRow();
+				txtCliId.setText(tblClientes.getModel().getValueAt(setar, 0).toString());
+				txtCliNome.setText(tblClientes.getModel().getValueAt(setar, 1).toString());
+				txtCliEnd.setText(tblClientes.getModel().getValueAt(setar, 2).toString());
+				txtCliFone.setText(tblClientes.getModel().getValueAt(setar, 3).toString());
+				txtCliEmail.setText(tblClientes.getModel().getValueAt(setar, 4).toString());
+			}
+		});
 		tblClientes.setAutoCreateRowSorter(true);
 		tblClientes.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tblClientes.setFillsViewportHeight(true);
@@ -233,7 +274,16 @@ public class TelaClientes extends JInternalFrame {
 
 		// Adicionar o JScrollPane ao conteúdo do contêiner ou painel adequado
 		getContentPane().add(scrollPane);
+		
+		txtCliId = new JTextField();
+		txtCliId.setEnabled(false);
+		txtCliId.setBounds(79, 111, 86, 20);
+		getContentPane().add(txtCliId);
+		txtCliId.setColumns(10);
+		
+		JLabel lblNewLabel_9 = new JLabel("  Id Cliente");
+		lblNewLabel_9.setBounds(10, 114, 68, 14);
+		getContentPane().add(lblNewLabel_9);
 
 	}
-
 }

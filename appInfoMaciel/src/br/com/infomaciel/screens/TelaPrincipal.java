@@ -62,7 +62,7 @@ public class TelaPrincipal extends JFrame {
 		setResizable(false);
 		setTitle("-*Informática Maciel*- TELA PRINCIPAL");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 859, 506);
+		setBounds(100, 100, 845, 506);
 		contentPane = new JPanel();
 		contentPane.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.setForeground(Color.YELLOW);
@@ -83,12 +83,12 @@ public class TelaPrincipal extends JFrame {
 		menCad.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menu.add(menCad);
 
-		JMenuItem menCadCli = new JMenuItem("Clientes");
+		JMenuItem menCadCli = new JMenuItem("Cliente");
 		menCadCli.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaClientes cliente = new TelaClientes();
-				cliente.setVisible(true);
-				desktop.add(cliente);
+				TelaClientes clientes = new TelaClientes();
+				clientes.setVisible(true);
+				desktop.add(clientes);
 			}
 		});
 		menCadCli.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -176,24 +176,24 @@ public class TelaPrincipal extends JFrame {
 		desktop = new JDesktopPane();
 		desktop.setLocation(0, 22);
 		desktop.setBackground(new Color(102, 102, 255));
-		desktop.setSize(608, 430);
+		desktop.setSize(600, 430);
 		contentPane.add(desktop);
 		desktop.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel
 				.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/br/com/infomaciel/icons/telaprincipal.png")));
-		lblNewLabel.setBounds(604, 220, 215, 232);
+		lblNewLabel.setBounds(600, 208, 215, 232);
 		contentPane.add(lblNewLabel);
 
 		lblUsuario = new JLabel("\t\tUsuário");
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblUsuario.setBounds(618, 106, 215, 22);
+		lblUsuario.setBounds(614, 94, 215, 22);
 		contentPane.add(lblUsuario);
 
 		JLabel lblData = new JLabel("");
 		lblData.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblData.setBounds(618, 150, 215, 22);
+		lblData.setBounds(614, 138, 215, 22);
 		contentPane.add(lblData);
 
 		// atualiza a data e hora do sistema a cada 1 segundo

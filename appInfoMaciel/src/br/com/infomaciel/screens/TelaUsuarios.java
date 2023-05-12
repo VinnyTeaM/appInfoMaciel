@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.ParseException;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,7 +36,7 @@ public class TelaUsuarios extends JInternalFrame {
 	PreparedStatement pst = null;
 	ResultSet rs = null;
 
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 3L;
 	private JTextField txtUsuId;
 	private JTextField txtUsuSenha;
 	private JTextField txtUsuLogin;
@@ -64,7 +63,7 @@ public class TelaUsuarios extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaUsuarios() {
-		setTitle("Usuários / Cadastros");
+		setTitle("\t\t\t\t\t                                                                    \t\t\t         Usuários / Cadastros");
 		setSize(608, 430);
 		setClosable(true);
 		setMaximizable(true);

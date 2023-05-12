@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
@@ -19,9 +20,18 @@ import javax.swing.JTextField;
 import br.com.infomaciel.dal.ConexaoDao;
 
 public class TelaTrocaSenha extends JInternalFrame {
-    /**
-	 * 
-	 */
+   
+	// usando a variavel conexao do DAL
+		Connection conexao = null;
+		/*
+		 * criando variaveis especiais para conexao com o banco PreparedStatement e
+		 * ResultSet são frameworks do pacote java.sql* e servem para preparar e
+		 * executar as intruções sql
+		 */
+
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+	
 	private static final long serialVersionUID = 2L;
 	private JLabel usuarioLabel;
     private JLabel senhaLabel;
@@ -83,7 +93,9 @@ public class TelaTrocaSenha extends JInternalFrame {
         // Adicione um listener ao botão de confirmar
         confirmarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String usuario = usuarioField.getText();
+            	conexao = ConexaoDao.getConnection();
+                
+            	String usuario = usuarioField.getText();
                 String senhaAntiga = new String(senhaField.getPassword());
                 String novaSenha = new String(novaSenhaField.getPassword());
                 String repetirNovaSenha = new String(repetirNovaSenhaField.getPassword());
@@ -102,20 +114,20 @@ public class TelaTrocaSenha extends JInternalFrame {
                 }
 
                 try {
-                    Connection conn = ConexaoDao.getConnection();
-                    PreparedStatement stmt = conn.prepareStatement(
+                     conexao = ConexaoDao.getConnection();
+                    PreparedStatement pst = conexao.prepareStatement(
                         "SELECT * FROM tbuser WHERE login = ? AND password = ?");
-                    stmt.setString(1, usuario);
-                    stmt.setString(2, senhaAntiga);
-                    ResultSet rs = stmt.executeQuery();
+                    pst.setString(1, usuario);
+                    pst.setString(2, senhaAntiga);
+                    ResultSet rs = pst.executeQuery();
 
                     if (rs.next()) {
                         // Atualiza a senha na tabela tbuser
-                        PreparedStatement updateStmt = conn.prepareStatement(
+                        PreparedStatement updatepst = conexao.prepareStatement(
                             "UPDATE tbuser SET password = ? WHERE login = ?");
-                        updateStmt.setString(1, novaSenha);
-                        updateStmt.setString(2, usuario);
-                        updateStmt.executeUpdate();
+                        updatepst.setString(1, novaSenha);
+                        updatepst.setString(2, usuario);
+                        updatepst.executeUpdate();
 
                         JOptionPane.showMessageDialog(null,
                             "Senha alterada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -126,8 +138,8 @@ public class TelaTrocaSenha extends JInternalFrame {
                     }
 
                     rs.close();
-                    stmt.close();
-                    conn.close();
+                    pst.close();
+                    conexao.close();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null,
                         "Erro ao acessar o banco de dados:\n" + ex.getMessage(),
