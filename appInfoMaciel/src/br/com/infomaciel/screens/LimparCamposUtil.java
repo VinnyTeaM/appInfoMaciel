@@ -26,4 +26,10 @@ public class LimparCamposUtil {
 			JTextField txtCliEmail) {
 		limparCampos(txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
 	}
+		
+	public static void limparCamposClId(JTextField txtCliPesquisar,JTextField txtCliId, JTextField txtCliNome, JTextField txtCliEnd, JTextField txtCliFone,
+				JTextField txtCliEmail) {
+			limparCampos(txtCliPesquisar, txtCliId, txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
+	}
+	
 }

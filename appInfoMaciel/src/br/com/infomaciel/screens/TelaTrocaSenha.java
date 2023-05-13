@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
@@ -44,20 +43,26 @@ public class TelaTrocaSenha extends JInternalFrame {
     private JCheckBox visualizarSenhaCheckbox;
     private JButton confirmarButton;
     private JButton cancelarButton;
+    
+    String nomeUsuario = TelaPrincipal.getNomeUsuario();
+    String perfil = TelaLogin.getPerfil();
+    
 
     public TelaTrocaSenha() {
         // Defina o título, tamanho e layout do JInternalFrame
-        super("Opções / Trocar Senha", false, true, true, true);
+        super("Mudar Senha / Opções", false, true, true, true);
         setSize(400, 300);
         getContentPane().setLayout(new GridLayout(6, 2));
        
-
+       System.out.println(perfil);
         // Inicialize os campos de texto, senhas, botões e checkbox
         usuarioLabel = new JLabel("Usuário:");
         senhaLabel = new JLabel("Senha:");
         novaSenhaLabel = new JLabel("Nova senha:");
         repetirNovaSenhaLabel = new JLabel("Repetir nova senha:");
         usuarioField = new JTextField();
+        usuarioField.setEditable(true);
+        usuarioField.setEnabled(true);
         senhaField = new JPasswordField();
         novaSenhaField = new JPasswordField();
         repetirNovaSenhaField = new JPasswordField();
@@ -78,6 +83,7 @@ public class TelaTrocaSenha extends JInternalFrame {
         getContentPane().add(new JLabel()); // espaço em branco
         getContentPane().add(confirmarButton);
         getContentPane().add(cancelarButton);
+       
         
         visualizarSenhaCheckbox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -90,7 +96,7 @@ public class TelaTrocaSenha extends JInternalFrame {
             }
         });
 
-        // Adicione uma ação ao botão de confirmar
+        // metodo para botão de confirmar trocar senha
         confirmarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	conexao = ConexaoDao.getConnection();
@@ -104,12 +110,12 @@ public class TelaTrocaSenha extends JInternalFrame {
                 if (usuario.isEmpty() || senhaAntiga.isEmpty() ||
                         novaSenha.isEmpty() || repetirNovaSenha.isEmpty()) {
                     JOptionPane.showMessageDialog(null,
-                        "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        "Preencha todos os campos!", "Atenção", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (!novaSenha.equals(repetirNovaSenha)) {
                     JOptionPane.showMessageDialog(null,
-                        "As senhas não coincidem!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        "As senhas não coincidem!", "Atenção", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -117,6 +123,7 @@ public class TelaTrocaSenha extends JInternalFrame {
                      conexao = ConexaoDao.getConnection();
                     PreparedStatement pst = conexao.prepareStatement(
                         "SELECT * FROM tbuser WHERE login = ? AND password = ?");
+                    
                     pst.setString(1, usuario);
                     pst.setString(2, senhaAntiga);
                     ResultSet rs = pst.executeQuery();

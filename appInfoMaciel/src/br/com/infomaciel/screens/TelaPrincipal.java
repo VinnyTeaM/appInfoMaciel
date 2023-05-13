@@ -76,7 +76,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JMenuBar menu = new JMenuBar();
 		menu.setForeground(Color.BLUE);
-		menu.setBounds(0, 0, 722, 22);
+		menu.setBounds(0, 0, 829, 22);
 		contentPane.add(menu);
 
 		JMenu menCad = new JMenu("Cadastros");
@@ -217,7 +217,7 @@ public class TelaPrincipal extends JFrame {
 		return menRel;
 	}
 
-	public JLabel getLblUsuario() {
-		return lblUsuario;
+	public static String getNomeUsuario() {
+		return lblUsuario.getText();
 	}
 }

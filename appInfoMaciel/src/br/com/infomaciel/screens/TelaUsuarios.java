@@ -64,7 +64,7 @@ public class TelaUsuarios extends JInternalFrame {
 	 */
 	public TelaUsuarios() {
 		setTitle(
-				"\t\t\t\t\t                                                                    \t\t\t         Usuários / Cadastros");
+				"Usuários / Cadastros");
 		setSize(608, 430);
 		setClosable(true);
 		setMaximizable(true);

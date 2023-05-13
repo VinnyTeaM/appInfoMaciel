@@ -38,6 +38,11 @@ public class TelaLogin extends JFrame implements ActionListener {
 	private JPasswordField campoSenha;
 	private JButton botaoLogin;
 	private JLabel lblStatus;
+	private String perfil;
+
+	public static String getPerfil() {
+		return null;
+	}
 
 	public TelaLogin() {
 		super("Tela de Login");
@@ -48,7 +53,6 @@ public class TelaLogin extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		ImageIcon icone = new ImageIcon(getClass().getResource("/br/com/infomaciel/icons/login.png"));
 		setIconImage(icone.getImage());
-
 		labelUsuario = new JLabel("Usuário:");
 		labelUsuario.setForeground(Color.BLUE);
 		campoUsuario = new JTextField(20);
@@ -112,7 +116,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 					String senhaArmazenada = resultado.getString("password");
 					if (senha.equals(senhaArmazenada)) {
 						// a linha abaixo obtem o conteudo do campo perfil na tabela tbuser
-						String perfil = resultado.getString(5);
+						perfil = resultado.getString(5);
 
 						// System.out.println(perfil);
 						// estrutura abaixo faz o tratamento do perfil do usuario
