@@ -94,12 +94,21 @@ public class TelaPrincipal extends JFrame {
 		menCadCli.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menCadCli.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK));
 		menCad.add(menCadCli);
-
+		
+		//botao chama tela OS
 		JMenuItem menCadOs = new JMenuItem("OS");
+		menCadOs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaOs os = new TelaOs();
+				os.setVisible(true);
+				desktop.add(os);
+			}
+		});
 		menCadOs.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menCadOs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.ALT_DOWN_MASK));
 		menCad.add(menCadOs);
 
+		//botao chama tela Usuários
 		menCadUsu = new JMenuItem("Usuários");
 		menCadUsu.addActionListener(new ActionListener() {
 			// abrir o form TelaUsuario dentro desktop pane
