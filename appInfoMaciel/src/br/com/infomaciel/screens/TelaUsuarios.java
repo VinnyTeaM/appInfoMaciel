@@ -117,7 +117,7 @@ public class TelaUsuarios extends JInternalFrame {
 		getContentPane().add(txtUsuSenha);
 
 		JComboBox<String> cboUsuPerfil = new JComboBox<>();
-		cboUsuPerfil.setModel(new DefaultComboBoxModel(new String[] { "", "usuario", "tecnico", "admin" }));
+		cboUsuPerfil.setModel(new DefaultComboBoxModel<String>(new String[] { "", "usuario", "tecnico", "admin" }));
 		cboUsuPerfil.setBounds(142, 56, 77, 22);
 		getContentPane().add(cboUsuPerfil);
 

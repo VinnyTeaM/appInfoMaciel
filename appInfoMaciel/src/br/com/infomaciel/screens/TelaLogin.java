@@ -34,9 +34,9 @@ public class TelaLogin extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 2L;
 	private JLabel labelUsuario, labelSenha;
-	private JTextField campoUsuario;
-	private JPasswordField campoSenha;
-	private JButton botaoLogin;
+	private JTextField txtUsuario;
+	private JPasswordField txtSenha;
+	private JButton btnLogin;
 	private JLabel lblStatus;
 	private String perfil;
 
@@ -51,34 +51,37 @@ public class TelaLogin extends JFrame implements ActionListener {
 		setSize(400, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		getRootPane().setDefaultButton(btnLogin);
 		ImageIcon icone = new ImageIcon(getClass().getResource("/br/com/infomaciel/icons/login.png"));
 		setIconImage(icone.getImage());
 		labelUsuario = new JLabel("Usuário:");
 		labelUsuario.setForeground(Color.BLUE);
-		campoUsuario = new JTextField(20);
-		campoUsuario.setForeground(Color.BLUE);
+		txtUsuario = new JTextField(20);
+		txtUsuario.setForeground(Color.BLUE);
 		labelSenha = new JLabel("Senha:");
 		labelSenha.setForeground(Color.BLUE);
-		campoSenha = new JPasswordField(20);
-		campoSenha.setForeground(Color.BLUE);
-		botaoLogin = new JButton("Login");
-		botaoLogin.setForeground(Color.BLUE);
-		botaoLogin.addActionListener(this);
+		txtSenha = new JPasswordField(20);
+		txtSenha.setForeground(Color.BLUE);
+		btnLogin = new JButton("Login");
+		btnLogin.setForeground(Color.BLUE);
+		btnLogin.addActionListener(this);
 
 		JPanel painelPrincipal = new JPanel(new GridLayout(3, 2, 5, 5));
 		painelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		painelPrincipal.add(labelUsuario);
-		painelPrincipal.add(campoUsuario);
+		painelPrincipal.add(txtUsuario);
 		painelPrincipal.add(labelSenha);
-		painelPrincipal.add(campoSenha);
-
+		painelPrincipal.add(txtSenha);
+		
 		lblStatus = new JLabel("");
 		painelPrincipal.add(lblStatus);
-		painelPrincipal.add(botaoLogin);
-
+		painelPrincipal.add(btnLogin);
 		getContentPane().add(painelPrincipal);
+		
+		getRootPane().setDefaultButton(btnLogin);
 
 		setVisible(true);
+
 	}
 	/*
 	 * aqui ve condição assim que abrir tela de login try (Connection conexao =
@@ -95,10 +98,10 @@ public class TelaLogin extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == botaoLogin) {
-			String usuario = campoUsuario.getText();
-			String senha = new String(campoSenha.getPassword());
-
+		if (e.getSource() == btnLogin) {
+			String usuario = txtUsuario.getText();
+			String senha = new String(txtSenha.getPassword());
+			
 			try (Connection conexao = ConexaoDao.getConnection()) {
 
 				// aqui ve a condição apos acionar botao login
@@ -143,14 +146,14 @@ public class TelaLogin extends JFrame implements ActionListener {
 
 					} else {
 						JOptionPane.showMessageDialog(this, "Senha incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
-						campoSenha.setText("");
-						campoSenha.requestFocus();
+						txtSenha.setText("");
+						txtSenha.requestFocus();
 					}
 				} else {
 					JOptionPane.showMessageDialog(this, "Usuário não encontrado!", "Erro", JOptionPane.ERROR_MESSAGE);
-					campoUsuario.setText("");
-					campoSenha.setText("");
-					campoUsuario.requestFocus();
+					txtUsuario.setText("");
+					txtSenha.setText("");
+					txtUsuario.requestFocus();
 				}
 			} catch (SQLException ex) {
 				JOptionPane.showMessageDialog(this, "Erro ao conectar ao banco de dados.", "Erro",
@@ -165,6 +168,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		new TelaLogin();
+		
 	}
 	
 	

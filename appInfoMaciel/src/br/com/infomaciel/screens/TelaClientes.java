@@ -1,5 +1,6 @@
 package br.com.infomaciel.screens;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -127,6 +128,7 @@ public class TelaClientes extends JInternalFrame {
 
 		// metodo para adicionar clientes
 		JButton btnCliCreate = new JButton("");
+		btnCliCreate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCliCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conexao = ConexaoDao.getConnection();
@@ -165,10 +167,10 @@ public class TelaClientes extends JInternalFrame {
 
 		// metodo para alterar cliente
 		JButton btnCliUpdate = new JButton("");
+		btnCliUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCliUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conexao = ConexaoDao.getConnection();
-				int setar = tblClientes.getSelectedRow();
 				// sempre prestar muito atenção na seguencia para passagem dos paramentros
 				String sql = "UPDATE tbclient SET namecli=?,addcli=?,phonecli=?,emailcli=? WHERE idcli=?";
 				try {
@@ -204,6 +206,7 @@ public class TelaClientes extends JInternalFrame {
 
 		// metodo para remover clientes
 		JButton btnCliDelete = new JButton("");
+		btnCliDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCliDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int remover = JOptionPane.showConfirmDialog(null, "tem certeza que deseja remover este cliente?",

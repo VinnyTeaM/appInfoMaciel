@@ -227,6 +227,6 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	public static String getNomeUsuario() {
-		return lblUsuario.getText();
+		return lblUsuario.getText().toString();
 	}
 }

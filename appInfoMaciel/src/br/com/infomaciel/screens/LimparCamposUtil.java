@@ -32,4 +32,8 @@ public class LimparCamposUtil {
 			limparCampos(txtCliPesquisar, txtCliId, txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
 	}
 	
+	public static void limparCamposOs(JTextField txtCliId,JTextField txtOsEquip, JTextField txtOsDef, JTextField txtOsServ, JTextField txtOsTec, JTextField txtOsValor) {
+		limparCampos(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec, txtOsEquip, txtOsValor);
+}
+	
 }
