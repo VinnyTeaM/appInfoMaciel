@@ -31,8 +31,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import com.mysql.cj.protocol.Resultset;
-
 import br.com.infomaciel.dal.ConexaoDao;
 import net.proteanit.sql.DbUtils;
 
@@ -40,7 +38,7 @@ public class TelaOs extends JInternalFrame {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1223643524871083895L;
+	private static final long serialVersionUID = 1L;
 	Connection conexao = null;
 	PreparedStatement pst = null;
 	ResultSet rs = null;
@@ -58,6 +56,11 @@ public class TelaOs extends JInternalFrame {
 	private JTextField txtOsValor;
 	private String numOs;
 	String perfil = TelaLogin.getPerfil();
+	private JButton btnOsUpdate;
+	private JButton btnOsDelete;
+	private JButton btnOsPrint;
+	private JButton btnOsRead;
+	private JButton btnOsCreate;
 
 	/**
 	 * Launch the application.
@@ -144,7 +147,7 @@ public class TelaOs extends JInternalFrame {
 
 		JComboBox<String> cboOsSit = new JComboBox<>();
 		cboOsSit.setModel(new DefaultComboBoxModel(
-				new String[] { "Na bancada", "Entrega OK", "Orçamento REPROVADO", "Orçamento APROVADO",
+				new String[] { " ", "Na bancada", "Entrega OK", "Orçamento REPROVADO", "Orçamento APROVADO",
 						"Aguardando aprovação", "Aguardando peças", "Abandonado pelo cliente", "Retornou" }));
 		cboOsSit.setBounds(66, 114, 185, 22);
 		getContentPane().add(cboOsSit);
@@ -169,9 +172,12 @@ public class TelaOs extends JInternalFrame {
 					// passando o conteudo de pesquisa para o ?
 					// atenção ao "%" continuação da string sql
 					pst.setString(1, txtCliPesquisar.getText() + "%");
-					rs = (Resultset) pst.executeQuery();
+					rs = (ResultSet) pst.executeQuery();
 					// a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela.
 					tblClientes.setModel(DbUtils.resultSetToTableModel((ResultSet) rs));
+					LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec, txtOsValor,
+							txtCliPesquisar);
+					txtOsValor.setText("0");
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, e2);
 				}
@@ -287,7 +293,8 @@ public class TelaOs extends JInternalFrame {
 		txtOsValor.setBounds(374, 245, 200, 20);
 		getContentPane().add(txtOsValor);
 
-		JButton btnOsCreate = new JButton("");
+		// metodo para adicionar OS
+		btnOsCreate = new JButton("");
 		btnOsCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String sql = "INSERT INTO tbos (type,situation,equipment,defect,service,tech,price,idcli) VALUES (?,?,?,?,?,?,?,?)";
@@ -304,15 +311,22 @@ public class TelaOs extends JInternalFrame {
 					pst.setString(8, txtCliId.getText());
 
 					if ((txtCliId.getText().isEmpty()) || (txtOsEquip.getText().isEmpty())
-							|| (txtOsDef.getText().isEmpty())) {
+							|| (txtOsDef.getText().isEmpty()) || (cboOsSit.getSelectedItem().equals(" "))) {
 						JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatorios!!");
 
 					} else {
 						int adicionado = pst.executeUpdate();
 						if (adicionado > 0) {
 							JOptionPane.showMessageDialog(null, "OS adicionada com sucesso!!");
+							btnOsCreate.setEnabled(false);
+							btnOsRead.setEnabled(false);
+							btnOsPrint.setEnabled(true);
+
 							LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec,
-									txtOsValor);
+									txtOsValor, txtCliPesquisar);
+							((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
+							cboOsSit.setSelectedItem(" ");
+
 						}
 					}
 
@@ -328,7 +342,7 @@ public class TelaOs extends JInternalFrame {
 		getContentPane().add(btnOsCreate);
 
 		// Metodo pesquisar OS
-		JButton btnOsRead = new JButton("");
+		btnOsRead = new JButton("");
 		btnOsRead.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				numOs = JOptionPane.showInputDialog("Número da OS");
@@ -361,8 +375,14 @@ public class TelaOs extends JInternalFrame {
 						txtCliId.setText(rs.getString(10));
 						// evitando problemas
 						btnOsCreate.setEnabled(false);
+						btnOsRead.setEnabled(false);
 						txtCliPesquisar.setEnabled(false);
 						tblClientes.setVisible(false);
+						// botoes habilitados
+						btnOsUpdate.setEnabled(true);
+						btnOsDelete.setEnabled(true);
+						btnOsPrint.setEnabled(true);
+
 					} else {
 						JOptionPane.showMessageDialog(null, "Os não cadastrada");
 					}
@@ -382,7 +402,8 @@ public class TelaOs extends JInternalFrame {
 		getContentPane().add(btnOsRead);
 
 		// metodo para alterar OS
-		JButton btnOsUpdate = new JButton("");
+		btnOsUpdate = new JButton("");
+		btnOsUpdate.setEnabled(false);
 		btnOsUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String sql = "UPDATE tbos SET type = ?, situation = ?, equipment = ?, defect = ?, service = ?, tech = ?, price = ? WHERE os = ?";
@@ -399,7 +420,7 @@ public class TelaOs extends JInternalFrame {
 					pst.setString(8, txtOs.getText());
 
 					if ((txtCliId.getText().isEmpty()) || (txtOsEquip.getText().isEmpty())
-							|| (txtOsDef.getText().isEmpty())) {
+							|| (txtOsDef.getText().isEmpty()) || (cboOsSit.getSelectedItem().equals(" "))) {
 						JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatorios!!");
 
 					} else {
@@ -407,13 +428,18 @@ public class TelaOs extends JInternalFrame {
 						if (adicionado > 0) {
 							JOptionPane.showMessageDialog(null, "OS alterada com sucesso!!");
 							LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec,
-									txtOsValor);
+									txtOsValor, txtCliPesquisar);
+							cboOsSit.setSelectedItem(" ");
 							txtOs.setText(null);
 							txtData.setText(null);
-							// habilitar os objetos
+							// gerenciando botoes
 							btnOsCreate.setEnabled(true);
+							btnOsRead.setEnabled(true);
 							txtCliPesquisar.setEnabled(true);
 							tblClientes.setVisible(true);
+							btnOsUpdate.setEnabled(false);
+							btnOsDelete.setEnabled(false);
+							btnOsPrint.setEnabled(false);
 
 						}
 					}
@@ -429,7 +455,9 @@ public class TelaOs extends JInternalFrame {
 		btnOsUpdate.setBounds(251, 297, 89, 75);
 		getContentPane().add(btnOsUpdate);
 
-		JButton btnOsDelete = new JButton();
+		// metodo para apenas usuario perfil admin deletar OS
+		btnOsDelete = new JButton();
+		btnOsDelete.setEnabled(false);
 		btnOsDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover esta OS?", "Atenção",
@@ -449,15 +477,18 @@ public class TelaOs extends JInternalFrame {
 						if (apagado > 0) {
 
 							JOptionPane.showMessageDialog(null, "OS removida com sucesso!!");
-							System.out.println();
-							LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec,
-									txtOsValor);
+							LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec, txtOsValor, txtCliPesquisar);
+							cboOsSit.setSelectedItem(" ");
 							txtOs.setText(null);
 							txtData.setText(null);
 							// habilitar os objetos
 							btnOsCreate.setEnabled(true);
+							btnOsRead.setEnabled(true);
 							txtCliPesquisar.setEnabled(true);
 							tblClientes.setVisible(true);
+							btnOsUpdate.setEnabled(false);
+							btnOsDelete.setEnabled(false);
+							btnOsPrint.setEnabled(false);
 						}
 
 					} catch (java.sql.SQLException e2) {
@@ -471,7 +502,8 @@ public class TelaOs extends JInternalFrame {
 		btnOsDelete.setBounds(357, 297, 89, 75);
 		getContentPane().add(btnOsDelete);
 
-		JButton btnOsPrint = new JButton("");
+		btnOsPrint = new JButton("");
+		btnOsPrint.setEnabled(false);
 		btnOsPrint.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOsPrint.setIcon(new ImageIcon(TelaOs.class.getResource("/br/com/infomaciel/icons/print.png")));
 		btnOsPrint.setBounds(456, 297, 89, 75);
@@ -500,7 +532,23 @@ public class TelaOs extends JInternalFrame {
 
 	}
 
+	public JButton getBtnOsUpdate() {
+		return btnOsUpdate;
+	}
+
 	public JButton getBtnOsDelete() {
 		return btnOsDelete;
+	}
+
+	public JButton getBtnOsPrint() {
+		return btnOsPrint;
+	}
+
+	public JButton getBtnOsCreate() {
+		return btnOsCreate;
+	}
+
+	public JButton getBtnOsRead() {
+		return btnOsRead;
 	}
 }

@@ -36,7 +36,7 @@ public class TelaUsuarios extends JInternalFrame {
 	PreparedStatement pst = null;
 	ResultSet rs = null;
 
-	private static final long serialVersionUID = 3L;
+	private static final long serialVersionUID = 4L;
 	private JTextField txtUsuId;
 	private JTextField txtUsuSenha;
 	private JTextField txtUsuLogin;

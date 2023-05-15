@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexaoDao {
-
+	
 	public static Connection getConnection() {
 		try {
 			String url = "jdbc:mysql://localhost:3306/dbinfomaciel";

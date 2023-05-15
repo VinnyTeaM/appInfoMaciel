@@ -36,7 +36,7 @@ public class TelaClientes extends JInternalFrame {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5485932035589945770L;
+	private static final long serialVersionUID = 1;
 	Connection conexao = null;
 	PreparedStatement pst = null;
 	ResultSet rs = null;

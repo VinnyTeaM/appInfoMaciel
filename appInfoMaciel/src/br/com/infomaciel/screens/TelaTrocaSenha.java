@@ -27,7 +27,6 @@ public class TelaTrocaSenha extends JInternalFrame {
 	 * ResultSet são frameworks do pacote java.sql* e servem para preparar e
 	 * executar as intruções sql
 	 */
-
 	PreparedStatement pst = null;
 	ResultSet rs = null;
 

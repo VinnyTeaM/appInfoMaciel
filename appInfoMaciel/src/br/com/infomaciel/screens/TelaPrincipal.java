@@ -29,7 +29,7 @@ import javax.swing.border.EmptyBorder;
 public class TelaPrincipal extends JFrame {
 	
 	
-	private static final long serialVersionUID = 3L;
+	private static final long serialVersionUID = 4L;
 	private JPanel contentPane;
 	public static JMenuItem menCadUsu;
 	public static JMenu menRel;

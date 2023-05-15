@@ -1,10 +1,11 @@
 package br.com.infomaciel.screens;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 public class LimparCamposUtil {
-
+	
 	public static void limparCampos(JTextField... camposTexto) {
 		for (JTextField campo : camposTexto) {
 			campo.setText("");
@@ -32,8 +33,10 @@ public class LimparCamposUtil {
 			limparCampos(txtCliPesquisar, txtCliId, txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
 	}
 	
-	public static void limparCamposOs(JTextField txtCliId,JTextField txtOsEquip, JTextField txtOsDef, JTextField txtOsServ, JTextField txtOsTec, JTextField txtOsValor) {
-		limparCampos(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec, txtOsEquip, txtOsValor);
-}
+	public static void limparCamposOs(JTextField txtCliId,JTextField txtOsEquip, JTextField txtOsDef, JTextField txtOsServ, JTextField txtOsTec, JTextField txtOsValor, JTextField txtCliPesquisar) {
+		limparCampos(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec, txtOsEquip, txtOsValor,txtCliPesquisar);
+				
+	}
 	
 }
+
