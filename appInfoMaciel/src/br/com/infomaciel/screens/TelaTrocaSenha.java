@@ -31,7 +31,7 @@ public class TelaTrocaSenha extends JInternalFrame {
 	PreparedStatement pst = null;
 	ResultSet rs = null;
 
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 3L;
 	private JLabel lblSenhaUsu;
 	private JLabel lblSenhaSenha;
 	private JLabel lblSenhaNova;

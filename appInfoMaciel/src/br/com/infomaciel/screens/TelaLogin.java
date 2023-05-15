@@ -22,26 +22,28 @@ import javax.swing.JTextField;
 import br.com.infomaciel.dal.ConexaoDao;
 
 public class TelaLogin extends JFrame implements ActionListener {
-	
-	//usando a variavel conexao do DAL
+
+	// usando a variavel conexao do DAL
 	Connection conexao = null;
-	/*criando variaveis especiais para conexao com o banco
-	PreparedStatement e ResultSet são frameworks do pacote java.sql*
-	e servem para preparar e executar as intruções sql */
-	
+	/*
+	 * criando variaveis especiais para conexao com o banco PreparedStatement e
+	 * ResultSet são frameworks do pacote java.sql* e servem para preparar e
+	 * executar as intruções sql
+	 */
+
 	PreparedStatement pst = null;
 	ResultSet rs = null;
 
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 3L;
 	private JLabel labelUsuario, labelSenha;
 	private JTextField txtUsuario;
 	private JPasswordField txtSenha;
 	private JButton btnLogin;
 	private JLabel lblStatus;
-	private String perfil;
+	private static String perfil;
 
 	public static String getPerfil() {
-		return null;
+		return perfil;
 	}
 
 	public TelaLogin() {
@@ -72,12 +74,12 @@ public class TelaLogin extends JFrame implements ActionListener {
 		painelPrincipal.add(txtUsuario);
 		painelPrincipal.add(labelSenha);
 		painelPrincipal.add(txtSenha);
-		
+
 		lblStatus = new JLabel("");
 		painelPrincipal.add(lblStatus);
 		painelPrincipal.add(btnLogin);
 		getContentPane().add(painelPrincipal);
-		
+
 		getRootPane().setDefaultButton(btnLogin);
 
 		setVisible(true);
@@ -94,14 +96,12 @@ public class TelaLogin extends JFrame implements ActionListener {
 	 * } catch (Exception erro) { erro.printStackTrace(); } }
 	 */
 
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnLogin) {
 			String usuario = txtUsuario.getText();
 			String senha = new String(txtSenha.getPassword());
-			
+
 			try (Connection conexao = ConexaoDao.getConnection()) {
 
 				// aqui ve a condição apos acionar botao login
@@ -133,6 +133,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 							TelaPrincipal.menRel.setEnabled(true);
 							TelaPrincipal.lblUsuario.setText(resultado.getString(2));
 							TelaPrincipal.lblUsuario.setForeground(Color.red);
+
 							this.dispose();
 							conexao.close();
 						} else {
@@ -140,6 +141,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 							TelaPrincipal principal = new TelaPrincipal();
 							principal.setVisible(true);
 							TelaPrincipal.lblUsuario.setText(resultado.getString(2));
+
 							this.dispose();
 							conexao.close();
 						}
@@ -162,14 +164,12 @@ public class TelaLogin extends JFrame implements ActionListener {
 			}
 
 		}
-		
 
 	}
 
 	public static void main(String[] args) {
 		new TelaLogin();
-		
+
 	}
-	
-	
+
 }
