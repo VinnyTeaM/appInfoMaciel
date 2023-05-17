@@ -8,9 +8,9 @@ public class ConexaoDao {
 	
 	public static Connection getConnection() {
 		try {
-			String url = "jdbc:mysql://localhost:3306/dbinfomaciel";
-			String usuario = "root";
-			String senha = "123Ibyte!";
+			String url = "jdbc:mysql://localhost:3306/dbinfomaciel?characterEnconding=utf-8";
+			String usuario = "dba";
+			String senha = "infomaciel123456";
 			Connection conexao = DriverManager.getConnection(url, usuario, senha);
 			return conexao;
 		} catch (SQLException e) {

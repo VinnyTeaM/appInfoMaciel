@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,10 +28,16 @@ import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
+import br.com.infomaciel.dal.ConexaoDao;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 public class TelaPrincipal extends JFrame {
-	
-	
-	private static final long serialVersionUID = 4L;
+
+	Connection conexao = null;
+
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public static JMenuItem menCadUsu;
 	public static JMenu menRel;
@@ -57,7 +65,8 @@ public class TelaPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaPrincipal() {
-		
+		conexao = ConexaoDao.getConnection();
+
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setResizable(false);
 		setTitle("-*Informática Maciel*- TELA PRINCIPAL");
@@ -73,7 +82,7 @@ public class TelaPrincipal extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JMenuBar menu = new JMenuBar();
 		menu.setForeground(Color.BLUE);
 		menu.setBounds(0, 0, 829, 22);
@@ -94,8 +103,8 @@ public class TelaPrincipal extends JFrame {
 		menCadCli.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menCadCli.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK));
 		menCad.add(menCadCli);
-		
-		//botao chama tela OS
+
+		// botao chama tela OS
 		JMenuItem menCadOs = new JMenuItem("OS");
 		menCadOs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -108,7 +117,7 @@ public class TelaPrincipal extends JFrame {
 		menCadOs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.ALT_DOWN_MASK));
 		menCad.add(menCadOs);
 
-		//botao chama tela Usuários
+		// botao chama tela Usuários
 		menCadUsu = new JMenuItem("Usuários");
 		menCadUsu.addActionListener(new ActionListener() {
 			// abrir o form TelaUsuario dentro desktop pane
@@ -128,6 +137,39 @@ public class TelaPrincipal extends JFrame {
 		menRel.setDebugGraphicsOptions(DebugGraphics.NONE_OPTION);
 		menRel.setEnabled(false);
 		menu.add(menRel);
+
+		// gerando um relatorio de clientes
+		JMenuItem memRelCli = new JMenuItem("Clientes");
+		memRelCli.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a impressão desse relatório?", "Atenção",
+		                JOptionPane.YES_NO_OPTION);
+		        if (confirma == JOptionPane.YES_OPTION) {
+		            // Imprimir relatório com o framework Jasper
+		            try {
+		                // Reestabelecer a conexão com o banco de dados
+		                conexao = ConexaoDao.getConnection();
+
+		                // Preencher o relatório
+		                JasperPrint print = JasperFillManager.fillReport(
+		                        "C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\clientes.jasper", null, conexao);
+
+		                // Exibir o relatório
+		                JasperViewer.viewReport(print, false);
+		                conexao.close();
+
+		            } catch (Exception e2) {
+		                JOptionPane.showMessageDialog(null, "Erro ao imprimir relatório: " + e2.getMessage());
+		                e2.printStackTrace();
+		            }
+		        }
+		    }
+		});
+
+
+		memRelCli.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_DOWN_MASK));
+		memRelCli.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		menRel.add(memRelCli);
 
 		JMenuItem menRelSer = new JMenuItem("Serviços");
 		menRelSer.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -172,10 +214,10 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem menOpcSenha = new JMenuItem("Alterar Senha");
 		menOpcSenha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    TelaTrocaSenha telaTrocaSenha = new TelaTrocaSenha();
-			    telaTrocaSenha.setVisible(true);
-			    desktop.add(telaTrocaSenha);
-			
+				TelaTrocaSenha telaTrocaSenha = new TelaTrocaSenha();
+				telaTrocaSenha.setVisible(true);
+				desktop.add(telaTrocaSenha);
+
 			}
 		});
 		menOpcSenha.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_DOWN_MASK));

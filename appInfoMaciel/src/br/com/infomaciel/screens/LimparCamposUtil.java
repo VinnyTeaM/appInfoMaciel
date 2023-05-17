@@ -1,6 +1,5 @@
 package br.com.infomaciel.screens;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 

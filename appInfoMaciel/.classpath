@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/mysql-connector-j-8.0.33/mysql-connector-j-8.0.33.jar"/>
 	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/rs2xml.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-6.20.5-project.zip"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-annotation-processors-6.20.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-castor-6.20.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-chart-customizers-6.20.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-chart-themes-6.20.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-custom-visualization-6.20.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-fonts-6.20.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-functions-6.20.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-javaflow-6.20.5.jar" sourcepath="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-6.20.5-project.zip"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-metadata-6.20.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/jasperreports-xalan-6.20.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/commons-logging-1.2-bin/commons-logging-1.2/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/commons-collections4-4.4-bin/commons-collections4-4.4/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/spring-beans-6.0.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/spring-core-6.0.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/spring-expression-6.0.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/commons-beanutils-1.9.4-bin.zip"/>
+	<classpathentry kind="lib" path="C:/Users/avinn/OneDrive/sistema os/jasperreports/net.tascalate.javaflow.api-2.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
