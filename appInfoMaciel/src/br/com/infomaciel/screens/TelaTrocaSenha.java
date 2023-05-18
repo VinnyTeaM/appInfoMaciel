@@ -68,6 +68,11 @@ public class TelaTrocaSenha extends JInternalFrame {
 		chbSenha = new JCheckBox("Visualizar senha");
 		btnSenhaConf = new JButton("Confirmar");
 		btnSenhaCan = new JButton("Cancelar");
+		btnSenhaCan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			dispose();
+			}
+		});
 
 		// Adicione os componentes na tela
 		getContentPane().add(lblSenhaUsu);

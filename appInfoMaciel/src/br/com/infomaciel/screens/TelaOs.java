@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +35,9 @@ import javax.swing.table.TableModel;
 
 import br.com.infomaciel.dal.ConexaoDao;
 import net.proteanit.sql.DbUtils;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class TelaOs extends JInternalFrame {
 	/**
@@ -163,26 +168,23 @@ public class TelaOs extends JInternalFrame {
 		// chamando o metodo pesquisar clientes
 		txtCliPesquisar = new JTextField();
 		txtCliPesquisar.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				conexao = ConexaoDao.getConnection();
-				String sql = "SELECT idcli AS ID,namecli AS NOME,phonecli AS FONE FROM tbclient WHERE namecli LIKE ?";
-				try {
-					pst = conexao.prepareStatement(sql);
-					// passando o conteudo de pesquisa para o ?
-					// atenção ao "%" continuação da string sql
-					pst.setString(1, txtCliPesquisar.getText() + "%");
-					rs = (ResultSet) pst.executeQuery();
-					// a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela.
-					tblClientes.setModel(DbUtils.resultSetToTableModel((ResultSet) rs));
-					LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec, txtOsValor,
-							txtCliPesquisar);
-					txtOsValor.setText("0");
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, e2);
-				}
-
-			}
+		    @Override
+		    public void keyTyped(KeyEvent e) {
+		        conexao = ConexaoDao.getConnection();
+		        String sql = "SELECT idcli AS ID, namecli AS NOME, phonecli AS FONE FROM tbclient WHERE namecli LIKE ?";
+		        try {
+		            pst = conexao.prepareStatement(sql);
+		            // passando o conteudo de pesquisa para o ?
+		            // atenção ao "%" continuação da string sql
+		            pst.setString(1, txtCliPesquisar.getText() + "%");
+		            rs = pst.executeQuery();
+		            // a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela.
+		            tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
+		            txtOsValor.setText("0");
+		        } catch (Exception e2) {
+		            JOptionPane.showMessageDialog(null, e2);
+		        }
+		    }
 		});
 
 		txtCliPesquisar.setBounds(10, 17, 175, 20);
@@ -298,6 +300,7 @@ public class TelaOs extends JInternalFrame {
 		btnOsCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String sql = "INSERT INTO tbos (type,situation,equipment,defect,service,tech,price,idcli) VALUES (?,?,?,?,?,?,?,?)";
+				String sqlos = "SELECT max(os) FROM tbos";
 				try {
 					pst = conexao.prepareStatement(sql);
 					pst.setString(1, type);
@@ -321,6 +324,11 @@ public class TelaOs extends JInternalFrame {
 							btnOsCreate.setEnabled(false);
 							btnOsRead.setEnabled(false);
 							btnOsPrint.setEnabled(true);
+							pst = conexao.prepareStatement(sqlos);
+							rs = pst.executeQuery();
+							if (rs.next()) {
+								txtOs.setText(rs.getString(1));
+							}
 
 							LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec,
 									txtOsValor, txtCliPesquisar);
@@ -477,7 +485,8 @@ public class TelaOs extends JInternalFrame {
 						if (apagado > 0) {
 
 							JOptionPane.showMessageDialog(null, "OS removida com sucesso!!");
-							LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec, txtOsValor, txtCliPesquisar);
+							LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec,
+									txtOsValor, txtCliPesquisar);
 							cboOsSit.setSelectedItem(" ");
 							txtOs.setText(null);
 							txtData.setText(null);
@@ -502,7 +511,42 @@ public class TelaOs extends JInternalFrame {
 		btnOsDelete.setBounds(357, 297, 89, 75);
 		getContentPane().add(btnOsDelete);
 
+		// metodo para imprimir os
 		btnOsPrint = new JButton("");
+		btnOsPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			    int confirma = JOptionPane.showConfirmDialog(null, "Confirma a impressão dessa OS?", "Atenção", JOptionPane.YES_NO_OPTION);
+			    if (confirma == JOptionPane.YES_OPTION) {
+			        try {
+			            // Criar um filtro com parâmetros
+			            Map<String, Object> parametros = new HashMap<>();
+			            parametros.put("os", Integer.parseInt(txtOs.getText()));
+
+			            // Obter a conexão com o banco de dados
+			            Connection conexao = ConexaoDao.getConnection();
+
+			            // Preencher o relatório utilizando o JasperReport
+			            JasperPrint print = JasperFillManager.fillReport("C:\\Users\\avinn\\JaspersoftWorkspace\\infomaciel\\os.jasper", parametros, conexao);
+
+			            // Exibir o relatório utilizando o JasperViewer
+			            JasperViewer.viewReport(print, false);
+
+			            // Fechar a conexão com o banco de dados
+			            conexao.close();
+			            // habilitar os objetos
+						btnOsRead.setEnabled(true);
+										
+												
+						LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec, txtOsValor, txtCliPesquisar);
+			        } catch (Exception e2) {
+			            JOptionPane.showMessageDialog(null, "Erro ao imprimir relatório: " + e2.getMessage());
+			            e2.printStackTrace();
+			        }
+			    }
+			}
+			
+			
+		});
 		btnOsPrint.setEnabled(false);
 		btnOsPrint.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOsPrint.setIcon(new ImageIcon(TelaOs.class.getResource("/br/com/infomaciel/icons/print.png")));

@@ -142,7 +142,7 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem memRelCli = new JMenuItem("Clientes");
 		memRelCli.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a impressão desse relatório?", "Atenção",
+		        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
 		                JOptionPane.YES_NO_OPTION);
 		        if (confirma == JOptionPane.YES_OPTION) {
 		            // Imprimir relatório com o framework Jasper
@@ -159,7 +159,7 @@ public class TelaPrincipal extends JFrame {
 		                conexao.close();
 
 		            } catch (Exception e2) {
-		                JOptionPane.showMessageDialog(null, "Erro ao imprimir relatório: " + e2.getMessage());
+		                JOptionPane.showMessageDialog(null, "Erro ao emitir relatório: " + e2.getMessage());
 		                e2.printStackTrace();
 		            }
 		        }
@@ -171,7 +171,34 @@ public class TelaPrincipal extends JFrame {
 		memRelCli.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menRel.add(memRelCli);
 
+		//GERA RELATORIO DE SERVIÇOS
 		JMenuItem menRelSer = new JMenuItem("Serviços");
+		menRelSer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
+		                JOptionPane.YES_NO_OPTION);
+		        if (confirma == JOptionPane.YES_OPTION) {
+		            // Imprimir relatório com o framework Jasper
+		            try {
+		                // Reestabelecer a conexão com o banco de dados
+		                conexao = ConexaoDao.getConnection();
+
+		                // Preencher o relatório
+		                JasperPrint print = JasperFillManager.fillReport(
+		                        "C:\\Users\\avinn\\JaspersoftWorkspace\\infomaciel\\servicos.jasper", null, conexao);
+
+		                // Exibir o relatório
+		                JasperViewer.viewReport(print, false);
+		                conexao.close();
+
+		            } catch (Exception e1) {
+		                JOptionPane.showMessageDialog(null, "Erro ao emitir relatório: " + e1.getMessage());
+		                e1.printStackTrace();
+		            }
+		        }
+		    }
+		});
+	
 		menRelSer.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menRelSer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK));
 		menRel.add(menRelSer);
