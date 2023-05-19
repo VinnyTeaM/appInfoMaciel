@@ -34,18 +34,20 @@ import net.proteanit.sql.DbUtils;
 public class TelaClientes extends JInternalFrame {
 
 	/**
-	 * Método responsável por pesquisar clientes
+	 * Método responsável por criar Cliente
 	 * 
-	 * @return txtCliPesquisar.addKeyListener(new KeyAdapter()
-	 * 
-	 *         Método responsável por criar Cliente
-	 * @return btnCliCreate.addActionListener(new ActionListener()
+	 * @return criarCliente
 	 * 
 	 *         Método responsável por modificar Cliente
-	 * @return btnCliUpdate.addActionListener(new ActionListener()
+	 * @return atualizarCliente
 	 * 
 	 *         Método responsável por deletar Cliente
-	 * @return btnCliDelete.addActionListener(new ActionListener()
+	 * @return deletarCliente
+	 *
+	 *         Método responsável por pesquisar clientes
+	 * @return pesquisarCliente
+	 * 
+	 * 
 	 *
 	 */
 	private static final long serialVersionUID = 1;
@@ -60,6 +62,7 @@ public class TelaClientes extends JInternalFrame {
 	private JTextField txtCliPesquisar;
 	private JTable tblClientes;
 	private JTextField txtCliId;
+	private JButton btnCliCreate;
 
 	/**
 	 * Launch the application.
@@ -138,38 +141,11 @@ public class TelaClientes extends JInternalFrame {
 		getContentPane().add(txtCliEmail);
 		txtCliEmail.setColumns(10);
 
-		JButton btnCliCreate = new JButton("");
+		btnCliCreate = new JButton("");
 		btnCliCreate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCliCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conexao = ConexaoDao.getConnection();
-				String sql = "insert into tbclient(namecli,addcli,phonecli,emailcli) values(?,?,?,?)";
-				try {
-					pst = conexao.prepareStatement(sql);
-					pst.setString(1, txtCliNome.getText());
-					pst.setString(2, txtCliEnd.getText());
-					pst.setString(3, txtCliFone.getText());
-					pst.setString(4, txtCliEmail.getText());
-
-					/*
-					 * .trim(): É um método da classe String que remove os espaços em branco no
-					 * início e no final de uma string. Ele retorna uma nova string sem os espaços
-					 * em branco adicionais.
-					 */
-					String texto = txtCliFone.getText().trim();
-					String textoVazio = "(  )     -";
-					if ((txtCliNome.getText().isEmpty()) || (texto.equals(textoVazio))) {
-						JOptionPane.showMessageDialog(null, "Preecher todos os campos obrigatorios!");
-					} else {
-						pst.executeUpdate();
-						LimparCamposUtil.limparCamposCl(txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
-						((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
-						JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso!");
-					}
-
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, e2);
-				}
+				criarCliente();
 			}
 		});
 		btnCliCreate.setIcon(new ImageIcon(TelaClientes.class.getResource("/br/com/infomaciel/icons/create.png")));
@@ -180,35 +156,7 @@ public class TelaClientes extends JInternalFrame {
 		btnCliUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCliUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conexao = ConexaoDao.getConnection();
-				// sempre prestar muito atenção na seguencia para passagem dos paramentros
-				String sql = "UPDATE tbclient SET namecli=?,addcli=?,phonecli=?,emailcli=? WHERE idcli=?";
-				try {
-
-					pst = conexao.prepareStatement(sql);
-					pst.setString(1, txtCliNome.getText());
-					pst.setString(2, txtCliEnd.getText());
-					pst.setString(3, txtCliFone.getText());
-					pst.setString(4, txtCliEmail.getText());
-					pst.setString(5, txtCliId.getText());
-
-					String texto = txtCliFone.getText().trim();
-					String textoVazio = "(  )     -";
-					if ((txtCliNome.getText().isEmpty()) || (texto.equals(textoVazio))) {
-						JOptionPane.showMessageDialog(null, "Preecher todos os campos obrigatorios!");
-					} else {
-						pst.executeUpdate();
-						LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd,
-								txtCliEmail);
-						((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
-						btnCliCreate.setEnabled(true);
-						JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");
-					}
-
-				} catch (Exception erro) {
-					JOptionPane.showMessageDialog(null, erro);
-					// System.out.println(erro);
-				}
+				atualizarCliente();
 			}
 		});
 		btnCliUpdate.setIcon(new ImageIcon(TelaClientes.class.getResource("/br/com/infomaciel/icons/update.png")));
@@ -219,25 +167,7 @@ public class TelaClientes extends JInternalFrame {
 		btnCliDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCliDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int remover = JOptionPane.showConfirmDialog(null, "tem certeza que deseja remover este cliente?",
-						"Atenção", JOptionPane.YES_NO_OPTION);
-				if (remover == JOptionPane.YES_OPTION) {
-					String sql = "delete from tbclient where idcli=?";
-					try {
-						pst = conexao.prepareStatement(sql);
-						pst.setString(1, txtCliId.getText());
-						pst.executeUpdate();
-						btnCliCreate.setEnabled(true);
-						((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
-						LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd,
-								txtCliEmail);
-						JOptionPane.showMessageDialog(null, "Cliente removido com sucesso!", "Sucesso",
-								JOptionPane.INFORMATION_MESSAGE);
-					} catch (Exception erro) {
-						JOptionPane.showMessageDialog(null, erro);
-					}
-				}
-
+				deletarCliente();
 			}
 		});
 		btnCliDelete.setIcon(new ImageIcon(TelaClientes.class.getResource("/br/com/infomaciel/icons/delete.png")));
@@ -260,20 +190,7 @@ public class TelaClientes extends JInternalFrame {
 		txtCliPesquisar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				conexao = ConexaoDao.getConnection();
-				String sql = "SELECT idcli AS ID, namecli AS NOME, addcli AS ENDEREÇO, phonecli AS FONE, emailcli AS EMAIL FROM tbclient WHERE namecli LIKE  ?";
-				try {
-					pst = conexao.prepareStatement(sql);
-					// passando o conteudo de pesquisa para o ?
-					// atenção ao "%" continuação da string sql
-					pst.setString(1, txtCliPesquisar.getText() + "%");
-					rs = pst.executeQuery();
-					// a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela.
-					tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, e2);
-				}
-
+				pesquisarCliente();
 			}
 		});
 		txtCliPesquisar.setBounds(10, 11, 311, 20);
@@ -369,6 +286,108 @@ public class TelaClientes extends JInternalFrame {
 		JLabel lblNewLabel_9 = new JLabel("  Id Cliente");
 		lblNewLabel_9.setBounds(10, 127, 68, 14);
 		getContentPane().add(lblNewLabel_9);
+
+	}
+
+	public void criarCliente() {
+		conexao = ConexaoDao.getConnection();
+		String sql = "insert into tbclient(namecli,addcli,phonecli,emailcli) values(?,?,?,?)";
+		try {
+			pst = conexao.prepareStatement(sql);
+			pst.setString(1, txtCliNome.getText());
+			pst.setString(2, txtCliEnd.getText());
+			pst.setString(3, txtCliFone.getText());
+			pst.setString(4, txtCliEmail.getText());
+
+			/*
+			 * .trim(): É um método da classe String que remove os espaços em branco no
+			 * início e no final de uma string. Ele retorna uma nova string sem os espaços
+			 * em branco adicionais.
+			 */
+			String texto = txtCliFone.getText().trim();
+			String textoVazio = "(  )     -";
+			if ((txtCliNome.getText().isEmpty()) || (texto.equals(textoVazio))) {
+				JOptionPane.showMessageDialog(null, "Preecher todos os campos obrigatorios!");
+			} else {
+				pst.executeUpdate();
+				LimparCamposUtil.limparCamposCl(txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
+				((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
+				JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso!");
+			}
+
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, e2);
+		}
+	}
+
+	public void atualizarCliente() {
+		conexao = ConexaoDao.getConnection();
+		// sempre prestar muito atenção na seguencia para passagem dos paramentros
+		String sql = "UPDATE tbclient SET namecli=?,addcli=?,phonecli=?,emailcli=? WHERE idcli=?";
+		try {
+
+			pst = conexao.prepareStatement(sql);
+			pst.setString(1, txtCliNome.getText());
+			pst.setString(2, txtCliEnd.getText());
+			pst.setString(3, txtCliFone.getText());
+			pst.setString(4, txtCliEmail.getText());
+			pst.setString(5, txtCliId.getText());
+
+			String texto = txtCliFone.getText().trim();
+			String textoVazio = "(  )     -";
+			if ((txtCliNome.getText().isEmpty()) || (texto.equals(textoVazio))) {
+				JOptionPane.showMessageDialog(null, "Preecher todos os campos obrigatorios!");
+			} else {
+				pst.executeUpdate();
+				LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd,
+						txtCliEmail);
+				((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
+				btnCliCreate.setEnabled(true);
+				JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");
+			}
+
+		} catch (Exception erro) {
+			JOptionPane.showMessageDialog(null, erro);
+			// System.out.println(erro);
+		}
+	}
+
+	public void deletarCliente() {
+		int remover = JOptionPane.showConfirmDialog(null, "tem certeza que deseja remover este cliente?", "Atenção",
+				JOptionPane.YES_NO_OPTION);
+		if (remover == JOptionPane.YES_OPTION) {
+			String sql = "delete from tbclient where idcli=?";
+			try {
+				pst = conexao.prepareStatement(sql);
+				pst.setString(1, txtCliId.getText());
+				pst.executeUpdate();
+				btnCliCreate.setEnabled(true);
+				((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
+				LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd,
+						txtCliEmail);
+				JOptionPane.showMessageDialog(null, "Cliente removido com sucesso!", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception erro) {
+				JOptionPane.showMessageDialog(null, erro);
+			}
+		}
+
+	}
+
+	public void pesquisarCliente() {
+		conexao = ConexaoDao.getConnection();
+		String sql = "SELECT idcli AS ID, namecli AS NOME, addcli AS ENDEREÇO, phonecli AS FONE, emailcli AS EMAIL FROM tbclient WHERE namecli LIKE  ?";
+		try {
+			pst = conexao.prepareStatement(sql);
+			// passando o conteudo de pesquisa para o ?
+			// atenção ao "%" continuação da string sql
+			pst.setString(1, txtCliPesquisar.getText() + "%");
+			rs = pst.executeQuery();
+			// a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela.
+			tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, e2);
+		}
 
 	}
 }

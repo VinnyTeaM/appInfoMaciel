@@ -8,17 +8,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
-
+/**
+ * A classe About representa a janela de sobre do sistema.
+ */
 public class About extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2L;
 	private JPanel Sobre;
 
 	/**
-	 * Launch the application.
+	 * Método principal que inicia a aplicação.
+	 *
+	 * @param args Os argumentos da linha de comando.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -34,7 +35,7 @@ public class About extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Cria a janela de ajuda/sobre.
 	 */
 	public About() {
 		setTitle("AJUDA / SOBRE");

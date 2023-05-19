@@ -21,18 +21,10 @@ import javax.swing.JTextField;
 
 import br.com.infomaciel.dal.ConexaoDao;
 
+/**
+ * A classe TelaLogin representa a tela de login do sistema.
+ */
 public class TelaLogin extends JFrame implements ActionListener {
-
-	// usando a variavel conexao do DAL
-	Connection conexao = null;
-	/*
-	 * criando variaveis especiais para conexao com o banco PreparedStatement e
-	 * ResultSet são frameworks do pacote java.sql* e servem para preparar e
-	 * executar as intruções sql
-	 */
-
-	PreparedStatement pst = null;
-	ResultSet rs = null;
 
 	private static final long serialVersionUID = 3L;
 	private JLabel labelUsuario, labelSenha;
@@ -42,10 +34,18 @@ public class TelaLogin extends JFrame implements ActionListener {
 	private JLabel lblStatus;
 	private static String perfil;
 
+	/**
+	 * Obtém o perfil do usuário logado.
+	 *
+	 * @return O perfil do usuário.
+	 */
 	public static String getPerfil() {
 		return perfil;
 	}
 
+	/**
+	 * Construtor da classe TelaLogin.
+	 */
 	public TelaLogin() {
 		super("Tela de Login");
 		setTitle("-*Informática Maciel*- LOGIN");
@@ -83,18 +83,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 		getRootPane().setDefaultButton(btnLogin);
 
 		setVisible(true);
-
 	}
-	/*
-	 * aqui ve condição assim que abrir tela de login try (Connection conexao =
-	 * ConexaoMySQL.getConnection()) { if (conexao != null) { lblStatus.setIcon( new
-	 * javax.swing.ImageIcon(getClass().getResource(
-	 * "/br/com/infomaciel/icons/dbon.png"))); } else { lblStatus.setIcon( new
-	 * javax.swing.ImageIcon(getClass().getResource(
-	 * "/br/com/infomaciel/icons/dboff.png"))); }
-	 * 
-	 * } catch (Exception erro) { erro.printStackTrace(); } }
-	 */
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -123,7 +112,6 @@ public class TelaLogin extends JFrame implements ActionListener {
 						// a linha abaixo obtem o conteudo do campo perfil na tabela tbuser
 						perfil = resultado.getString(5);
 
-						// System.out.println(perfil);
 						// estrutura abaixo faz o tratamento do perfil do usuario
 						if (perfil.equals("admin")) {
 							resultado.getString(2);
@@ -169,7 +157,5 @@ public class TelaLogin extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		new TelaLogin();
-
 	}
-
 }

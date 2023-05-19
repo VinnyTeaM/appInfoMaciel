@@ -349,7 +349,7 @@ public class TelaOs extends JInternalFrame {
 		btnOsPrint = new JButton("");
 		btnOsPrint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				imprimirOS();
+				imprimirOs();
 			}
 
 		});
