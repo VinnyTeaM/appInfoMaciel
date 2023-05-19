@@ -34,7 +34,19 @@ import net.proteanit.sql.DbUtils;
 public class TelaClientes extends JInternalFrame {
 
 	/**
+	 * Método responsável por pesquisar clientes
 	 * 
+	 * @return txtCliPesquisar.addKeyListener(new KeyAdapter()
+	 * 
+	 *         Método responsável por criar Cliente
+	 * @return btnCliCreate.addActionListener(new ActionListener()
+	 * 
+	 *         Método responsável por modificar Cliente
+	 * @return btnCliUpdate.addActionListener(new ActionListener()
+	 * 
+	 *         Método responsável por deletar Cliente
+	 * @return btnCliDelete.addActionListener(new ActionListener()
+	 *
 	 */
 	private static final long serialVersionUID = 1;
 	Connection conexao = null;
@@ -126,7 +138,6 @@ public class TelaClientes extends JInternalFrame {
 		getContentPane().add(txtCliEmail);
 		txtCliEmail.setColumns(10);
 
-		// metodo para adicionar clientes
 		JButton btnCliCreate = new JButton("");
 		btnCliCreate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCliCreate.addActionListener(new ActionListener() {
@@ -152,7 +163,7 @@ public class TelaClientes extends JInternalFrame {
 					} else {
 						pst.executeUpdate();
 						LimparCamposUtil.limparCamposCl(txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
-						((DefaultTableModel)tblClientes.getModel()).setRowCount(0);
+						((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
 						JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso!");
 					}
 
@@ -165,7 +176,6 @@ public class TelaClientes extends JInternalFrame {
 		btnCliCreate.setBounds(141, 296, 78, 66);
 		getContentPane().add(btnCliCreate);
 
-		// metodo para alterar cliente
 		JButton btnCliUpdate = new JButton("");
 		btnCliUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCliUpdate.addActionListener(new ActionListener() {
@@ -188,8 +198,9 @@ public class TelaClientes extends JInternalFrame {
 						JOptionPane.showMessageDialog(null, "Preecher todos os campos obrigatorios!");
 					} else {
 						pst.executeUpdate();
-						LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd, txtCliEmail);
-						((DefaultTableModel)tblClientes.getModel()).setRowCount(0);
+						LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd,
+								txtCliEmail);
+						((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
 						btnCliCreate.setEnabled(true);
 						JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");
 					}
@@ -204,7 +215,6 @@ public class TelaClientes extends JInternalFrame {
 		btnCliUpdate.setBounds(260, 296, 89, 66);
 		getContentPane().add(btnCliUpdate);
 
-		// metodo para remover clientes
 		JButton btnCliDelete = new JButton("");
 		btnCliDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCliDelete.addActionListener(new ActionListener() {
@@ -218,8 +228,9 @@ public class TelaClientes extends JInternalFrame {
 						pst.setString(1, txtCliId.getText());
 						pst.executeUpdate();
 						btnCliCreate.setEnabled(true);
-						((DefaultTableModel)tblClientes.getModel()).setRowCount(0);
-						LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd, txtCliEmail);
+						((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
+						LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd,
+								txtCliEmail);
 						JOptionPane.showMessageDialog(null, "Cliente removido com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
 					} catch (Exception erro) {
@@ -245,7 +256,6 @@ public class TelaClientes extends JInternalFrame {
 		lblNewLabel_7.setBounds(405, 363, 67, 14);
 		getContentPane().add(lblNewLabel_7);
 
-		// metodo para pesquisar e usar a tabela para ir preenchendo
 		txtCliPesquisar = new JTextField();
 		txtCliPesquisar.addKeyListener(new KeyAdapter() {
 			@Override
@@ -324,7 +334,8 @@ public class TelaClientes extends JInternalFrame {
 						btnCliCreate.setEnabled(false);
 
 					} else {
-						LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd, txtCliEmail);
+						LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliFone, txtCliEnd,
+								txtCliEmail);
 					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, e2);

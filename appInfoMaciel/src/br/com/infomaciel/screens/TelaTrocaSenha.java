@@ -18,6 +18,11 @@ import javax.swing.JTextField;
 
 import br.com.infomaciel.dal.ConexaoDao;
 
+/**
+ * A classe TelaTrocaSenha é responsável por exibir uma interface gráfica para o usuário alterar sua senha.
+ * Ela herda funcionalidades da classe JInternalFrame e implementa a lógica de troca de senha no banco de dados conforme o usuario logado.
+ */
+
 public class TelaTrocaSenha extends JInternalFrame {
 
 	// usando a variavel conexao do DAL
