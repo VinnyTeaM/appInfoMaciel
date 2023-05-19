@@ -41,32 +41,21 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class TelaOs extends JInternalFrame {
 	/**
-	 * Método responsável por pesquisar clientes
-	 * 
-	 * @return cliPesquisar
-	 * 
-	 *         Método responsável por criar Ordem de Serviço
-	 * @return criarOs
-	 * 
-	 *         Método responsável por buscar a Ordem de Serviço pelo número
-	 * @return pesquisarOs
-	 * 
-	 *         Método responsável por modificar a Ordem de Serviço
-	 * @return atualizarOs
-	 * 
-	 *         Método responsável por deletar a Ordem de Serviço se for perfil
-	 *         'admin'
-	 * @return deletarOs
-	 * 
-	 *         Método responsável por imprimir a Ordem de Serviço
-	 * @return imprimirOs
+	 * @param cliPesquisar o cliente a ser pesquisado.
+	 * @param criarOs o objeto Ordem de Serviço a ser criado.
+	 * @param pesquisarOs o número da Ordem de Serviço a ser pesquisada.
+	 * @param atualizarOs o objeto Ordem de Serviço atualizado.
+	 * @param deletarOs o número da Ordem de Serviço a ser deletada (somente para perfil 'admin').
+	 * @param imprimirOs o número da Ordem de Serviço a ser impressa.
 	 */
 	private static final long serialVersionUID = 1L;
 	Connection conexao = null;
 	PreparedStatement pst = null;
 	ResultSet rs = null;
-	// variavel para o radion button selecionado
+	// variavel
 	private String type;
+	String perfil = TelaLogin.getPerfil();
+	// TextFields e PasswordFields
 	private JTextField txtOs;
 	private JTextField txtData;
 	private JTextField txtCliPesquisar;
@@ -78,7 +67,7 @@ public class TelaOs extends JInternalFrame {
 	private JTextField txtOsTec;
 	private JTextField txtOsValor;
 	private String numOs;
-	String perfil = TelaLogin.getPerfil();
+	// Botões
 	private JButton btnOsUpdate;
 	private JButton btnOsDelete;
 	private JButton btnOsPrint;
@@ -541,6 +530,7 @@ public class TelaOs extends JInternalFrame {
 		}
 		;
 	}
+
 	public void deletarOs() {
 		int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover esta OS?", "Atenção",
 				JOptionPane.YES_NO_OPTION);
@@ -559,8 +549,8 @@ public class TelaOs extends JInternalFrame {
 				if (apagado > 0) {
 
 					JOptionPane.showMessageDialog(null, "OS removida com sucesso!!");
-					LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec,
-							txtOsValor, txtCliPesquisar);
+					LimparCamposUtil.limparCamposOs(txtCliId, txtOsEquip, txtOsDef, txtOsServ, txtOsTec, txtOsValor,
+							txtCliPesquisar);
 					cboOsSit.setSelectedItem(" ");
 					txtOs.setText(null);
 					txtData.setText(null);
@@ -579,6 +569,7 @@ public class TelaOs extends JInternalFrame {
 			}
 		}
 	}
+
 	public void imprimirOs() {
 		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a impressão dessa OS?", "Atenção",
 				JOptionPane.YES_NO_OPTION);

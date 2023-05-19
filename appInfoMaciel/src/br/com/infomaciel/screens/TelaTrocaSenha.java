@@ -19,67 +19,94 @@ import javax.swing.JTextField;
 import br.com.infomaciel.dal.ConexaoDao;
 
 /**
- * A classe TelaTrocaSenha é responsável por exibir uma interface gráfica para o usuário alterar sua senha.
- * Ela herda funcionalidades da classe JInternalFrame e implementa a lógica de troca de senha no banco de dados conforme o usuario logado.
+ * A classe TelaTrocaSenha é responsável por exibir uma interface gráfica para o
+ * usuário alterar sua senha. Ela herda funcionalidades da classe JInternalFrame
+ * e implementa a lógica de troca de senha no banco de dados conforme o usuário
+ * logado.
  */
-
 public class TelaTrocaSenha extends JInternalFrame {
 
-	// usando a variavel conexao do DAL
+	// usando a variável conexão do DAL
 	Connection conexao = null;
 	/*
-	 * criando variaveis especiais para conexao com o banco PreparedStatement e
+	 * Criando variáveis especiais para conexão com o banco PreparedStatement e
 	 * ResultSet são frameworks do pacote java.sql* e servem para preparar e
-	 * executar as intruções sql
+	 * executar as instruções SQL
 	 */
 	PreparedStatement pst = null;
 	ResultSet rs = null;
 
-	private static final long serialVersionUID = 3L;
+	/**
+	 * Número de série para a serialização.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Labels utilizados na interface de alteração de senha.
+	 */
 	private JLabel lblSenhaUsu;
 	private JLabel lblSenhaSenha;
 	private JLabel lblSenhaNova;
 	private JLabel lblSenhaRep;
+
+	/**
+	 * Campos de texto e campos de senha utilizados na interface de alteração de
+	 * senha.
+	 */
 	private JTextField txtSenhaUsu;
 	private JPasswordField txtSenhaSenha;
 	private JPasswordField txtSenhaNova;
 	private JPasswordField txtSenhaRep;
+
+	/**
+	 * Checkbox utilizado para exibir/ocultar a senha.
+	 */
 	private JCheckBox chbSenha;
+
+	/**
+	 * Botões utilizados na interface de alteração de senha.
+	 */
 	private JButton btnSenhaConf;
 	private JButton btnSenhaCan;
 
 	String nomeUsuario = TelaPrincipal.getNomeUsuario();
 	String perfil = TelaLogin.getPerfil();
 
+	/**
+	 * Construtor da classe TelaTrocaSenha.
+	 */
 	public TelaTrocaSenha() {
-		// Defina o título, tamanho e layout do JInternalFrame
+		// Define o título, tamanho e layout do JInternalFrame
 		super("Mudar Senha / Opções", false, true, true, true);
 		setSize(400, 300);
-		getContentPane().setLayout(new GridLayout(6, 2));
-		// System.out.println(nomeUsuario);
-		// System.out.println(perfil);
-		// Inicialize os campos de texto, senhas, botões e checkbox
+
 		lblSenhaUsu = new JLabel("Usuário:");
 		lblSenhaSenha = new JLabel("Senha:");
 		lblSenhaNova = new JLabel("Nova senha:");
 		lblSenhaRep = new JLabel("Repetir nova senha:");
+
 		txtSenhaUsu = new JTextField();
 		txtSenhaUsu.setEditable(false);
 		txtSenhaUsu.setEnabled(true);
 		txtSenhaUsu.setText(nomeUsuario);
+
 		txtSenhaSenha = new JPasswordField();
 		txtSenhaNova = new JPasswordField();
 		txtSenhaRep = new JPasswordField();
+
 		chbSenha = new JCheckBox("Visualizar senha");
+
 		btnSenhaConf = new JButton("Confirmar");
 		btnSenhaCan = new JButton("Cancelar");
+
 		btnSenhaCan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			dispose();
+				dispose();
 			}
 		});
 
-		// Adicione os componentes na tela
+		// Adiciona os componentes na tela
+		getContentPane().setLayout(new GridLayout(6, 2));
 		getContentPane().add(lblSenhaUsu);
 		getContentPane().add(txtSenhaUsu);
 		getContentPane().add(lblSenhaSenha);
@@ -102,7 +129,6 @@ public class TelaTrocaSenha extends JInternalFrame {
 			}
 		});
 
-		// metodo para botão de confirmar trocar senha
 		btnSenhaConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conexao = ConexaoDao.getConnection();

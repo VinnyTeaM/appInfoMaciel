@@ -5,15 +5,22 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 /**
- * A classe OnlyNumbersDocument é uma implementação de PlainDocument que permite apenas a inserção de números e caracteres permitidos.
+ * A classe OnlyNumbersDocument é uma implementação de PlainDocument que permite
+ * apenas a inserção de números e caracteres permitidos.
  */
 public class OnlyNumbersDocument extends PlainDocument {
-
-	private static final long serialVersionUID = 2L;
+	/**
+	 * Número de série para a serialização.
+	 */
+	private static final long serialVersionUID = 1L;
+	/** 
+	 * Vetor de caracteres permitidos para o documento.
+	 */
 	private char[] allowedChars;
 
 	/**
-	 * Construtor padrão que inicializa o vetor de caracteres permitidos com um vetor vazio.
+	 * Construtor padrão que inicializa o vetor de caracteres permitidos com um
+	 * vetor vazio.
 	 */
 	public OnlyNumbersDocument() {
 		super();
@@ -31,11 +38,12 @@ public class OnlyNumbersDocument extends PlainDocument {
 	}
 
 	/**
-	 * Sobrescrita do método insertString, que é chamado sempre que um novo texto é inserido no componente.
+	 * Sobrescrita do método insertString, que é chamado sempre que um novo texto é
+	 * inserido no componente.
 	 *
 	 * @param offs A posição de offset para inserção do texto.
-	 * @param str A string a ser inserida.
-	 * @param a Os atributos do texto.
+	 * @param str  A string a ser inserida.
+	 * @param a    Os atributos do texto.
 	 * @throws BadLocationException Se a posição de offset for inválida.
 	 */
 	@Override
@@ -46,13 +54,16 @@ public class OnlyNumbersDocument extends PlainDocument {
 		}
 		// Converte a string em um vetor de caracteres
 		char[] chars = str.toCharArray();
-		// Percorre o vetor de caracteres verificando se cada um é um dígito ou um caracter permitido
+		// Percorre o vetor de caracteres verificando se cada um é um dígito ou um
+		// caracter permitido
 		for (int i = 0; i < chars.length; i++) {
 			if (!Character.isDigit(chars[i]) && !isAllowedChar(chars[i])) {
-				return; // Se o caracter não é um dígito e não está na lista de permitidos, retorna sem inserir
+				return; // Se o caracter não é um dígito e não está na lista de permitidos, retorna sem
+						// inserir
 			}
 		}
-		// Insere o texto normalmente, já que ele é composto apenas de dígitos ou caracteres permitidos
+		// Insere o texto normalmente, já que ele é composto apenas de dígitos ou
+		// caracteres permitidos
 		super.insertString(offs, new String(chars), a);
 	}
 

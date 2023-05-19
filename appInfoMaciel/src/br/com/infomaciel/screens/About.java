@@ -13,7 +13,13 @@ import javax.swing.JLabel;
  */
 public class About extends JFrame {
 
-	private static final long serialVersionUID = 2L;
+	/**
+	 * Número de série para a serialização.
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Painel para exibição de informações sobre o sistema.
+	 */
 	private JPanel Sobre;
 
 	/**

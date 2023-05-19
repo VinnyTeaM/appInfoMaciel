@@ -34,21 +34,18 @@ import net.proteanit.sql.DbUtils;
 public class TelaClientes extends JInternalFrame {
 
 	/**
-	 * Método responsável por criar Cliente
+	 * @param criarCliente     criar Cliente
 	 * 
-	 * @return criarCliente
+	 * @param atualizarCliente modificar Cliente
 	 * 
-	 *         Método responsável por modificar Cliente
-	 * @return atualizarCliente
-	 * 
-	 *         Método responsável por deletar Cliente
-	 * @return deletarCliente
+	 * @param deletarCliente   deletar Cliente
 	 *
-	 *         Método responsável por pesquisar clientes
-	 * @return pesquisarCliente
+	 * @param pesquisarCliente pesquisar clientes
 	 * 
-	 * 
-	 *
+	 */
+
+	/**
+	 * Número de série para a serialização.
 	 */
 	private static final long serialVersionUID = 1;
 	Connection conexao = null;
@@ -66,6 +63,8 @@ public class TelaClientes extends JInternalFrame {
 
 	/**
 	 * Launch the application.
+	 * 
+	 * @param args the command-line arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

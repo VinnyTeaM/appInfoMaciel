@@ -25,6 +25,17 @@ import br.com.infomaciel.dal.ConexaoDao;
 
 public class TelaUsuarios extends JInternalFrame {
 
+	/**
+	 * @param criarUsuario     criar Usuario
+	 * 
+	 * @param deletarUsuario   deletar Usuario
+	 * 
+	 * @param pesquisarUsuario pesquisar Usuario
+	 * 
+	 * @param atualizarUsuario atualizar clientes
+	 * 
+	 */
+
 	// usando a variavel conexao do DAL
 	Connection conexao = null;
 	/*
@@ -35,13 +46,39 @@ public class TelaUsuarios extends JInternalFrame {
 
 	PreparedStatement pst = null;
 	ResultSet rs = null;
-
-	private static final long serialVersionUID = 4L;
+	/**
+	 * Número de série para a serialização.
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Campo de texto para exibição/entrada do ID do usuário.
+	 */
 	private JTextField txtUsuId;
+
+	/**
+	 * Campo de texto para exibição/entrada da senha do usuário.
+	 */
 	private JTextField txtUsuSenha;
+
+	/**
+	 * Campo de texto para exibição/entrada do login do usuário.
+	 */
 	private JTextField txtUsuLogin;
+
+	/**
+	 * Campo de texto para exibição/entrada do nome do usuário.
+	 */
 	private JTextField txtUsuNome;
+
+	/**
+	 * Campo de texto formatado para exibição/entrada do telefone do usuário.
+	 */
 	private JFormattedTextField txtUsuFone;
+
+	/**
+	 * ComboBox para seleção do perfil do usuário.
+	 */
+	private JComboBox<String> cboUsuPerfil;
 
 	/**
 	 * Launch the application.
@@ -63,8 +100,7 @@ public class TelaUsuarios extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaUsuarios() {
-		setTitle(
-				"Usuários / Cadastros");
+		setTitle("Usuários / Cadastros");
 		setSize(608, 430);
 		setClosable(true);
 		setMaximizable(true);
@@ -116,7 +152,7 @@ public class TelaUsuarios extends JInternalFrame {
 		txtUsuSenha.setBounds(375, 167, 145, 20);
 		getContentPane().add(txtUsuSenha);
 
-		JComboBox<String> cboUsuPerfil = new JComboBox<>();
+		cboUsuPerfil = new JComboBox<>();
 		cboUsuPerfil.setModel(new DefaultComboBoxModel<String>(new String[] { "", "usuario", "tecnico", "admin" }));
 		cboUsuPerfil.setBounds(142, 56, 77, 22);
 		getContentPane().add(cboUsuPerfil);
@@ -139,32 +175,7 @@ public class TelaUsuarios extends JInternalFrame {
 		JButton btnUsuCreate = new JButton("");
 		btnUsuCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conexao = ConexaoDao.getConnection();
-				String sql = "insert into tbuser(iduser,user,login,password,perfil,phone) values(?,?,?,?,?,?)";
-				try {
-					pst = conexao.prepareStatement(sql);
-					pst.setString(1, txtUsuId.getText());
-					pst.setString(2, txtUsuNome.getText());
-					pst.setString(3, txtUsuLogin.getText());
-					pst.setString(4, txtUsuSenha.getText());
-					pst.setString(5, cboUsuPerfil.getSelectedItem().toString());
-					pst.setString(6, txtUsuFone.getText());
-					// validação dos campos obrigatorios
-					if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty())
-							|| (txtUsuLogin.getText().isEmpty()) || (txtUsuSenha.getText().isEmpty())) {
-						JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios!");
-					} else {
-
-						// a linha abaixo atualiza a tabela usuario com os dados do formulario
-						pst.executeUpdate();
-						JOptionPane.showMessageDialog(null, "Usuário adicionado com sucesso!", "Sucesso",
-								JOptionPane.INFORMATION_MESSAGE);
-						LimparCamposUtil.limparCamposUsId(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
-								cboUsuPerfil);
-					}
-				} catch (Exception erro) {
-					JOptionPane.showMessageDialog(null, erro);
-				}
+				criarUsuario();
 			}
 		});
 		btnUsuCreate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -178,23 +189,7 @@ public class TelaUsuarios extends JInternalFrame {
 		JButton btnUsuDelete = new JButton("");
 		btnUsuDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// estrutura abaixo confirma a remoção do usuario.
-				int remover = JOptionPane.showConfirmDialog(null, "tem certeza que deseja remover este usuário?",
-						"Atenção", JOptionPane.YES_NO_OPTION);
-				if (remover == JOptionPane.YES_OPTION) {
-					String sql = "delete from tbuser where iduser=?";
-					try {
-						pst = conexao.prepareStatement(sql);
-						pst.setString(1, txtUsuId.getText());
-						pst.executeUpdate();
-						LimparCamposUtil.limparCamposUsId(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
-								cboUsuPerfil);
-						JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!", "Sucesso",
-								JOptionPane.INFORMATION_MESSAGE);
-					} catch (Exception erro) {
-						JOptionPane.showMessageDialog(null, erro);
-					}
-				}
+				deletarUsuario();
 			}
 		});
 		btnUsuDelete.setToolTipText("Apagar");
@@ -208,35 +203,7 @@ public class TelaUsuarios extends JInternalFrame {
 		JButton btnUsuRead = new JButton("");
 		btnUsuRead.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conexao = ConexaoDao.getConnection();
-				String sql = "select * from tbuser where  iduser = ?";
-
-				try {
-
-					if (txtUsuId.getText().equals("")) {
-						JOptionPane.showMessageDialog(null, "Digite um ID válido");
-					} else {
-						pst = conexao.prepareStatement(sql);
-						pst.setString(1, txtUsuId.getText());
-						rs = pst.executeQuery();
-						if (rs.next()) {
-							txtUsuNome.setText(rs.getString(2));
-							txtUsuFone.setText(rs.getString(6));
-							txtUsuLogin.setText(rs.getString(3));
-							txtUsuSenha.setText(rs.getString(4));
-							// a linha abaixo se refere ao combobox
-							cboUsuPerfil.setSelectedItem(rs.getString(5));
-						} else {
-							JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
-							// as linhas a baixo "limpa" os campos
-							LimparCamposUtil.limparCampos(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha);
-
-						}
-					}
-				} catch (Exception erro) {
-					JOptionPane.showMessageDialog(null, erro);
-
-				}
+				pesquisarUsuario();
 			}
 		});
 
@@ -251,37 +218,7 @@ public class TelaUsuarios extends JInternalFrame {
 		JButton btnUsuUpdate = new JButton("");
 		btnUsuUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conexao = ConexaoDao.getConnection();
-				// sempre prestar muito atenção na seguencia para passagem dos paramentros
-				String sql = "update tbuser set user=?,login=?,password=?,perfil=?,phone=? where iduser=?";
-				try {
-
-					pst = conexao.prepareStatement(sql);
-					pst.setString(1, txtUsuNome.getText());
-					pst.setString(2, txtUsuLogin.getText());
-					pst.setString(3, txtUsuSenha.getText());
-					pst.setString(4, cboUsuPerfil.getSelectedItem().toString());
-					pst.setString(5, txtUsuFone.getText());
-					pst.setString(6, txtUsuId.getText());
-
-					if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty())
-							|| (txtUsuLogin.getText().isEmpty()) || (txtUsuSenha.getText().isEmpty())) {
-						JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios!");
-
-					} else {
-						// a linha abaixo altera a tabela usuario com os dados do formulario
-						pst.executeUpdate();
-						LimparCamposUtil.limparCamposUsId(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha, txtUsuId,
-								cboUsuPerfil);
-						JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!", "Sucesso",
-								JOptionPane.INFORMATION_MESSAGE);
-					}
-
-				} catch (Exception erro) {
-					JOptionPane.showMessageDialog(null, erro);
-					// System.out.println(erro);
-				}
-
+				atualizarUsuario();
 			}
 		});
 		btnUsuUpdate.setToolTipText("Atualizar");
@@ -318,5 +255,130 @@ public class TelaUsuarios extends JInternalFrame {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * Método responsável por criar um usuário.
+	 */
+	public void criarUsuario() {
+		conexao = ConexaoDao.getConnection();
+		String sql = "insert into tbuser(iduser,user,login,password,perfil,phone) values(?,?,?,?,?,?)";
+		try {
+			pst = conexao.prepareStatement(sql);
+			pst.setString(1, txtUsuId.getText());
+			pst.setString(2, txtUsuNome.getText());
+			pst.setString(3, txtUsuLogin.getText());
+			pst.setString(4, txtUsuSenha.getText());
+			pst.setString(5, cboUsuPerfil.getSelectedItem().toString());
+			pst.setString(6, txtUsuFone.getText());
+			// validação dos campos obrigatorios
+			if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (txtUsuLogin.getText().isEmpty())
+					|| (txtUsuSenha.getText().isEmpty())) {
+				JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios!");
+			} else {
+
+				// a linha abaixo atualiza a tabela usuario com os dados do formulario
+				pst.executeUpdate();
+				JOptionPane.showMessageDialog(null, "Usuário adicionado com sucesso!", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+				LimparCamposUtil.limparCamposUsId(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
+						cboUsuPerfil);
+			}
+		} catch (Exception erro) {
+			JOptionPane.showMessageDialog(null, erro);
+		}
+	}
+	/**
+	 * Método responsável por deletar um usuário.
+	 */
+	public void deletarUsuario() {
+		// estrutura abaixo confirma a remoção do usuario.
+		int remover = JOptionPane.showConfirmDialog(null, "tem certeza que deseja remover este usuário?", "Atenção",
+				JOptionPane.YES_NO_OPTION);
+		if (remover == JOptionPane.YES_OPTION) {
+			String sql = "delete from tbuser where iduser=?";
+			try {
+				pst = conexao.prepareStatement(sql);
+				pst.setString(1, txtUsuId.getText());
+				pst.executeUpdate();
+				LimparCamposUtil.limparCamposUsId(txtUsuId, txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha,
+						cboUsuPerfil);
+				JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception erro) {
+				JOptionPane.showMessageDialog(null, erro);
+			}
+		}
+	}
+
+	/**
+	 * Método responsável por pesquisar um usuário.
+	 */
+	public void pesquisarUsuario() {
+		conexao = ConexaoDao.getConnection();
+		String sql = "select * from tbuser where  iduser = ?";
+
+		try {
+
+			if (txtUsuId.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Digite um ID válido");
+			} else {
+				pst = conexao.prepareStatement(sql);
+				pst.setString(1, txtUsuId.getText());
+				rs = pst.executeQuery();
+				if (rs.next()) {
+					txtUsuNome.setText(rs.getString(2));
+					txtUsuFone.setText(rs.getString(6));
+					txtUsuLogin.setText(rs.getString(3));
+					txtUsuSenha.setText(rs.getString(4));
+					// a linha abaixo se refere ao combobox
+					cboUsuPerfil.setSelectedItem(rs.getString(5));
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
+					// as linhas a baixo "limpa" os campos
+					LimparCamposUtil.limparCampos(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha);
+
+				}
+			}
+		} catch (Exception erro) {
+			JOptionPane.showMessageDialog(null, erro);
+
+		}
+	}
+
+	/**
+	 * Método responsável por atualizar um usuário.
+	 */
+	public void atualizarUsuario() {
+		conexao = ConexaoDao.getConnection();
+		// sempre prestar muito atenção na seguencia para passagem dos paramentros
+		String sql = "update tbuser set user=?,login=?,password=?,perfil=?,phone=? where iduser=?";
+		try {
+
+			pst = conexao.prepareStatement(sql);
+			pst.setString(1, txtUsuNome.getText());
+			pst.setString(2, txtUsuLogin.getText());
+			pst.setString(3, txtUsuSenha.getText());
+			pst.setString(4, cboUsuPerfil.getSelectedItem().toString());
+			pst.setString(5, txtUsuFone.getText());
+			pst.setString(6, txtUsuId.getText());
+
+			if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (txtUsuLogin.getText().isEmpty())
+					|| (txtUsuSenha.getText().isEmpty())) {
+				JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios!");
+
+			} else {
+				// a linha abaixo altera a tabela usuario com os dados do formulario
+				pst.executeUpdate();
+				LimparCamposUtil.limparCamposUsId(txtUsuNome, txtUsuFone, txtUsuLogin, txtUsuSenha, txtUsuId,
+						cboUsuPerfil);
+				JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+
+		} catch (Exception erro) {
+			JOptionPane.showMessageDialog(null, erro);
+			// System.out.println(erro);
+		}
+
 	}
 }

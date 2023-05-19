@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"br.com.infomaciel.dal"},{"l":"br.com.infomaciel.screens"}];updateSearchResults();

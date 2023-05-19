@@ -33,17 +33,17 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class TelaPrincipal extends JFrame {
-	
+
 	/**
-	 * Método para chamar relatorio de clientes
-	 * @return relatorioCli
+	 * @param relatorioCli   chamar relatorio de clientes
 	 * 
-	 * Método para chamar relatorio de clientes
-	 * @return relatorioServ
+	 * @param relatorioServ  chamar relatorio de clientes
 	 */
 
 	Connection conexao = null;
-
+	/**
+	 * Número de série para a serialização.
+	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public static JMenuItem menCadUsu;
@@ -111,7 +111,6 @@ public class TelaPrincipal extends JFrame {
 		menCadCli.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK));
 		menCad.add(menCadCli);
 
-		
 		JMenuItem menCadOs = new JMenuItem("OS");
 		menCadOs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -146,11 +145,10 @@ public class TelaPrincipal extends JFrame {
 
 		JMenuItem memRelCli = new JMenuItem("Clientes");
 		memRelCli.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		    	relatorioCli();		       
-		    }
+			public void actionPerformed(ActionEvent e) {
+				relatorioCli();
+			}
 		});
-
 
 		memRelCli.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_DOWN_MASK));
 		memRelCli.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -159,10 +157,10 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem menRelSer = new JMenuItem("Serviços");
 		menRelSer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		      relatorioServ();
-		    }
+				relatorioServ();
+			}
 		});
-	
+
 		menRelSer.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menRelSer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK));
 		menRel.add(menRelSer);
@@ -250,53 +248,53 @@ public class TelaPrincipal extends JFrame {
 		((Timer) timer).start();
 
 	}
-	
+
 	public void relatorioCli() {
-		 int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
-	                JOptionPane.YES_NO_OPTION);
-	        if (confirma == JOptionPane.YES_OPTION) {
-	            // Imprimir relatório com o framework Jasper
-	            try {
-	                // Reestabelecer a conexão com o banco de dados
-	                conexao = ConexaoDao.getConnection();
+		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
+				JOptionPane.YES_NO_OPTION);
+		if (confirma == JOptionPane.YES_OPTION) {
+			// Imprimir relatório com o framework Jasper
+			try {
+				// Reestabelecer a conexão com o banco de dados
+				conexao = ConexaoDao.getConnection();
 
-	                // Preencher o relatório
-	                JasperPrint print = JasperFillManager.fillReport(
-	                        "C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\clientes.jasper", null, conexao);
+				// Preencher o relatório
+				JasperPrint print = JasperFillManager.fillReport(
+						"C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\clientes.jasper", null, conexao);
 
-	                // Exibir o relatório
-	                JasperViewer.viewReport(print, false);
-	                conexao.close();
+				// Exibir o relatório
+				JasperViewer.viewReport(print, false);
+				conexao.close();
 
-	            } catch (Exception e2) {
-	                JOptionPane.showMessageDialog(null, "Erro ao emitir relatório: " + e2.getMessage());
-	                e2.printStackTrace();
-	            }
-	        }
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "Erro ao emitir relatório: " + e2.getMessage());
+				e2.printStackTrace();
+			}
+		}
 	}
-	
+
 	public void relatorioServ() {
-		  int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
-	                JOptionPane.YES_NO_OPTION);
-	        if (confirma == JOptionPane.YES_OPTION) {
-	            // Imprimir relatório com o framework Jasper
-	            try {
-	                // Reestabelecer a conexão com o banco de dados
-	                conexao = ConexaoDao.getConnection();
+		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
+				JOptionPane.YES_NO_OPTION);
+		if (confirma == JOptionPane.YES_OPTION) {
+			// Imprimir relatório com o framework Jasper
+			try {
+				// Reestabelecer a conexão com o banco de dados
+				conexao = ConexaoDao.getConnection();
 
-	                // Preencher o relatório
-	                JasperPrint print = JasperFillManager.fillReport(
-	                        "C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\servicos.jasper", null, conexao);
+				// Preencher o relatório
+				JasperPrint print = JasperFillManager.fillReport(
+						"C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\servicos.jasper", null, conexao);
 
-	                // Exibir o relatório
-	                JasperViewer.viewReport(print, false);
-	                conexao.close();
+				// Exibir o relatório
+				JasperViewer.viewReport(print, false);
+				conexao.close();
 
-	            } catch (Exception e1) {
-	                JOptionPane.showMessageDialog(null, "Erro ao emitir relatório: " + e1.getMessage());
-	                e1.printStackTrace();
-	            }
-	        }
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro ao emitir relatório: " + e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	public JMenuItem getMenCadUsu() {
