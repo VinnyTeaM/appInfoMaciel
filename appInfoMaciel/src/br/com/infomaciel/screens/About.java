@@ -9,21 +9,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
 /**
- * A classe About representa a janela de sobre do sistema.
+ * A classe About representa a janela de "sobre" do sistema.
  */
 public class About extends JFrame {
 
 	/**
-	 * Número de série para a serialização.
+	 * Numero de serie para a serializacao.
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * Painel para exibição de informações sobre o sistema.
+	 * Painel para exibicao de informacoes sobre o sistema.
 	 */
 	private JPanel Sobre;
 
 	/**
-	 * Método principal que inicia a aplicação.
+	 * Metodo principal que inicia a aplicacao.
 	 *
 	 * @param args Os argumentos da linha de comando.
 	 */

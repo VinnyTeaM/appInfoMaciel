@@ -19,63 +19,63 @@ import javax.swing.JTextField;
 import br.com.infomaciel.dal.ConexaoDao;
 
 /**
- * A classe TelaTrocaSenha é responsável por exibir uma interface gráfica para o
- * usuário alterar sua senha. Ela herda funcionalidades da classe JInternalFrame
- * e implementa a lógica de troca de senha no banco de dados conforme o usuário
+ * A classe TelaTrocaSenha e responsavel por exibir uma interface grafica para o
+ * usuario alterar sua senha. Ela herda funcionalidades da classe JInternalFrame
+ * e implementa a logica de troca de senha no banco de dados conforme o usuario
  * logado.
  */
 public class TelaTrocaSenha extends JInternalFrame {
 
 	/**
 	 * 
-	 * O objeto Connection representa a conexão com o banco de dados. Ele é
-	 * responsável por estabelecer a comunicação entre a aplicação e o banco de
-	 * dados, permitindo a execução de consultas e atualizações.
+	 * O objeto Connection representa a conexao com o banco de dados. Ele e
+	 * responsavel por estabelecer a comunicacao entre a aplicacao e o banco de
+	 * dados, permitindo a execucao de consultas e atualizacoes.
 	 */
 	Connection conexao = null;
 
 	/**
 	 * 
-	 * O objeto PreparedStatement representa uma instrução SQL pré-compilada que
-	 * pode ser executada várias vezes com diferentes parâmetros. Ele é usado para
-	 * melhorar o desempenho e a segurança, prevenindo ataques de injeção de SQL.
+	 * O objeto PreparedStatement representa uma instrucao SQL pre compilada que
+	 * pode ser executada varias vezes com diferentes parametros. Ele e usado para
+	 * melhorar o desempenho e a seguranca, prevenindo ataques de injecao de SQL.
 	 */
 	PreparedStatement pst = null;
 	/**
 	 * 
 	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
-	 * banco de dados. Ele fornece métodos para iterar sobre as linhas do conjunto
+	 * banco de dados. Ele fornece metodos para iterar sobre as linhas do conjunto
 	 * de resultados e acessar os dados armazenados em cada coluna.
 	 */
 	ResultSet rs = null;
 
 	/**
-	 * Número de série para a serialização.
+	 * Numero de serie para a serializacao.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
-	 * Rótulo para o campo "Usuário".
+	 * Campo para o campo "Usuario".
 	 */
 	private JLabel lblSenhaUsu;
 	/**
 	 * 
-	 * Rótulo para o campo "Senha".
+	 * Campo para o campo "Senha".
 	 */
 	private JLabel lblSenhaSenha;
 	/**
 	 * 
-	 * Rótulo para o campo "Nova senha".
+	 * Campo para o campo "Nova senha".
 	 */
 	private JLabel lblSenhaNova;
 	/**
 	 * 
-	 * Rótulo para o campo "Repetir nova senha".
+	 * Campo para o campo "Repetir nova senha".
 	 */
 	private JLabel lblSenhaRep;
 	/**
-	 * Campo de texto e campo de senha utilizado na interface de alteração de senha.
+	 * Campo de texto e campo de senha utilizado na interface de alteracao de senha.
 	 */
 	private JTextField txtSenhaUsu;
 
@@ -102,23 +102,23 @@ public class TelaTrocaSenha extends JInternalFrame {
 
 	/**
 	 * 
-	 * Botão de confirmação para a alteração de senha.
+	 * Botao de confirmacao para a alteracao de senha.
 	 */
 	private JButton btnSenhaConf;
 	/**
 	 * 
-	 * Botão de cancelamento da alteração de senha.
+	 * Botao de cancelamento da alteracao de senha.
 	 */
 	private JButton btnSenhaCan;
 
 	/**
 	 * 
-	 * Variável que armazena o nome de usuário do usuário logado.
+	 * Variavel que armazena o nome de usuario do usuario logado.
 	 */
 	String nomeUsuario = TelaPrincipal.getNomeUsuario();
 	/**
 	 * 
-	 * Variável que armazena o perfil do usuário logado.
+	 * Variavel que armazena o perfil do usuario logado.
 	 */
 	String perfil = TelaLogin.getPerfil();
 
@@ -166,7 +166,8 @@ public class TelaTrocaSenha extends JInternalFrame {
 		getContentPane().add(lblSenhaRep);
 		getContentPane().add(txtSenhaRep);
 		getContentPane().add(chbSenha);
-		getContentPane().add(new JLabel()); // espaço em branco
+		// espaco em branco
+		getContentPane().add(new JLabel()); 
 		getContentPane().add(btnSenhaConf);
 		getContentPane().add(btnSenhaCan);
 		getRootPane().setDefaultButton(btnSenhaConf);

@@ -32,36 +32,36 @@ import br.com.infomaciel.dal.ConexaoDao;
 import net.proteanit.sql.DbUtils;
 
 /**
- * A classe TelaClientes é responsável por exibir uma interface gráfica para o
- * usuário interagir com os clientes. Ela herda funcionalidades da classe
- * JInternalFrame e implementa a lógica relacionada aos clientes.
+ * A classe TelaClientes e responsavel por exibir uma interface grafica para o
+ * usuario interagir com os clientes. Ela herda funcionalidades da classe
+ * JInternalFrame e implementa a logica relacionada aos clientes.
  */
 public class TelaClientes extends JInternalFrame {
 
 	/**
-	 * Número de série para a serialização.
+	 * Numero de serie para a serializacao.
 	 */
 	private static final long serialVersionUID = 1;
 
 	/**
 	 * 
-	 * O objeto Connection representa a conexão com o banco de dados. Ele é
-	 * responsável por estabelecer a comunicação entre a aplicação e o banco de
-	 * dados, permitindo a execução de consultas e atualizações.
+	 * O objeto Connection representa a conexao com o banco de dados. Ele e
+	 * responsavel por estabelecer a comunicacao entre a aplicacao e o banco de
+	 * dados, permitindo a execucao de consultas e atualizacoes.
 	 */
 	Connection conexao = null;
 
 	/**
 	 * 
-	 * O objeto PreparedStatement representa uma instrução SQL pré-compilada que
-	 * pode ser executada várias vezes com diferentes parâmetros. Ele é usado para
-	 * melhorar o desempenho e a segurança, prevenindo ataques de injeção de SQL.
+	 * O objeto PreparedStatement representa uma instrucao SQL pre compilada que
+	 * pode ser executada varias vezes com diferentes parametros. Ele e usado para
+	 * melhorar o desempenho e a seguranca, prevenindo ataques de injecao de SQL.
 	 */
 	PreparedStatement pst = null;
 	/**
 	 * 
 	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
-	 * banco de dados. Ele fornece métodos para iterar sobre as linhas do conjunto
+	 * banco de dados. Ele fornece metodos para iterar sobre as linhas do conjunto
 	 * de resultados e acessar os dados armazenados em cada coluna.
 	 */
 	ResultSet rs = null;
@@ -73,7 +73,7 @@ public class TelaClientes extends JInternalFrame {
 	private JTextField txtCliNome;
 	/**
 	 * 
-	 * JTextField utilizado para inserir ou exibir o endereço do cliente.
+	 * JTextField utilizado para inserir ou exibir o endereco do cliente.
 	 */
 	private JTextField txtCliEnd;
 	/**
@@ -255,7 +255,7 @@ public class TelaClientes extends JInternalFrame {
 
 			@Override
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return false; // Torna todas as células não editáveis
+				return false; // Torna todas as celulas nao editaveis
 			}
 		};
 		// evento usado para setar os campos na tabela (com click do mouse)
@@ -267,7 +267,7 @@ public class TelaClientes extends JInternalFrame {
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return false; // Torna todas as células não editáveis
+				return false; // Torna todas as celulas nao editaveis
 			}
 		};
 		tblClientes.setFocusable(false);
@@ -311,7 +311,7 @@ public class TelaClientes extends JInternalFrame {
 		tblClientes.setFillsViewportHeight(true);
 		tblClientes.setBounds(10, 39, 572, 53);
 		getContentPane().add(tblClientes);
-		// a linha abaixo desabilita o botão adicionar quando for cliente for setado
+		// a linha abaixo desabilita o botao adicionar quando for cliente for setado
 
 		// Criar um JScrollPane e adicionar a tabela a ele
 		JScrollPane scrollPane = new JScrollPane(tblClientes);
@@ -319,7 +319,7 @@ public class TelaClientes extends JInternalFrame {
 		// Definir as dimensões e a posição do JScrollPane
 		scrollPane.setBounds(10, 39, 572, 83);
 
-		// Adicionar o JScrollPane ao conteúdo do contêiner ou painel adequado
+		// Adicionar o JScrollPane ao conteudo do conteiner ou painel adequado
 		getContentPane().add(scrollPane);
 
 		txtCliId = new JTextField();
@@ -349,8 +349,8 @@ public class TelaClientes extends JInternalFrame {
 			pst.setString(4, txtCliEmail.getText());
 
 			/*
-			 * .trim(): É um método da classe String que remove os espaços em branco no
-			 * início e no final de uma string. Ele retorna uma nova string sem os espaços
+			 * .trim(): E um metodo da classe String que remove os espaços em branco no
+			 * inicio e no final de uma string. Ele retorna uma nova string sem os espaços
 			 * em branco adicionais.
 			 */
 			String texto = txtCliFone.getText().trim();
@@ -371,11 +371,11 @@ public class TelaClientes extends JInternalFrame {
 
 	/**
 	 * 
-	 * Atualiza as informações de um cliente existente.
+	 * Atualiza as informacoes de um cliente existente.
 	 */
 	public void atualizarCliente() {
 		conexao = ConexaoDao.getConnection();
-		// sempre prestar muito atenção na seguencia para passagem dos paramentros
+		// sempre prestar muito atencao na seguencia para passagem dos paramentros
 		String sql = "UPDATE tbclient SET namecli=?,addcli=?,phonecli=?,emailcli=? WHERE idcli=?";
 		try {
 
@@ -406,8 +406,8 @@ public class TelaClientes extends JInternalFrame {
 	}
 
 	/**
-	 * Deleta um cliente do banco de dados. Antes de realizar a exclusão, exibe uma
-	 * mensagem de confirmação para o usuário.
+	 * Deleta um cliente do banco de dados. Antes de realizar a exclusao, exibe uma
+	 * mensagem de confirmacao para o usuario.
 	 * 
 	 */
 	public void deletarCliente() {

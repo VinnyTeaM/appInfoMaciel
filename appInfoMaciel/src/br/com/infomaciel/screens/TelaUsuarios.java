@@ -25,10 +25,10 @@ import br.com.infomaciel.dal.ConexaoDao;
 
 /**
  * 
- * A classe TelaUsuarios é uma janela interna que exibe a interface gráfica para
- * gerenciamento de usuários. Ela herda funcionalidades da classe JInternalFrame
- * e permite a interação com o banco de dados para realizar operações
- * relacionadas aos usuários, como criar, editar, pesquisar e excluir.
+ * A classe TelaUsuarios a uma janela interna que exibe a interface grafica para
+ * gerenciamento de usuarios. Ela herda funcionalidades da classe JInternalFrame
+ * e permite a interacaoo com o banco de dados para realizar operacoes
+ * relacionadas aos usuarios, como criar, editar, pesquisar e excluir.
  */
 public class TelaUsuarios extends JInternalFrame {
 
@@ -45,62 +45,62 @@ public class TelaUsuarios extends JInternalFrame {
 
 	/**
 	 * 
-	 * O objeto Connection representa a conexão com o banco de dados. Ele é
-	 * responsável por estabelecer a comunicação entre a aplicação e o banco de
-	 * dados, permitindo a execução de consultas e atualizações.
+	 * O objeto Connection representa a conexao com o banco de dados. Ele e
+	 * responsavel por estabelecer a comunicação entre a aplicacao e o banco de
+	 * dados, permitindo a execucao de consultas e atualizacoes.
 	 */
 	Connection conexao = null;
 
 	/**
 	 * 
-	 * O objeto PreparedStatement representa uma instrução SQL pré-compilada que
-	 * pode ser executada várias vezes com diferentes parâmetros. Ele é usado para
-	 * melhorar o desempenho e a segurança, prevenindo ataques de injeção de SQL.
+	 * O objeto PreparedStatement representa uma instrucao SQL pre compilada que
+	 * pode ser executada várias vezes com diferentes parametros. Ele e usado para
+	 * melhorar o desempenho e a seguranca, prevenindo ataques de injecao de SQL.
 	 */
 	PreparedStatement pst = null;
 	/**
 	 * 
 	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
-	 * banco de dados. Ele fornece métodos para iterar sobre as linhas do conjunto
+	 * banco de dados. Ele fornece metodos para iterar sobre as linhas do conjunto
 	 * de resultados e acessar os dados armazenados em cada coluna.
 	 */
 	ResultSet rs = null;
 	/**
-	 * Número de série para a serialização.
+	 * Numero de serie para a serializacao.
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * Campo de texto para exibição/entrada do ID do usuário.
+	 * Campo de texto para exibicao/entrada do ID do usuario.
 	 */
 	private JTextField txtUsuId;
 
 	/**
-	 * Campo de texto para exibição/entrada da senha do usuário.
+	 * Campo de texto para exibicao/entrada da senha do usuario.
 	 */
 	private JTextField txtUsuSenha;
 
 	/**
-	 * Campo de texto para exibição/entrada do login do usuário.
+	 * Campo de texto para exibicao/entrada do login do usuario.
 	 */
 	private JTextField txtUsuLogin;
 
 	/**
-	 * Campo de texto para exibição/entrada do nome do usuário.
+	 * Campo de texto para exibicao/entrada do nome do usuario.
 	 */
 	private JTextField txtUsuNome;
 
 	/**
-	 * Campo de texto formatado para exibição/entrada do telefone do usuário.
+	 * Campo de texto formatado para exibicao/entrada do telefone do usuario.
 	 */
 	private JFormattedTextField txtUsuFone;
 
 	/**
-	 * ComboBox para seleção do perfil do usuário.
+	 * ComboBox para selecao do perfil do usuario.
 	 */
 	private JComboBox<String> cboUsuPerfil;
 
 	/**
-	Método principal responsável por iniciar a aplicação.
+	Metodo principal responsavel por iniciar a aplicacao.
 	@param args os argumentos de linha de comando
 	*/
 	public static void main(String[] args) {
@@ -191,7 +191,7 @@ public class TelaUsuarios extends JInternalFrame {
 		getContentPane().add(txtUsuFone);
 		txtUsuFone.setBounds(142, 139, 145, 20);
 
-		// metodo para adicionar usuários
+		// metodo para adicionar usuarios
 		JButton btnUsuCreate = new JButton("");
 		btnUsuCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -205,7 +205,7 @@ public class TelaUsuarios extends JInternalFrame {
 		btnUsuCreate.setBounds(117, 242, 89, 73);
 		getContentPane().add(btnUsuCreate);
 
-		// metodo para remover usuário
+		// metodo para remover usuario
 		JButton btnUsuDelete = new JButton("");
 		btnUsuDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -219,7 +219,7 @@ public class TelaUsuarios extends JInternalFrame {
 		btnUsuDelete.setBounds(414, 242, 89, 73);
 		getContentPane().add(btnUsuDelete);
 
-		// metodo para consultar usuário
+		// metodo para consultar usuario
 		JButton btnUsuRead = new JButton("");
 		btnUsuRead.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -278,7 +278,7 @@ public class TelaUsuarios extends JInternalFrame {
 	}
 
 	/**
-	 * Método responsável por criar um usuário.
+	 * Metodo responsavel por criar um usuario.
 	 */
 	public void criarUsuario() {
 		conexao = ConexaoDao.getConnection();
@@ -291,7 +291,7 @@ public class TelaUsuarios extends JInternalFrame {
 			pst.setString(4, txtUsuSenha.getText());
 			pst.setString(5, cboUsuPerfil.getSelectedItem().toString());
 			pst.setString(6, txtUsuFone.getText());
-			// validação dos campos obrigatorios
+			// validacaoo dos campos obrigatorios
 			if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (txtUsuLogin.getText().isEmpty())
 					|| (txtUsuSenha.getText().isEmpty())) {
 				JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios!");
@@ -310,7 +310,7 @@ public class TelaUsuarios extends JInternalFrame {
 	}
 
 	/**
-	 * Método responsável por deletar um usuário.
+	 * Metodo responsavel por deletar um usuario.
 	 */
 	public void deletarUsuario() {
 		// estrutura abaixo confirma a remoção do usuario.
@@ -333,7 +333,7 @@ public class TelaUsuarios extends JInternalFrame {
 	}
 
 	/**
-	 * Método responsável por pesquisar um usuário.
+	 * Metodo responsavel por pesquisar um usuario.
 	 */
 	public void pesquisarUsuario() {
 		conexao = ConexaoDao.getConnection();
@@ -368,11 +368,11 @@ public class TelaUsuarios extends JInternalFrame {
 	}
 
 	/**
-	 * Método responsável por atualizar um usuário.
+	 * Metodo responsavel por atualizar um usuario.
 	 */
 	public void atualizarUsuario() {
 		conexao = ConexaoDao.getConnection();
-		// sempre prestar muito atenção na seguencia para passagem dos paramentros
+		// sempre prestar muito atencao na seguencia para passagem dos parametros
 		String sql = "update tbuser set user=?,login=?,password=?,perfil=?,phone=? where iduser=?";
 		try {
 

@@ -27,23 +27,23 @@ import br.com.infomaciel.dal.ConexaoDao;
 public class TelaLogin extends JFrame implements ActionListener {
 
 	/**
-	 * Número de série para a serialização.
+	 * Numero de serie para a serializacao.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
-	 * JLabel privado para o rótulo do usuário.
+	 * JLabel privado para o rotulo do usuario.
 	 */
 	private JLabel labelUsuario;
 	/**
 	 * 
-	 * JLabel privado para o rótulo da senha.
+	 * JLabel privado para o rotulo da senha.
 	 */
 	private JLabel labelSenha;
 	/**
 	 * 
-	 * JTextField privado para o campo de entrada do usuário.
+	 * JTextField privado para o campo de entrada do usuario.
 	 */
 	private JTextField txtUsuario;
 	/**
@@ -53,7 +53,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 	private JPasswordField txtSenha;
 
 	/**
-	 * Botão utilizado para fazer login.
+	 * Botao utilizado para fazer login.
 	 */
 	private JButton btnLogin;
 
@@ -63,14 +63,14 @@ public class TelaLogin extends JFrame implements ActionListener {
 	private JLabel lblStatus;
 
 	/**
-	 * Perfil do usuário logado.
+	 * Perfil do usuario logado.
 	 */
 	private static String perfil;
 
 	/**
-	 * Obtém o perfil do usuário logado.
+	 * Obtem o perfil do usuario logado.
 	 *
-	 * @return O perfil do usuário.
+	 * @return O perfil do usuario.
 	 */
 	public static String getPerfil() {
 		return perfil;
@@ -190,9 +190,9 @@ public class TelaLogin extends JFrame implements ActionListener {
 
 	/**
 	 * 
-	 * Método de entrada do programa.
+	 * Metodo de entrada do programa.
 	 * 
-	 * @param args argumentos de linha de comando (não são utilizados)
+	 * @param args argumentos de linha de comando (nao sao utilizados)
 	 */
 	public static void main(String[] args) {
 		new TelaLogin();

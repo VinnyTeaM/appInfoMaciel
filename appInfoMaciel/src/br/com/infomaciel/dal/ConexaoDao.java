@@ -28,7 +28,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Conexão com o banco de dados
+ * Conexao com o banco de dados
  * @author VinnyTeaM
  * @version 1.0
  */
@@ -36,7 +36,7 @@ import java.sql.SQLException;
 public class ConexaoDao {
 
 	/**
-	 * Método responsável pela conexão com banco
+	 * Metodo responsavel pela conexao com banco
 	 * 
 	 * @return conexao
 	 */

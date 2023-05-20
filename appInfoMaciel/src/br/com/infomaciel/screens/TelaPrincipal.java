@@ -34,41 +34,41 @@ import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * 
- * A classe TelaPrincipal é responsável por exibir a tela principal da
- * aplicação. Ela herda funcionalidades da classe JFrame e contém os componentes
- * e a lógica de interação da interface principal.
+ * A classe TelaPrincipal e responsavel por exibir a tela principal da
+ * aplicacao. Ela herda funcionalidades da classe JFrame e contem os componentes
+ * e a logica de interacao da interface principal.
  */
 public class TelaPrincipal extends JFrame {
 
 	/**
 	 * 
-	 * O objeto Connection representa a conexão com o banco de dados. Ele é
-	 * responsável por estabelecer a comunicação entre a aplicação e o banco de
-	 * dados, permitindo a execução de consultas e atualizações.
+	 * O objeto Connection representa a conexao com o banco de dados. Ele e
+	 * responsavel por estabelecer a comunicacao entre a aplicacao e o banco de
+	 * dados, permitindo a execucao de consultas e atualizacoes.
 	 */
 	Connection conexao = null;
 	/**
-	 * Número de série para a serialização.
+	 * Numero de serie para a serializacao.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Painel de conteúdo principal.
+	 * Painel de conteudo principal.
 	 */
 	private JPanel contentPane;
 
 	/**
-	 * Item de menu para cadastro de usuários.
+	 * Item de menu para cadastro de usuarios.
 	 */
 	public static JMenuItem menCadUsu;
 
 	/**
-	 * Menu de relatórios.
+	 * Menu de relatorios.
 	 */
 	public static JMenu menRel;
 
 	/**
-	 * Rótulo que exibe o nome de usuário logado.
+	 * Rotulo que exibe o nome de usuario logado.
 	 */
 	public static JLabel lblUsuario;
 
@@ -79,9 +79,9 @@ public class TelaPrincipal extends JFrame {
 
 	/**
 	 * 
-	 * Método principal responsável por iniciar a aplicação.
+	 * Metodo principal responsavel por iniciar a aplicacao.
 	 * 
-	 * @param args argumentos de linha de comando (não são utilizados).
+	 * @param args argumentos de linha de comando (nao sao utilizados).
 	 */
 
 	public static void main(String[] args) {
@@ -280,7 +280,7 @@ public class TelaPrincipal extends JFrame {
 
 	/**
 	 * 
-	 * Método responsável por gerar um relatório de clientes.
+	 * Metodo responsavel por gerar um relatorio de clientes.
 	 */
 	public void relatorioCli() {
 		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
@@ -308,22 +308,22 @@ public class TelaPrincipal extends JFrame {
 
 	/**
 	 * 
-	 * O método relatorioServ responsável por gerar um relatório de serviços.
+	 * O metodo relatorioServ responsavel por gerar um relatorio de servicos Jasper Report.
 	 */
 	public void relatorioServ() {
 		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
 				JOptionPane.YES_NO_OPTION);
 		if (confirma == JOptionPane.YES_OPTION) {
-			// Imprimir relatório com o framework Jasper
+			// Imprimir relatorio com o framework Jasper
 			try {
-				// Reestabelecer a conexão com o banco de dados
+				// Reestabelecer a conexao com o banco de dados
 				conexao = ConexaoDao.getConnection();
 
-				// Preencher o relatório
+				// Preencher o relatorio
 				JasperPrint print = JasperFillManager.fillReport(
 						"C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\servicos.jasper", null, conexao);
 
-				// Exibir o relatório
+				// Exibir o relatorio
 				JasperViewer.viewReport(print, false);
 				conexao.close();
 
@@ -336,9 +336,9 @@ public class TelaPrincipal extends JFrame {
 
 	/**
 	 * 
-	 * O método getMenCadUsu retorna o item de menu para cadastro de usuários.
+	 * O metodo getMenCadUsu retorna o item de menu para cadastro de usuarios.
 	 * 
-	 * @return O item de menu para cadastro de usuários.
+	 * @return O item de menu para cadastro de usuarios.
 	 */
 	public JMenuItem getMenCadUsu() {
 		return menCadUsu;
@@ -346,9 +346,9 @@ public class TelaPrincipal extends JFrame {
 
 	/**
 	 * 
-	 * O método getMenRel retorna o menu de relatórios.
+	 * O metodo getMenRel retorna o menu de relatorios.
 	 * 
-	 * @return O menu de relatórios.
+	 * @return O menu de relatorios.
 	 */
 	public JMenu getMenRel() {
 		return menRel;
@@ -356,9 +356,9 @@ public class TelaPrincipal extends JFrame {
 
 	/**
 	 * 
-	 * O método getNomeUsuario retorna o nome do usuário logado.
+	 * O metodo getNomeUsuario retorna o nome do usuario logado.
 	 * 
-	 * @return O nome do usuário logado.
+	 * @return O nome do usuario logado.
 	 */
 	public static String getNomeUsuario() {
 		return lblUsuario.getText().toString();

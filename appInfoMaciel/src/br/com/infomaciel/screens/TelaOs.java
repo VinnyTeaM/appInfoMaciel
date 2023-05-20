@@ -40,56 +40,56 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
- * A classe TelaOs é responsável por exibir uma interface gráfica para o usuário
- * interagir com as ordens de serviço. Ela herda funcionalidades da classe
- * JInternalFrame e implementa a lógica relacionada às ordens de serviço.
+ * A classe TelaOs e responsavel por exibir uma interface grafica para o usuario
+ * interagir com as ordens de servico. Ela herda funcionalidades da classe
+ * JInternalFrame e implementa a logica relacionada as ordens de servico.
  */
 public class TelaOs extends JInternalFrame {
 	/**
-	 * Número de série para a serialização.
+	 * Numero de serie para a serializacao.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
-	 * O objeto Connection representa a conexão com o banco de dados. Ele é
-	 * responsável por estabelecer a comunicação entre a aplicação e o banco de
-	 * dados, permitindo a execução de consultas e atualizações.
+	 * O objeto Connection representa a conexao com o banco de dados. Ele e
+	 * responsavel por estabelecer a comunicacao entre a aplicacao e o banco de
+	 * dados, permitindo a execucao de consultas e atualizacoes.
 	 */
 	Connection conexao = null;
 
 	/**
 	 * 
-	 * O objeto PreparedStatement representa uma instrução SQL pré-compilada que
-	 * pode ser executada várias vezes com diferentes parâmetros. Ele é usado para
-	 * melhorar o desempenho e a segurança, prevenindo ataques de injeção de SQL.
+	 * O objeto PreparedStatement representa uma instrucao SQL pre compilada que
+	 * pode ser executada varias vezes com diferentes parametros. Ele e usado para
+	 * melhorar o desempenho e a seguranca, prevenindo ataques de injecao de SQL.
 	 */
 	PreparedStatement pst = null;
 	/**
 	 * 
 	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
-	 * banco de dados. Ele fornece métodos para iterar sobre as linhas do conjunto
+	 * banco de dados. Ele fornece metodos para iterar sobre as linhas do conjunto
 	 * de resultados e acessar os dados armazenados em cada coluna.
 	 */
 	ResultSet rs = null;
 
 	/**
-	 * O tipo de usuário logado.
+	 * O tipo de usuario logado.
 	 */
 	private String type;
 
 	/**
-	 * O perfil do usuário logado obtido a partir da classe TelaLogin.
+	 * O perfil do usuario logado obtido a partir da classe TelaLogin.
 	 */
 	String perfil = TelaLogin.getPerfil();
 
 	/**
-	 * Campo de texto para inserção do número da ordem de serviço.
+	 * Campo de texto para insercao do numero da ordem de servico.
 	 */
 	private JTextField txtOs;
 
 	/**
-	 * Campo de texto para inserção da data da ordem de serviço.
+	 * Campo de texto para insercao da data da ordem de servico.
 	 */
 	private JTextField txtData;
 
@@ -99,7 +99,7 @@ public class TelaOs extends JInternalFrame {
 	private JTextField txtCliPesquisar;
 
 	/**
-	 * Campo de texto para exibição do ID do cliente selecionado.
+	 * Campo de texto para exibicao do ID do cliente selecionado.
 	 */
 	private JTextField txtCliId;
 
@@ -109,81 +109,81 @@ public class TelaOs extends JInternalFrame {
 	private JTable tblClientes;
 
 	/**
-	 * Campo de texto para inserção do equipamento relacionado à ordem de serviço.
+	 * Campo de texto para insercao do equipamento relacionado a ordem de servico.
 	 */
 	private JTextField txtOsEquip;
 
 	/**
-	 * Campo de texto para inserção da definição do problema relacionado à ordem de
-	 * serviço.
+	 * Campo de texto para insercao da definicao do problema relacionado a ordem de
+	 * servico.
 	 */
 	private JTextField txtOsDef;
 
 	/**
-	 * Campo de texto para inserção do serviço a ser realizado na ordem de serviço.
+	 * Campo de texto para insercao do servico a ser realizado na ordem de servico.
 	 */
 	private JTextField txtOsServ;
 
 	/**
-	 * Campo de texto para inserção do técnico responsável pela ordem de serviço.
+	 * Campo de texto para insercao do tecnico responsavel pela ordem de servico.
 	 */
 	private JTextField txtOsTec;
 
 	/**
-	 * Campo de texto para inserção do valor do serviço da ordem de serviço.
+	 * Campo de texto para insercao do valor do servico da ordem de servico.
 	 */
 	private JTextField txtOsValor;
 
 	/**
-	 * Número da ordem de serviço.
+	 * Numero da ordem de servico.
 	 */
 	private String numOs;
 
 	/**
-	 * Botão para atualizar a ordem de serviço.
+	 * Botao para atualizar a ordem de servico.
 	 */
 	private JButton btnOsUpdate;
 
 	/**
-	 * Botão para excluir a ordem de serviço.
+	 * Botao para excluir a ordem de servico.
 	 */
 	private JButton btnOsDelete;
 
 	/**
-	 * Botão para imprimir a ordem de serviço.
+	 * Botao para imprimir a ordem de servico.
 	 */
 	private JButton btnOsPrint;
 
 	/**
-	 * Botão para visualizar os detalhes da ordem de serviço.
+	 * Botao para visualizar os detalhes da ordem de servico.
 	 */
 	private JButton btnOsRead;
 
 	/**
-	 * Botão para criar uma nova ordem de serviço.
+	 * Botao para criar uma nova ordem de servico.
 	 */
 	private JButton btnOsCreate;
 
 	/**
-	 * ComboBox para seleção da situação da ordem de serviço.
+	 * ComboBox para selecao da situacao da ordem de servico.
 	 */
 	private JComboBox<String> cboOsSit;
 
 	/**
-	 * RadioButton para seleção de orçamento.
+	 * RadioButton para selecao de orcamento.
 	 */
 	private JRadioButton rbtOrc;
 
 	/**
-	 * RadioButton para seleção de ordem de serviço.
+	 * RadioButton para selecao de ordem de servico.
 	 */
 	private JRadioButton rbtOs;
 
 	/**
 	 * 
-	 * Método de entrada do programa.
+	 * Metodo de entrada do programa.
 	 * 
-	 * @param args argumentos de linha de comando (não são utilizados)
+	 * @param args argumentos de linha de comando (nao sao utilizados)
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -256,7 +256,7 @@ public class TelaOs extends JInternalFrame {
 		rbtOs.setBounds(111, 57, 129, 23);
 		panel.add(rbtOs);
 
-		// Adicione os botões de opção ao ButtonGroup:
+		// Adicione os botoes de opcao ao ButtonGroup:
 		ButtonGroup buttonGroup = new ButtonGroup();
 		buttonGroup.add(rbtOrc);
 		buttonGroup.add(rbtOs);
@@ -485,7 +485,7 @@ public class TelaOs extends JInternalFrame {
 		try {
 			pst = conexao.prepareStatement(sql);
 			// passando o conteudo de pesquisa para o ?
-			// atenção ao "%" continuação da string sql
+			// atencao ao "%" continuacao da string sql
 			pst.setString(1, txtCliPesquisar.getText() + "%");
 			rs = pst.executeQuery();
 			// a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela.
@@ -497,7 +497,7 @@ public class TelaOs extends JInternalFrame {
 	}
 
 	/**
-	 * Cria uma nova ordem de serviço.
+	 * Cria uma nova ordem de servico.
 	 */
 	public void criarOs() {
 		String sql = "INSERT INTO tbos (type,situation,equipment,defect,service,tech,price,idcli) VALUES (?,?,?,?,?,?,?,?)";
@@ -546,12 +546,12 @@ public class TelaOs extends JInternalFrame {
 	}
 
 	/**
-	 * Pesquisa uma ordem de serviço no banco de dados com base no número da OS.
+	 * Pesquisa uma ordem de servico no banco de dados com base no numero da OS.
 	 */
 	public void pesquisarOs() {
 		numOs = JOptionPane.showInputDialog("Número da OS");
 		String sql = "SELECT * FROM tbos WHERE os = " + numOs;
-		// formata a data para o padrão brasileiro, exemplo: 10/07/2016
+		// formata a data para o padrao brasileiro, exemplo: 10/07/2016 18:18:18
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 		try {
@@ -601,7 +601,7 @@ public class TelaOs extends JInternalFrame {
 	}
 
 	/**
-	 * Atualiza uma ordem de serviço no banco de dados com base nos dados
+	 * Atualiza uma ordem de servico no banco de dados com base nos dados
 	 * preenchidos.
 	 */
 	public void atualizarOs() {
@@ -651,8 +651,8 @@ public class TelaOs extends JInternalFrame {
 
 	/**
 	 * 
-	 * Deleta uma OS do banco de dados, antes verifica se o perfil do usuário logado
-	 * é "admin" Se for, executa a instrução SQL
+	 * Deleta uma OS do banco de dados, antes verifica se o perfil do usuario logado
+	 * e "admin" Se for, executa a instrucao SQL
 	 */
 
 	public void deletarOs() {
@@ -695,7 +695,7 @@ public class TelaOs extends JInternalFrame {
 	}
 
 	/**
-	 * Imprime a ordem de serviço em um relatório utilizando o JasperReports.
+	 * Imprime a ordem de servico em um relatorio utilizando o JasperReports.
 	 */
 
 	public void imprimirOs() {
@@ -703,21 +703,21 @@ public class TelaOs extends JInternalFrame {
 				JOptionPane.YES_NO_OPTION);
 		if (confirma == JOptionPane.YES_OPTION) {
 			try {
-				// Criar um filtro com parâmetros
+				// Criar um filtro com parametros
 				Map<String, Object> parametros = new HashMap<>();
 				parametros.put("os", Integer.parseInt(txtOs.getText()));
 
-				// Obter a conexão com o banco de dados
+				// Obter a conexao com o banco de dados
 				Connection conexao = ConexaoDao.getConnection();
 
-				// Preencher o relatório utilizando o JasperReport
+				// Preencher o relatorio utilizando o JasperReport
 				JasperPrint print = JasperFillManager.fillReport(
 						"C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\os.jasper", parametros, conexao);
 
-				// Exibir o relatório utilizando o JasperViewer
+				// Exibir o relatorio utilizando o JasperViewer
 				JasperViewer.viewReport(print, false);
 
-				// Fechar a conexão com o banco de dados
+				// Fechar a conexao com o banco de dados
 				conexao.close();
 				// habilitar os objetos
 				btnOsRead.setEnabled(true);
@@ -732,45 +732,45 @@ public class TelaOs extends JInternalFrame {
 	}
 
 	/**
-	 * Obtém o botão de atualização de ordem de serviço.
+	 * Obtem o botao de atualizacao de ordem de servico.
 	 *
-	 * @return O botão de atualização de ordem de serviço.
+	 * @return O botao de atualizacao de ordem de servico.
 	 */
 	public JButton getBtnOsUpdate() {
 		return btnOsUpdate;
 	}
 
 	/**
-	 * Obtém o botão de exclusão de ordem de serviço.
+	 * Obtem o botao de exclusao de ordem de servico.
 	 *
-	 * @return O botão de exclusão de ordem de serviço.
+	 * @return O botao de exclusao de ordem de servico.
 	 */
 	public JButton getBtnOsDelete() {
 		return btnOsDelete;
 	}
 
 	/**
-	 * Obtém o botão de impressão de ordem de serviço.
+	 * Obtem o botao de impressao de ordem de servico.
 	 *
-	 * @return O botão de impressão de ordem de serviço.
+	 * @return O botao de impressao de ordem de servico.
 	 */
 	public JButton getBtnOsPrint() {
 		return btnOsPrint;
 	}
 
 	/**
-	 * Obtém o botão de criação de ordem de serviço.
+	 * Obtem o botao de criacao de ordem de servico.
 	 *
-	 * @return O botão de criação de ordem de serviço.
+	 * @return O botao de criacao de ordem de servico.
 	 */
 	public JButton getBtnOsCreate() {
 		return btnOsCreate;
 	}
 
 	/**
-	 * Obtém o botão de leitura de ordem de serviço.
+	 * Obtem o botao de leitura de ordem de servico.
 	 *
-	 * @return O botão de leitura de ordem de serviço.
+	 * @return O botao de leitura de ordem de servico.
 	 */
 	public JButton getBtnOsRead() {
 		return btnOsRead;
