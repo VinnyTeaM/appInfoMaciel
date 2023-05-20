@@ -26,14 +26,27 @@ import br.com.infomaciel.dal.ConexaoDao;
  */
 public class TelaTrocaSenha extends JInternalFrame {
 
-	// usando a variável conexão do DAL
+	/**
+	 * 
+	 * O objeto Connection representa a conexão com o banco de dados. Ele é
+	 * responsável por estabelecer a comunicação entre a aplicação e o banco de
+	 * dados, permitindo a execução de consultas e atualizações.
+	 */
 	Connection conexao = null;
-	/*
-	 * Criando variáveis especiais para conexão com o banco PreparedStatement e
-	 * ResultSet são frameworks do pacote java.sql* e servem para preparar e
-	 * executar as instruções SQL
+
+	/**
+	 * 
+	 * O objeto PreparedStatement representa uma instrução SQL pré-compilada que
+	 * pode ser executada várias vezes com diferentes parâmetros. Ele é usado para
+	 * melhorar o desempenho e a segurança, prevenindo ataques de injeção de SQL.
 	 */
 	PreparedStatement pst = null;
+	/**
+	 * 
+	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
+	 * banco de dados. Ele fornece métodos para iterar sobre as linhas do conjunto
+	 * de resultados e acessar os dados armazenados em cada coluna.
+	 */
 	ResultSet rs = null;
 
 	/**
@@ -42,20 +55,44 @@ public class TelaTrocaSenha extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Labels utilizados na interface de alteração de senha.
+	 * 
+	 * Rótulo para o campo "Usuário".
 	 */
 	private JLabel lblSenhaUsu;
-	private JLabel lblSenhaSenha;
-	private JLabel lblSenhaNova;
-	private JLabel lblSenhaRep;
-
 	/**
-	 * Campos de texto e campos de senha utilizados na interface de alteração de
-	 * senha.
+	 * 
+	 * Rótulo para o campo "Senha".
+	 */
+	private JLabel lblSenhaSenha;
+	/**
+	 * 
+	 * Rótulo para o campo "Nova senha".
+	 */
+	private JLabel lblSenhaNova;
+	/**
+	 * 
+	 * Rótulo para o campo "Repetir nova senha".
+	 */
+	private JLabel lblSenhaRep;
+	/**
+	 * Campo de texto e campo de senha utilizado na interface de alteração de senha.
 	 */
 	private JTextField txtSenhaUsu;
+
+	/**
+	 * 
+	 * Campo de senha utilizado para digitar a senha atual.
+	 */
 	private JPasswordField txtSenhaSenha;
+	/**
+	 * 
+	 * Campo de senha utilizado para digitar a nova senha.
+	 */
 	private JPasswordField txtSenhaNova;
+	/**
+	 * 
+	 * Campo de senha utilizado para repetir a nova senha.
+	 */
 	private JPasswordField txtSenhaRep;
 
 	/**
@@ -64,12 +101,25 @@ public class TelaTrocaSenha extends JInternalFrame {
 	private JCheckBox chbSenha;
 
 	/**
-	 * Botões utilizados na interface de alteração de senha.
+	 * 
+	 * Botão de confirmação para a alteração de senha.
 	 */
 	private JButton btnSenhaConf;
+	/**
+	 * 
+	 * Botão de cancelamento da alteração de senha.
+	 */
 	private JButton btnSenhaCan;
 
+	/**
+	 * 
+	 * Variável que armazena o nome de usuário do usuário logado.
+	 */
 	String nomeUsuario = TelaPrincipal.getNomeUsuario();
+	/**
+	 * 
+	 * Variável que armazena o perfil do usuário logado.
+	 */
 	String perfil = TelaLogin.getPerfil();
 
 	/**

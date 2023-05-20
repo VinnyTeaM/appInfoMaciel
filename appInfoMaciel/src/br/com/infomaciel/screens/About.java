@@ -72,7 +72,7 @@ public class About extends JFrame {
 		JLabel lblNewLabel_4 = new JLabel("de desenvolver uma aplicação que viabilize o controle ordens de serviço.");
 		lblNewLabel_4.setBounds(10, 85, 414, 14);
 		Sobre.add(lblNewLabel_4);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(About.class.getResource("/br/com/infomaciel/icons/login.png")));
 		lblNewLabel_2.setBounds(178, 122, 87, 64);

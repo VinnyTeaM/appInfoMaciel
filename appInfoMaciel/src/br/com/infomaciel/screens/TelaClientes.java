@@ -31,34 +31,80 @@ import javax.swing.text.MaskFormatter;
 import br.com.infomaciel.dal.ConexaoDao;
 import net.proteanit.sql.DbUtils;
 
+/**
+ * A classe TelaClientes é responsável por exibir uma interface gráfica para o
+ * usuário interagir com os clientes. Ela herda funcionalidades da classe
+ * JInternalFrame e implementa a lógica relacionada aos clientes.
+ */
 public class TelaClientes extends JInternalFrame {
-
-	/**
-	 * @param criarCliente     criar Cliente
-	 * 
-	 * @param atualizarCliente modificar Cliente
-	 * 
-	 * @param deletarCliente   deletar Cliente
-	 *
-	 * @param pesquisarCliente pesquisar clientes
-	 * 
-	 */
 
 	/**
 	 * Número de série para a serialização.
 	 */
 	private static final long serialVersionUID = 1;
+
+	/**
+	 * 
+	 * O objeto Connection representa a conexão com o banco de dados. Ele é
+	 * responsável por estabelecer a comunicação entre a aplicação e o banco de
+	 * dados, permitindo a execução de consultas e atualizações.
+	 */
 	Connection conexao = null;
+
+	/**
+	 * 
+	 * O objeto PreparedStatement representa uma instrução SQL pré-compilada que
+	 * pode ser executada várias vezes com diferentes parâmetros. Ele é usado para
+	 * melhorar o desempenho e a segurança, prevenindo ataques de injeção de SQL.
+	 */
 	PreparedStatement pst = null;
+	/**
+	 * 
+	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
+	 * banco de dados. Ele fornece métodos para iterar sobre as linhas do conjunto
+	 * de resultados e acessar os dados armazenados em cada coluna.
+	 */
 	ResultSet rs = null;
 
+	/**
+	 * 
+	 * JTextField utilizado para inserir ou exibir o nome do cliente.
+	 */
 	private JTextField txtCliNome;
+	/**
+	 * 
+	 * JTextField utilizado para inserir ou exibir o endereço do cliente.
+	 */
 	private JTextField txtCliEnd;
+	/**
+	 * 
+	 * JTextField utilizado para inserir ou exibir o telefone do cliente.
+	 */
 	private JTextField txtCliFone;
+	/**
+	 * 
+	 * JTextField utilizado para inserir ou exibir o email do cliente.
+	 */
 	private JTextField txtCliEmail;
+	/**
+	 * 
+	 * JTextField utilizado para pesquisar clientes pelo nome.
+	 */
 	private JTextField txtCliPesquisar;
+	/**
+	 * 
+	 * JTable utilizado para exibir a lista de clientes.
+	 */
 	private JTable tblClientes;
+	/**
+	 * 
+	 * JTextField utilizado para exibir o ID do cliente selecionado.
+	 */
 	private JTextField txtCliId;
+	/**
+	 * 
+	 * JButton utilizado para criar um novo cliente.
+	 */
 	private JButton btnCliCreate;
 
 	/**
@@ -288,6 +334,10 @@ public class TelaClientes extends JInternalFrame {
 
 	}
 
+	/**
+	 * 
+	 * Cria um novo cliente no banco de dados.
+	 */
 	public void criarCliente() {
 		conexao = ConexaoDao.getConnection();
 		String sql = "insert into tbclient(namecli,addcli,phonecli,emailcli) values(?,?,?,?)";
@@ -319,6 +369,10 @@ public class TelaClientes extends JInternalFrame {
 		}
 	}
 
+	/**
+	 * 
+	 * Atualiza as informações de um cliente existente.
+	 */
 	public void atualizarCliente() {
 		conexao = ConexaoDao.getConnection();
 		// sempre prestar muito atenção na seguencia para passagem dos paramentros
@@ -351,6 +405,11 @@ public class TelaClientes extends JInternalFrame {
 		}
 	}
 
+	/**
+	 * Deleta um cliente do banco de dados. Antes de realizar a exclusão, exibe uma
+	 * mensagem de confirmação para o usuário.
+	 * 
+	 */
 	public void deletarCliente() {
 		int remover = JOptionPane.showConfirmDialog(null, "tem certeza que deseja remover este cliente?", "Atenção",
 				JOptionPane.YES_NO_OPTION);
@@ -373,6 +432,10 @@ public class TelaClientes extends JInternalFrame {
 
 	}
 
+	/**
+	 * Realiza a pesquisa de clientes com base no nome do cliente.
+	 * 
+	 */
 	public void pesquisarCliente() {
 		conexao = ConexaoDao.getConnection();
 		String sql = "SELECT idcli AS ID, namecli AS NOME, addcli AS ENDEREÇO, phonecli AS FONE, emailcli AS EMAIL FROM tbclient WHERE namecli LIKE  ?";
@@ -389,4 +452,5 @@ public class TelaClientes extends JInternalFrame {
 		}
 
 	}
+
 }

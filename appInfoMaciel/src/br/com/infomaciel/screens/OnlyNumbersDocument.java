@@ -13,7 +13,7 @@ public class OnlyNumbersDocument extends PlainDocument {
 	 * Número de série para a serialização.
 	 */
 	private static final long serialVersionUID = 1L;
-	/** 
+	/**
 	 * Vetor de caracteres permitidos para o documento.
 	 */
 	private char[] allowedChars;

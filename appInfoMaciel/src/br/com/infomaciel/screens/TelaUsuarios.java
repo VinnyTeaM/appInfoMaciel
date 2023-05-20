@@ -23,6 +23,13 @@ import javax.swing.text.MaskFormatter;
 
 import br.com.infomaciel.dal.ConexaoDao;
 
+/**
+ * 
+ * A classe TelaUsuarios é uma janela interna que exibe a interface gráfica para
+ * gerenciamento de usuários. Ela herda funcionalidades da classe JInternalFrame
+ * e permite a interação com o banco de dados para realizar operações
+ * relacionadas aos usuários, como criar, editar, pesquisar e excluir.
+ */
 public class TelaUsuarios extends JInternalFrame {
 
 	/**
@@ -36,15 +43,27 @@ public class TelaUsuarios extends JInternalFrame {
 	 * 
 	 */
 
-	// usando a variavel conexao do DAL
-	Connection conexao = null;
-	/*
-	 * criando variaveis especiais para conexao com o banco PreparedStatement e
-	 * ResultSet são frameworks do pacote java.sql* e servem para preparar e
-	 * executar as intruções sql
+	/**
+	 * 
+	 * O objeto Connection representa a conexão com o banco de dados. Ele é
+	 * responsável por estabelecer a comunicação entre a aplicação e o banco de
+	 * dados, permitindo a execução de consultas e atualizações.
 	 */
+	Connection conexao = null;
 
+	/**
+	 * 
+	 * O objeto PreparedStatement representa uma instrução SQL pré-compilada que
+	 * pode ser executada várias vezes com diferentes parâmetros. Ele é usado para
+	 * melhorar o desempenho e a segurança, prevenindo ataques de injeção de SQL.
+	 */
 	PreparedStatement pst = null;
+	/**
+	 * 
+	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
+	 * banco de dados. Ele fornece métodos para iterar sobre as linhas do conjunto
+	 * de resultados e acessar os dados armazenados em cada coluna.
+	 */
 	ResultSet rs = null;
 	/**
 	 * Número de série para a serialização.
@@ -81,8 +100,9 @@ public class TelaUsuarios extends JInternalFrame {
 	private JComboBox<String> cboUsuPerfil;
 
 	/**
-	 * Launch the application.
-	 */
+	Método principal responsável por iniciar a aplicação.
+	@param args os argumentos de linha de comando
+	*/
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -256,6 +276,7 @@ public class TelaUsuarios extends JInternalFrame {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Método responsável por criar um usuário.
 	 */
@@ -287,6 +308,7 @@ public class TelaUsuarios extends JInternalFrame {
 			JOptionPane.showMessageDialog(null, erro);
 		}
 	}
+
 	/**
 	 * Método responsável por deletar um usuário.
 	 */

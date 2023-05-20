@@ -32,27 +32,56 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
+/**
+ * 
+ * A classe TelaPrincipal é responsável por exibir a tela principal da
+ * aplicação. Ela herda funcionalidades da classe JFrame e contém os componentes
+ * e a lógica de interação da interface principal.
+ */
 public class TelaPrincipal extends JFrame {
 
 	/**
-	 * @param relatorioCli   chamar relatorio de clientes
 	 * 
-	 * @param relatorioServ  chamar relatorio de clientes
+	 * O objeto Connection representa a conexão com o banco de dados. Ele é
+	 * responsável por estabelecer a comunicação entre a aplicação e o banco de
+	 * dados, permitindo a execução de consultas e atualizações.
 	 */
-
 	Connection conexao = null;
 	/**
 	 * Número de série para a serialização.
 	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Painel de conteúdo principal.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Item de menu para cadastro de usuários.
+	 */
 	public static JMenuItem menCadUsu;
+
+	/**
+	 * Menu de relatórios.
+	 */
 	public static JMenu menRel;
+
+	/**
+	 * Rótulo que exibe o nome de usuário logado.
+	 */
 	public static JLabel lblUsuario;
+
+	/**
+	 * Area de trabalho do aplicativo que contem as janelas internas.
+	 */
 	public static JDesktopPane desktop;
 
 	/**
-	 * Launch the application.
+	 * 
+	 * Método principal responsável por iniciar a aplicação.
+	 * 
+	 * @param args argumentos de linha de comando (não são utilizados).
 	 */
 
 	public static void main(String[] args) {
@@ -249,6 +278,10 @@ public class TelaPrincipal extends JFrame {
 
 	}
 
+	/**
+	 * 
+	 * Método responsável por gerar um relatório de clientes.
+	 */
 	public void relatorioCli() {
 		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
 				JOptionPane.YES_NO_OPTION);
@@ -273,6 +306,10 @@ public class TelaPrincipal extends JFrame {
 		}
 	}
 
+	/**
+	 * 
+	 * O método relatorioServ responsável por gerar um relatório de serviços.
+	 */
 	public void relatorioServ() {
 		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
 				JOptionPane.YES_NO_OPTION);
@@ -297,14 +334,32 @@ public class TelaPrincipal extends JFrame {
 		}
 	}
 
+	/**
+	 * 
+	 * O método getMenCadUsu retorna o item de menu para cadastro de usuários.
+	 * 
+	 * @return O item de menu para cadastro de usuários.
+	 */
 	public JMenuItem getMenCadUsu() {
 		return menCadUsu;
 	}
 
+	/**
+	 * 
+	 * O método getMenRel retorna o menu de relatórios.
+	 * 
+	 * @return O menu de relatórios.
+	 */
 	public JMenu getMenRel() {
 		return menRel;
 	}
 
+	/**
+	 * 
+	 * O método getNomeUsuario retorna o nome do usuário logado.
+	 * 
+	 * @return O nome do usuário logado.
+	 */
 	public static String getNomeUsuario() {
 		return lblUsuario.getText().toString();
 	}
