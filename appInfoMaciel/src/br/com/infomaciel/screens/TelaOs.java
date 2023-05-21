@@ -711,8 +711,7 @@ public class TelaOs extends JInternalFrame {
 				Connection conexao = ConexaoDao.getConnection();
 
 				// Preencher o relatorio utilizando o JasperReport
-				JasperPrint print = JasperFillManager.fillReport(
-						"C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\os.jasper", parametros, conexao);
+				JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/reports/os.jasper"), parametros, conexao);
 
 				// Exibir o relatorio utilizando o JasperViewer
 				JasperViewer.viewReport(print, false);

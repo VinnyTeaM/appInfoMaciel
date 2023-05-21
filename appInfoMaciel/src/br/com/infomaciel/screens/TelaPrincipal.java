@@ -292,8 +292,7 @@ public class TelaPrincipal extends JFrame {
 				conexao = ConexaoDao.getConnection();
 
 				// Preencher o relatório
-				JasperPrint print = JasperFillManager.fillReport(
-						"C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\clientes.jasper", null, conexao);
+				JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/reports/clientes.jasper"), null, conexao);
 
 				// Exibir o relatório
 				JasperViewer.viewReport(print, false);
@@ -320,8 +319,7 @@ public class TelaPrincipal extends JFrame {
 				conexao = ConexaoDao.getConnection();
 
 				// Preencher o relatorio
-				JasperPrint print = JasperFillManager.fillReport(
-						"C:\\Users\\avinn\\OneDrive\\sistema os\\relatorios\\servicos.jasper", null, conexao);
+				JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/reports/servicos.jasper"), null, conexao);
 
 				// Exibir o relatorio
 				JasperViewer.viewReport(print, false);
