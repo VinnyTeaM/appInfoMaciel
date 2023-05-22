@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import br.com.infomaciel.dal.ConexaoDao;
 
@@ -32,22 +33,22 @@ public class TelaLogin extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 *
 	 * JLabel privado para o rotulo do usuario.
 	 */
 	private JLabel labelUsuario;
 	/**
-	 * 
+	 *
 	 * JLabel privado para o rotulo da senha.
 	 */
 	private JLabel labelSenha;
 	/**
-	 * 
+	 *
 	 * JTextField privado para o campo de entrada do usuario.
 	 */
 	private JTextField txtUsuario;
 	/**
-	 * 
+	 *
 	 * JPasswordField privado para o campo de entrada da senha.
 	 */
 	private JPasswordField txtSenha;
@@ -82,7 +83,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 	public TelaLogin() {
 		super("Tela de Login");
 		setTitle("-*Informática Maciel*- LOGIN");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setSize(400, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -189,9 +190,9 @@ public class TelaLogin extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * 
+	 *
 	 * Metodo de entrada do programa.
-	 * 
+	 *
 	 * @param args argumentos de linha de comando (nao sao utilizados)
 	 */
 	public static void main(String[] args) {

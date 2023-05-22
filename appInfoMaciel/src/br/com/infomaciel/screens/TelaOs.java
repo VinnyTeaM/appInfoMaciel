@@ -51,7 +51,7 @@ public class TelaOs extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 *
 	 * O objeto Connection representa a conexao com o banco de dados. Ele e
 	 * responsavel por estabelecer a comunicacao entre a aplicacao e o banco de
 	 * dados, permitindo a execucao de consultas e atualizacoes.
@@ -59,14 +59,14 @@ public class TelaOs extends JInternalFrame {
 	Connection conexao = null;
 
 	/**
-	 * 
+	 *
 	 * O objeto PreparedStatement representa uma instrucao SQL pre compilada que
 	 * pode ser executada varias vezes com diferentes parametros. Ele e usado para
 	 * melhorar o desempenho e a seguranca, prevenindo ataques de injecao de SQL.
 	 */
 	PreparedStatement pst = null;
 	/**
-	 * 
+	 *
 	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
 	 * banco de dados. Ele fornece metodos para iterar sobre as linhas do conjunto
 	 * de resultados e acessar os dados armazenados em cada coluna.
@@ -180,13 +180,14 @@ public class TelaOs extends JInternalFrame {
 	private JRadioButton rbtOs;
 
 	/**
-	 * 
+	 *
 	 * Metodo de entrada do programa.
-	 * 
+	 *
 	 * @param args argumentos de linha de comando (nao sao utilizados)
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					TelaOs frame = new TelaOs();
@@ -207,7 +208,7 @@ public class TelaOs extends JInternalFrame {
 		setMaximizable(true);
 		setIconifiable(true);
 		setClosable(true);
-		setSize(600, 430);
+		setSize(600, 407);
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
@@ -238,6 +239,7 @@ public class TelaOs extends JInternalFrame {
 		// atribuindo um texto a variavel type se selecionado o radion button
 		rbtOrc = new JRadioButton("Orçamento");
 		rbtOrc.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				type = "Orçamento";
 			}
@@ -249,6 +251,7 @@ public class TelaOs extends JInternalFrame {
 
 		rbtOs = new JRadioButton("Ordem de Serviço");
 		rbtOs.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				type = "Ordem de Serviço";
 			}
@@ -311,7 +314,7 @@ public class TelaOs extends JInternalFrame {
 
 		DefaultTableModel model = new DefaultTableModel() {
 			/**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -324,7 +327,7 @@ public class TelaOs extends JInternalFrame {
 		tblClientes = new JTable();
 		tblClientes = new JTable(model) {
 			/**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -396,52 +399,57 @@ public class TelaOs extends JInternalFrame {
 
 		btnOsCreate = new JButton("");
 		btnOsCreate.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				criarOs();
 			}
 		});
 		btnOsCreate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOsCreate.setIcon(new ImageIcon(TelaOs.class.getResource("/br/com/infomaciel/icons/create.png")));
-		btnOsCreate.setBounds(48, 297, 89, 75);
+		btnOsCreate.setBounds(48, 273, 89, 75);
 		getContentPane().add(btnOsCreate);
 
 		btnOsRead = new JButton("");
 		btnOsRead.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				pesquisarOs();
 			}
 		});
 		btnOsRead.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOsRead.setIcon(new ImageIcon(TelaOs.class.getResource("/br/com/infomaciel/icons/read.png")));
-		btnOsRead.setBounds(147, 297, 89, 75);
+		btnOsRead.setBounds(147, 273, 89, 75);
 		getContentPane().add(btnOsRead);
 
 		btnOsUpdate = new JButton("");
 		btnOsUpdate.setEnabled(false);
 		btnOsUpdate.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				atualizarOs();
 			}
 		});
 		btnOsUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOsUpdate.setIcon(new ImageIcon(TelaOs.class.getResource("/br/com/infomaciel/icons/update.png")));
-		btnOsUpdate.setBounds(251, 297, 89, 75);
+		btnOsUpdate.setBounds(251, 273, 89, 75);
 		getContentPane().add(btnOsUpdate);
 
 		btnOsDelete = new JButton();
 		btnOsDelete.setEnabled(false);
 		btnOsDelete.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				deletarOs();
 			}
 		});
 		btnOsDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOsDelete.setIcon(new ImageIcon(TelaOs.class.getResource("/br/com/infomaciel/icons/delete.png")));
-		btnOsDelete.setBounds(357, 297, 89, 75);
+		btnOsDelete.setBounds(357, 273, 89, 75);
 		getContentPane().add(btnOsDelete);
 
 		btnOsPrint = new JButton("");
 		btnOsPrint.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				imprimirOs();
 			}
@@ -450,28 +458,28 @@ public class TelaOs extends JInternalFrame {
 		btnOsPrint.setEnabled(false);
 		btnOsPrint.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOsPrint.setIcon(new ImageIcon(TelaOs.class.getResource("/br/com/infomaciel/icons/print.png")));
-		btnOsPrint.setBounds(456, 297, 89, 75);
+		btnOsPrint.setBounds(456, 273, 89, 75);
 		getContentPane().add(btnOsPrint);
 
 		JLabel lblNewLabel_7 = new JLabel("ADICIONAR");
-		lblNewLabel_7.setBounds(66, 375, 71, 14);
+		lblNewLabel_7.setBounds(66, 348, 71, 14);
 		getContentPane().add(lblNewLabel_7);
 
 		JLabel lblNewLabel_8 = new JLabel("BUSCAR");
-		lblNewLabel_8.setBounds(174, 375, 62, 14);
+		lblNewLabel_8.setBounds(174, 348, 62, 14);
 		getContentPane().add(lblNewLabel_8);
 
 		JLabel lblNewLabel_9 = new JLabel("EDITAR");
-		lblNewLabel_9.setBounds(277, 375, 46, 14);
+		lblNewLabel_9.setBounds(277, 348, 46, 14);
 		getContentPane().add(lblNewLabel_9);
 
 		JLabel lblNewLabel_10 = new JLabel("REMOVER");
-		lblNewLabel_10.setBounds(375, 375, 59, 14);
+		lblNewLabel_10.setBounds(375, 348, 59, 14);
 		getContentPane().add(lblNewLabel_10);
 
 		JLabel lblNewLabel_11 = new JLabel("IMPRIMIR");
 		lblNewLabel_11.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_11.setBounds(476, 375, 58, 14);
+		lblNewLabel_11.setBounds(476, 348, 58, 14);
 		getContentPane().add(lblNewLabel_11);
 
 	}
@@ -542,7 +550,6 @@ public class TelaOs extends JInternalFrame {
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, e2);
 		}
-		;
 	}
 
 	/**
@@ -556,7 +563,7 @@ public class TelaOs extends JInternalFrame {
 
 		try {
 			pst = conexao.prepareStatement(sql);
-			rs = (ResultSet) pst.executeQuery();
+			rs = pst.executeQuery();
 			if (rs.next()) {
 				txtOs.setText(rs.getString(1));
 				// recebe a data do SQL
@@ -646,11 +653,10 @@ public class TelaOs extends JInternalFrame {
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, e2);
 		}
-		;
 	}
 
 	/**
-	 * 
+	 *
 	 * Deleta uma OS do banco de dados, antes verifica se o perfil do usuario logado
 	 * e "admin" Se for, executa a instrucao SQL
 	 */

@@ -4,9 +4,10 @@ import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
 
 /**
  * A classe About representa a janela de "sobre" do sistema.
@@ -29,6 +30,7 @@ public class About extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					About frame = new About();
@@ -45,7 +47,7 @@ public class About extends JFrame {
 	 */
 	public About() {
 		setTitle("AJUDA / SOBRE");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 460, 244);
 		setResizable(false);
 		setLocationRelativeTo(null);

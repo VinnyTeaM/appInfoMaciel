@@ -24,7 +24,7 @@ import javax.swing.text.MaskFormatter;
 import br.com.infomaciel.dal.ConexaoDao;
 
 /**
- * 
+ *
  * A classe TelaUsuarios a uma janela interna que exibe a interface grafica para
  * gerenciamento de usuarios. Ela herda funcionalidades da classe JInternalFrame
  * e permite a interacaoo com o banco de dados para realizar operacoes
@@ -34,17 +34,17 @@ public class TelaUsuarios extends JInternalFrame {
 
 	/**
 	 * @param criarUsuario     criar Usuario
-	 * 
+	 *
 	 * @param deletarUsuario   deletar Usuario
-	 * 
+	 *
 	 * @param pesquisarUsuario pesquisar Usuario
-	 * 
+	 *
 	 * @param atualizarUsuario atualizar clientes
-	 * 
+	 *
 	 */
 
 	/**
-	 * 
+	 *
 	 * O objeto Connection representa a conexao com o banco de dados. Ele e
 	 * responsavel por estabelecer a comunicação entre a aplicacao e o banco de
 	 * dados, permitindo a execucao de consultas e atualizacoes.
@@ -52,14 +52,14 @@ public class TelaUsuarios extends JInternalFrame {
 	Connection conexao = null;
 
 	/**
-	 * 
+	 *
 	 * O objeto PreparedStatement representa uma instrucao SQL pre compilada que
 	 * pode ser executada várias vezes com diferentes parametros. Ele e usado para
 	 * melhorar o desempenho e a seguranca, prevenindo ataques de injecao de SQL.
 	 */
 	PreparedStatement pst = null;
 	/**
-	 * 
+	 *
 	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
 	 * banco de dados. Ele fornece metodos para iterar sobre as linhas do conjunto
 	 * de resultados e acessar os dados armazenados em cada coluna.
@@ -105,6 +105,7 @@ public class TelaUsuarios extends JInternalFrame {
 	*/
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					TelaUsuarios frame = new TelaUsuarios();
@@ -121,7 +122,7 @@ public class TelaUsuarios extends JInternalFrame {
 	 */
 	public TelaUsuarios() {
 		setTitle("Usuários / Cadastros");
-		setSize(608, 430);
+		setSize(608, 407);
 		setClosable(true);
 		setMaximizable(true);
 		setIconifiable(true);
@@ -173,7 +174,7 @@ public class TelaUsuarios extends JInternalFrame {
 		getContentPane().add(txtUsuSenha);
 
 		cboUsuPerfil = new JComboBox<>();
-		cboUsuPerfil.setModel(new DefaultComboBoxModel<String>(new String[] { "", "usuario", "tecnico", "admin" }));
+		cboUsuPerfil.setModel(new DefaultComboBoxModel<>(new String[] { "", "usuario", "tecnico", "admin" }));
 		cboUsuPerfil.setBounds(142, 56, 77, 22);
 		getContentPane().add(cboUsuPerfil);
 
@@ -194,6 +195,7 @@ public class TelaUsuarios extends JInternalFrame {
 		// metodo para adicionar usuarios
 		JButton btnUsuCreate = new JButton("");
 		btnUsuCreate.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				criarUsuario();
 			}
@@ -208,6 +210,7 @@ public class TelaUsuarios extends JInternalFrame {
 		// metodo para remover usuario
 		JButton btnUsuDelete = new JButton("");
 		btnUsuDelete.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				deletarUsuario();
 			}
@@ -222,6 +225,7 @@ public class TelaUsuarios extends JInternalFrame {
 		// metodo para consultar usuario
 		JButton btnUsuRead = new JButton("");
 		btnUsuRead.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				pesquisarUsuario();
 			}
@@ -237,6 +241,7 @@ public class TelaUsuarios extends JInternalFrame {
 		// criando o metodo para alterar dados do usuario
 		JButton btnUsuUpdate = new JButton("");
 		btnUsuUpdate.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				atualizarUsuario();
 			}

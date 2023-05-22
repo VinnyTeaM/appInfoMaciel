@@ -27,7 +27,7 @@ import br.com.infomaciel.dal.ConexaoDao;
 public class TelaTrocaSenha extends JInternalFrame {
 
 	/**
-	 * 
+	 *
 	 * O objeto Connection representa a conexao com o banco de dados. Ele e
 	 * responsavel por estabelecer a comunicacao entre a aplicacao e o banco de
 	 * dados, permitindo a execucao de consultas e atualizacoes.
@@ -35,14 +35,14 @@ public class TelaTrocaSenha extends JInternalFrame {
 	Connection conexao = null;
 
 	/**
-	 * 
+	 *
 	 * O objeto PreparedStatement representa uma instrucao SQL pre compilada que
 	 * pode ser executada varias vezes com diferentes parametros. Ele e usado para
 	 * melhorar o desempenho e a seguranca, prevenindo ataques de injecao de SQL.
 	 */
 	PreparedStatement pst = null;
 	/**
-	 * 
+	 *
 	 * O objeto ResultSet representa um conjunto de resultados de uma consulta ao
 	 * banco de dados. Ele fornece metodos para iterar sobre as linhas do conjunto
 	 * de resultados e acessar os dados armazenados em cada coluna.
@@ -55,22 +55,22 @@ public class TelaTrocaSenha extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 *
 	 * Campo para o campo "Usuario".
 	 */
 	private JLabel lblSenhaUsu;
 	/**
-	 * 
+	 *
 	 * Campo para o campo "Senha".
 	 */
 	private JLabel lblSenhaSenha;
 	/**
-	 * 
+	 *
 	 * Campo para o campo "Nova senha".
 	 */
 	private JLabel lblSenhaNova;
 	/**
-	 * 
+	 *
 	 * Campo para o campo "Repetir nova senha".
 	 */
 	private JLabel lblSenhaRep;
@@ -80,17 +80,17 @@ public class TelaTrocaSenha extends JInternalFrame {
 	private JTextField txtSenhaUsu;
 
 	/**
-	 * 
+	 *
 	 * Campo de senha utilizado para digitar a senha atual.
 	 */
 	private JPasswordField txtSenhaSenha;
 	/**
-	 * 
+	 *
 	 * Campo de senha utilizado para digitar a nova senha.
 	 */
 	private JPasswordField txtSenhaNova;
 	/**
-	 * 
+	 *
 	 * Campo de senha utilizado para repetir a nova senha.
 	 */
 	private JPasswordField txtSenhaRep;
@@ -101,23 +101,23 @@ public class TelaTrocaSenha extends JInternalFrame {
 	private JCheckBox chbSenha;
 
 	/**
-	 * 
+	 *
 	 * Botao de confirmacao para a alteracao de senha.
 	 */
 	private JButton btnSenhaConf;
 	/**
-	 * 
+	 *
 	 * Botao de cancelamento da alteracao de senha.
 	 */
 	private JButton btnSenhaCan;
 
 	/**
-	 * 
+	 *
 	 * Variavel que armazena o nome de usuario do usuario logado.
 	 */
 	String nomeUsuario = TelaPrincipal.getNomeUsuario();
 	/**
-	 * 
+	 *
 	 * Variavel que armazena o perfil do usuario logado.
 	 */
 	String perfil = TelaLogin.getPerfil();
@@ -150,6 +150,7 @@ public class TelaTrocaSenha extends JInternalFrame {
 		btnSenhaCan = new JButton("Cancelar");
 
 		btnSenhaCan.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
@@ -167,12 +168,13 @@ public class TelaTrocaSenha extends JInternalFrame {
 		getContentPane().add(txtSenhaRep);
 		getContentPane().add(chbSenha);
 		// espaco em branco
-		getContentPane().add(new JLabel()); 
+		getContentPane().add(new JLabel());
 		getContentPane().add(btnSenhaConf);
 		getContentPane().add(btnSenhaCan);
 		getRootPane().setDefaultButton(btnSenhaConf);
 
 		chbSenha.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				txtSenhaSenha.setEchoChar(chbSenha.isSelected() ? '\0' : '*');
 				txtSenhaNova.setEchoChar(chbSenha.isSelected() ? '\0' : '*');
@@ -181,6 +183,7 @@ public class TelaTrocaSenha extends JInternalFrame {
 		});
 
 		btnSenhaConf.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				conexao = ConexaoDao.getConnection();
 

@@ -2,17 +2,23 @@ package br.com.infomaciel.screens;
 
 import java.awt.Color;
 import java.awt.Dialog.ModalExclusionType;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.DebugGraphics;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -25,6 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import br.com.infomaciel.dal.ConexaoDao;
@@ -33,7 +40,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
- * 
+ *
  * A classe TelaPrincipal e responsavel por exibir a tela principal da
  * aplicacao. Ela herda funcionalidades da classe JFrame e contem os componentes
  * e a logica de interacao da interface principal.
@@ -41,7 +48,7 @@ import net.sf.jasperreports.view.JasperViewer;
 public class TelaPrincipal extends JFrame {
 
 	/**
-	 * 
+	 *
 	 * O objeto Connection representa a conexao com o banco de dados. Ele e
 	 * responsavel por estabelecer a comunicacao entre a aplicacao e o banco de
 	 * dados, permitindo a execucao de consultas e atualizacoes.
@@ -78,14 +85,15 @@ public class TelaPrincipal extends JFrame {
 	public static JDesktopPane desktop;
 
 	/**
-	 * 
+	 *
 	 * Metodo principal responsavel por iniciar a aplicacao.
-	 * 
+	 *
 	 * @param args argumentos de linha de comando (nao sao utilizados).
 	 */
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					TelaPrincipal frame = new TelaPrincipal();
@@ -106,7 +114,7 @@ public class TelaPrincipal extends JFrame {
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setResizable(false);
 		setTitle("-*Informática Maciel*- TELA PRINCIPAL");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 845, 506);
 		contentPane = new JPanel();
 		contentPane.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -130,6 +138,7 @@ public class TelaPrincipal extends JFrame {
 
 		JMenuItem menCadCli = new JMenuItem("Cliente");
 		menCadCli.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				TelaClientes clientes = new TelaClientes();
 				clientes.setVisible(true);
@@ -142,6 +151,7 @@ public class TelaPrincipal extends JFrame {
 
 		JMenuItem menCadOs = new JMenuItem("OS");
 		menCadOs.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				TelaOs os = new TelaOs();
 				os.setVisible(true);
@@ -155,6 +165,7 @@ public class TelaPrincipal extends JFrame {
 		menCadUsu = new JMenuItem("Usuários");
 		menCadUsu.addActionListener(new ActionListener() {
 			// abrir o form TelaUsuario dentro desktop pane
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				TelaUsuarios usuarios = new TelaUsuarios();
 				usuarios.setVisible(true);
@@ -174,6 +185,7 @@ public class TelaPrincipal extends JFrame {
 
 		JMenuItem memRelCli = new JMenuItem("Clientes");
 		memRelCli.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				relatorioCli();
 			}
@@ -185,6 +197,7 @@ public class TelaPrincipal extends JFrame {
 
 		JMenuItem menRelSer = new JMenuItem("Serviços");
 		menRelSer.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				relatorioServ();
 			}
@@ -201,6 +214,7 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem menAjuSob = new JMenuItem("Sobre");
 		menAjuSob.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menAjuSob.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				// chamando a tela sobre
 				About sobre = new About();
@@ -218,6 +232,7 @@ public class TelaPrincipal extends JFrame {
 		menOpcSai.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		menOpcSai.addActionListener(new ActionListener() {
 			// exibir uma caixa de dialogo sim ou não
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				int sair = JOptionPane.showConfirmDialog(null, "tem certeza que deseja sair?", "Atenção",
 						JOptionPane.YES_NO_OPTION);
@@ -231,6 +246,7 @@ public class TelaPrincipal extends JFrame {
 
 		JMenuItem menOpcSenha = new JMenuItem("Alterar Senha");
 		menOpcSenha.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				TelaTrocaSenha telaTrocaSenha = new TelaTrocaSenha();
 				telaTrocaSenha.setVisible(true);
@@ -248,10 +264,10 @@ public class TelaPrincipal extends JFrame {
 		desktop.setSize(600, 430);
 		contentPane.add(desktop);
 		desktop.setLayout(null);
+		 
 
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel
-				.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/br/com/infomaciel/icons/telaprincipal.png")));
+		lblNewLabel.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/br/com/infomaciel/icons/login3.png")));
 		lblNewLabel.setBounds(600, 208, 215, 232);
 		contentPane.add(lblNewLabel);
 
@@ -274,12 +290,12 @@ public class TelaPrincipal extends JFrame {
 				lblData.setText(dateFormat.format(date));
 			}
 		});
-		((Timer) timer).start();
+		timer.start();
 
 	}
 
 	/**
-	 * 
+	 *
 	 * Metodo responsavel por gerar um relatorio de clientes.
 	 */
 	public void relatorioCli() {
@@ -292,7 +308,8 @@ public class TelaPrincipal extends JFrame {
 				conexao = ConexaoDao.getConnection();
 
 				// Preencher o relatório
-				JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/reports/clientes.jasper"), null, conexao);
+				JasperPrint print = JasperFillManager
+						.fillReport(getClass().getResourceAsStream("/reports/clientes.jasper"), null, conexao);
 
 				// Exibir o relatório
 				JasperViewer.viewReport(print, false);
@@ -306,8 +323,9 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	/**
-	 * 
-	 * O metodo relatorioServ responsavel por gerar um relatorio de servicos Jasper Report.
+	 *
+	 * O metodo relatorioServ responsavel por gerar um relatorio de servicos Jasper
+	 * Report.
 	 */
 	public void relatorioServ() {
 		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão desse relatório?", "Atenção",
@@ -319,7 +337,8 @@ public class TelaPrincipal extends JFrame {
 				conexao = ConexaoDao.getConnection();
 
 				// Preencher o relatorio
-				JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/reports/servicos.jasper"), null, conexao);
+				JasperPrint print = JasperFillManager
+						.fillReport(getClass().getResourceAsStream("/reports/servicos.jasper"), null, conexao);
 
 				// Exibir o relatorio
 				JasperViewer.viewReport(print, false);
@@ -333,9 +352,9 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	/**
-	 * 
+	 *
 	 * O metodo getMenCadUsu retorna o item de menu para cadastro de usuarios.
-	 * 
+	 *
 	 * @return O item de menu para cadastro de usuarios.
 	 */
 	public JMenuItem getMenCadUsu() {
@@ -343,9 +362,9 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	/**
-	 * 
+	 *
 	 * O metodo getMenRel retorna o menu de relatorios.
-	 * 
+	 *
 	 * @return O menu de relatorios.
 	 */
 	public JMenu getMenRel() {
@@ -353,9 +372,9 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	/**
-	 * 
+	 *
 	 * O metodo getNomeUsuario retorna o nome do usuario logado.
-	 * 
+	 *
 	 * @return O nome do usuario logado.
 	 */
 	public static String getNomeUsuario() {

@@ -56,8 +56,8 @@ public class OnlyNumbersDocument extends PlainDocument {
 		char[] chars = str.toCharArray();
 		// Percorre o vetor de caracteres verificando se cada um e um digito ou um
 		// caracter permitido
-		for (int i = 0; i < chars.length; i++) {
-			if (!Character.isDigit(chars[i]) && !isAllowedChar(chars[i])) {
+		for (char element : chars) {
+			if (!Character.isDigit(element) && !isAllowedChar(element)) {
 				return; // Se o caracter nao e um digito e nao esta na lista de permitidos, retorna sem
 						// inserir
 			}
@@ -74,8 +74,8 @@ public class OnlyNumbersDocument extends PlainDocument {
 	 * @return true se o caracter esta na lista de permitidos, false caso contrario.
 	 */
 	private boolean isAllowedChar(char c) {
-		for (int i = 0; i < allowedChars.length; i++) {
-			if (allowedChars[i] == c) {
+		for (char allowedChar : allowedChars) {
+			if (allowedChar == c) {
 				return true; // Se o caracter esta na lista de permitidos, retorna verdadeiro
 			}
 		}
