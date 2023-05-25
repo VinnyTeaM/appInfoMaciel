@@ -20,7 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import br.com.infomaciel.dal.ConexaoDao;
+import br.com.infomaciel.dao.ConexaoDao;
 
 /**
  * A classe TelaLogin representa a tela de login do sistema.

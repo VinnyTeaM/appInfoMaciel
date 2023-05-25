@@ -28,7 +28,7 @@ import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import br.com.infomaciel.dal.ConexaoDao;
+import br.com.infomaciel.dao.ConexaoDao;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
@@ -258,10 +258,10 @@ public class TelaPrincipal extends JFrame {
 		desktop.setSize(600, 430);
 		contentPane.add(desktop);
 		desktop.setLayout(null);
-		 
 
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/br/com/infomaciel/icons/login3.png")));
+
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/br/com/infomaciel/icons/telaprincipal.png")));
 		lblNewLabel.setBounds(600, 208, 215, 232);
 		contentPane.add(lblNewLabel);
 

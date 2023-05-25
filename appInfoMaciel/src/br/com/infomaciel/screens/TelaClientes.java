@@ -31,7 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 
-import br.com.infomaciel.dal.ConexaoDao;
+import br.com.infomaciel.dao.ConexaoDao;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -226,7 +226,7 @@ public class TelaClientes extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				deletarCliente();
-			}
+				}
 		});
 		btnCliDelete.setIcon(new ImageIcon(TelaClientes.class.getResource("/br/com/infomaciel/icons/delete.png")));
 		btnCliDelete.setBounds(383, 286, 89, 66);
@@ -314,7 +314,7 @@ public class TelaClientes extends JInternalFrame {
 					}
 				} catch (java.lang.ArrayIndexOutOfBoundsException e1) {
 					 e1.printStackTrace();
-					
+
 				}
 			}
 		});
@@ -345,9 +345,10 @@ public class TelaClientes extends JInternalFrame {
 		JLabel lblNewLabel_9 = new JLabel("  Id Cliente");
 		lblNewLabel_9.setBounds(10, 127, 68, 14);
 		getContentPane().add(lblNewLabel_9);
-		
+
 		JButton btnRefresh = new JButton("");
 		btnRefresh.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				LimparCamposUtil.limparCamposClId(txtCliPesquisar, txtCliId, txtCliNome, txtCliEnd, txtCliFone, txtCliEmail);
 				DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
@@ -379,7 +380,7 @@ public class TelaClientes extends JInternalFrame {
 			/*
 			 * .trim(): É um método da classe String que remove os espaços em branco no
 			 * início e no final de uma string. Ele retorna uma nova string sem os espaços
-			 * em branco adicionais. 
+			 * em branco adicionais.
 			 * .replaceAll() é um método da classe String. Ele é usado
 			 * para substituir todas as ocorrências de uma determinada sequência de
 			 * caracteres por outra sequência especificada.

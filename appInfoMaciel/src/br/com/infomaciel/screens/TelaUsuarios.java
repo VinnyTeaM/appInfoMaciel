@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-import br.com.infomaciel.dal.ConexaoDao;
+import br.com.infomaciel.dao.ConexaoDao;
 
 /**
  *
